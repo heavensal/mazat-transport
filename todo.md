@@ -11,6 +11,8 @@ Updated 2026-11-23. This is a preparation branch, not a deployed production serv
 - [x] FAQ local fallback and shared Forge build transport; remote credentials absent, warnings explicit.
 - [x] Preview noindex; robots/sitemap endpoints and shared metadata; no fabricated canonical domain.
 
+- [x] Complete brand asset set (2026-11-23): ICO, 16/32/48/96px PNGs, Apple 152/167/180px, Android and maskable 192/512px, PNG/WebP logo exports, 1200×630 share image and manifest. Dimensions, ICO frames, opaque mask safe zones and unchanged original verified; build and 536 internal links/assets pass.
+
 ## Client and infrastructure dependencies
 
 - [ ] **EXT-001 · P0 · Reception infrastructure · blocked.** Owner chooses backend/email/storage/admin authentication. Files: `src/components/QuoteForm.astro`, `src/lib/quote-form.ts`, `src/pages/[...slug].astro`. Acceptance: stored request with server timestamp/ID, anti-spam, structured company email, prospect acknowledgement, admin statuses and attachment retention; local/national/export submissions received in a test environment. Current mail draft is an explicit interim delivery.

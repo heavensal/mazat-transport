@@ -17,13 +17,13 @@ Copied from Laure Corrao. These are workflow recipes, not completed actions. MAZ
 - [ ] Thème / références visuelles
 - [ ] Couleurs
 - [ ] Typographies
-- [ ] Logo
-- [ ] Icônes du site
-  - [ ] Favicon
-  - [ ] Apple Touch Icon — iPhone / iPad
-  - [ ] Icônes Android
+- [x] Logo
+- [x] Icônes du site
+  - [x] Favicon
+  - [x] Apple Touch Icon — iPhone / iPad
+  - [x] Icônes Android
 - [ ] Photos / illustrations
-- [ ] Image de partage — réseaux sociaux
+- [x] Image de partage — réseaux sociaux
 
 ## 3. Déploiement
 
@@ -148,7 +148,7 @@ Dashboard Forge → ouvrir le Website concerné ou le créer.
 - [ ] Navigation — liens / boutons / page 404 / langues publiées
 - [ ] Affichage — mobile / tablette / ordinateur
 - [ ] Accessibilité — clavier / focus / contrastes / labels
-- [ ] Logo / favicons / icônes téléphone / aperçu de partage
+- [x] Logo / favicons / icônes téléphone / aperçu de partage
 - [ ] Sitemap / `robots.txt` / `llms.txt` — accès public et contenu correct
 - [ ] Indexation — aucun `noindex` ou blocage involontaire en production
 - [ ] Réservation / carte — si présentes

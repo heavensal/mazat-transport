@@ -43,3 +43,7 @@ No copied credentials, internal price grid, fabricated reviews, generated job ph
 ## Verification
 
 `pnpm build` produces static HTML. `pnpm test` checks generated links/anchors, metadata, French language, preview noindex, JSON-LD and exclusion of internal rates/starter assets. Browser acceptance and remaining limits are recorded in [validation.md](docs/validation.md).
+
+## Brand asset set
+
+Favicons, Apple/Android/maskable icons, manifest, PNG/WebP logo sizes and a 1200×630 sharing image are included. Regenerate deterministically with `pnpm assets:brand` using the unchanged original logo. See [asset inventory](public/favicons/README.md) for sizes, metadata, safe-zone details and scope.

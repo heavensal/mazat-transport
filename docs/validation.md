@@ -21,3 +21,11 @@
 - Forge credentials are absent. Warnings and local fallback are observed; real remote 0/N/replacement/error cases remain unverified.
 - Real submissions, email receipts, photo upload, admin persistence, signed PDF quotes, hosting statuses and production analytics do not exist in this delivery.
 - Domain and legal validation remain outstanding. No production deployment performed.
+
+## Brand asset follow-up — 23 November 2026
+
+- Build and existing checks pass: 14 pages and 536 internal links/assets.
+- Checked actual dimensions of 19 raster files (including the original), all three ICO frames, manifest sizes/purposes, and absence of alpha in launcher icons. Root Apple fallback also generated at 180px.
+- Checked maskable pixels outside the central safe circle are black; all artwork fits within it. Original PNG byte-for-byte identical to the supplied file.
+- Inspected social preview locally. Shared head declares favicons, manifest, OG/Twitter image dimensions and alternatives; brand links have accessible names with decorative image alternatives.
+- Actual installation on Apple/Android, search-result icon selection and social-platform cache refresh not tested. Canonical image URLs depend on the still-unconfirmed SITE_URL. No production deployment or broad accessibility audit.

@@ -1,0 +1,19 @@
+{
+  "id": "/",
+  "name": "MAZAT Transport Déménagement",
+  "short_name": "MAZAT",
+  "description": "Déménagement et transport à Marseille, en PACA, en France et à l’international selon faisabilité.",
+  "lang": "fr",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "theme_color": "#121719",
+  "background_color": "#000000",
+  "icons": [
+    { "src": "/favicons/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/favicons/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/favicons/icon-maskable-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/favicons/icon-maskable-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

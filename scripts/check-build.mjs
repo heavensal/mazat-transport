@@ -14,6 +14,10 @@ async function walk(dir) {
 const files = await walk(root);
 const htmlFiles = files.filter((f) => f.endsWith('.html'));
 assert.equal(htmlFiles.length, 14, 'Expected 14 HTML pages including 404');
+const sitemap = await readFile(join(root, 'sitemap.xml'), 'utf8');
+const published = /<loc>/.test(sitemap);
+const preparationPage =
+  /(?:^|\/)(?:404\.html|mentions-legales\/index\.html|confidentialite\/index\.html|conditions\/index\.html)$/;
 const titles = new Set();
 const contents = new Map(
   await Promise.all(htmlFiles.map(async (f) => [f, await readFile(f, 'utf8')])),
@@ -30,10 +34,14 @@ for (const [file, html] of contents) {
   assert.ok(title && !titles.has(title), `${file}: unique title`);
   titles.add(title);
   assert.match(html, /<meta name="description" content="[^"]+"/);
+  const robots =
+    published && !preparationPage.test(file)
+      ? 'index, follow'
+      : 'noindex, follow';
   assert.match(
     html,
-    /<meta name="robots" content="noindex, follow"/,
-    'Preview must not be indexable',
+    new RegExp(`<meta name="robots" content="${robots}"`),
+    `${file}: expected ${robots}`,
   );
   assert.doesNotMatch(
     html,
@@ -67,11 +75,25 @@ for (const [file, html] of contents) {
     links++;
   }
 }
-assert.doesNotMatch(
-  await readFile(join(root, 'sitemap.xml'), 'utf8'),
-  /<loc>/,
-  'Unconfigured preview sitemap must be empty',
-);
+if (published) {
+  const indexable = htmlFiles.filter((file) => !preparationPage.test(file));
+  assert.equal(
+    (sitemap.match(/<loc>/g) || []).length,
+    indexable.length,
+    'Publication sitemap must list each indexable page',
+  );
+  assert.doesNotMatch(
+    sitemap,
+    /<loc>[^<]*(?:\/mentions-legales\/|\/confidentialite\/|\/conditions\/|404)/,
+    'Preparation and error pages stay out of the sitemap',
+  );
+} else {
+  assert.doesNotMatch(
+    sitemap,
+    /<loc>/,
+    'Unconfigured preview sitemap must be empty',
+  );
+}
 console.log(
-  `PASS: ${htmlFiles.length} pages, ${links} internal links/assets, titles, descriptions, headings, JSON-LD, noindex and public-content checks.`,
+  `PASS: ${htmlFiles.length} pages, ${links} internal links/assets, titles, descriptions, headings, JSON-LD, ${published ? 'publication index' : 'preview noindex'} and public-content checks.`,
 );

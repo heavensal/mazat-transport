@@ -316,7 +316,11 @@ const exportOptions = [
             <p class="mb-5 text-slate-600">{text}</p>
             <a
               class="font-bold underline decoration-slate-300 underline-offset-4"
-              href={`/devis/?service=${id}`}
+              href={
+                id === 'entreprises'
+                  ? '/devis/?type=entreprise'
+                  : `/devis/?service=${id}`
+              }
             >
               Décrire mon besoin
             </a>

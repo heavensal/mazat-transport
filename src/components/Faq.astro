@@ -1,0 +1,9 @@
+---
+import { localFaqs } from '../content/faq';
+import { fetchResource } from '../lib/forge';
+const remote = await fetchResource('faqs');
+const valid = remote?.every(f => typeof f.question === 'string' && !!f.question.trim() && typeof f.answer === 'string' && !!f.answer.trim());
+if (remote?.length && !valid) console.warn('[Forge faqs] Invalid fields; using local FAQ.');
+const faqs = valid && remote?.length ? [...remote].sort((a,b)=>Number(a.position || 0)-Number(b.position || 0)) as {question:string;answer:string}[] : localFaqs;
+---
+<section class="section wrap faq" aria-labelledby="faq-title"><div><p class="eyebrow">Vos questions, nos réponses</p><h2 id="faq-title">Un départ bien préparé.</h2><p>Les repères pour avancer dans votre projet.</p></div><div>{faqs.map(f=><details><summary>{f.question}</summary><p>{f.answer}</p></details>)}</div></section>

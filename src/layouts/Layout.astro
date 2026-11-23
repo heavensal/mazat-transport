@@ -1,23 +1,22 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+---
+import '../styles/global.css';
+import {business, navigation, siteUrl, publicationReady} from '../site/config';
+import {publication} from '../site/publication';
+interface Props {title:string;description:string;noindex?:boolean;}
+const {title,description,noindex=false}=Astro.props;
+const canonical=siteUrl ? new URL(Astro.url.pathname,siteUrl).href : undefined;
+const schema={ '@context':'https://schema.org','@type':'MovingCompany',name:business.name,telephone:business.phone,email:business.email,...(siteUrl?{url:siteUrl,logo:new URL('/images/mazat-logo.png',siteUrl).href}:{}),areaServed:['Marseille','Bouches-du-Rhône','Var','Alpes-Maritimes','France'],description:'Déménagement de particuliers et entreprises, en France et à l’international selon faisabilité.'};
+---
+<!doctype html><html lang={publication.defaultLocale}><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>{title}</title><meta name="description" content={description}/><meta name="theme-color" content="#121719"/>{canonical && <link rel="canonical" href={canonical}/>}<meta name="robots" content={noindex || !publicationReady ? 'noindex, follow' : 'index, follow'}/><meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:type" content="website"/><meta property="og:locale" content="fr_FR"/>{canonical && <meta property="og:url" content={canonical}/>}<meta property="og:image" content={siteUrl ? new URL('/images/mazat-logo.png',siteUrl).href : '/images/mazat-logo.png'}/><meta property="og:image:alt" content="Logo MAZAT Transport Déménagement"/><link rel="icon" type="image/png" href="/images/mazat-logo.png"/><script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g,'\\u003c')}/></head><body>
+<a class="skip-link" href="#main">Aller au contenu</a>
+<div class="topbar"><div class="wrap"><span>Marseille · Côte d’Azur · France · International</span><a href={business.phoneHref}>Parlons de votre projet : {business.phone}</a></div></div>
+<header class="header"><div class="wrap header-inner"><a class="brand" href="/" aria-label="MAZAT, accueil"><img src="/images/mazat-logo.png" width="76" height="76" alt=""/><span>MAZAT<small>TRANSPORT & DÉMÉNAGEMENT</small></span></a><button class="menu-toggle" aria-expanded="false" aria-controls="main-nav" hidden>Menu <span aria-hidden="true">☰</span></button><nav id="main-nav" aria-label="Navigation principale">{navigation.map(item=><a href={item.href} aria-current={Astro.url.pathname===item.href?'page':undefined}>{item.label}</a>)}<a class="button small" href="/devis/">Devis gratuit</a></nav></div></header>
+<main id="main" tabindex="-1"><slot/></main>
+<section class="contact-band"><div class="wrap"><div><p class="eyebrow">Chaque projet commence par un échange</p><h2>Et si on préparait<br/>votre prochain départ ?</h2></div><div class="contact-actions"><a class="button" href="/devis/">Demander mon devis gratuit</a><a href={business.phoneHref}>Parler à un conseiller · {business.phone}</a></div></div></section>
+<footer><div class="wrap footer-grid"><div><a class="brand footer-brand" href="/"><img src="/images/mazat-logo.png" width="90" height="90" alt="MAZAT"/></a><p>Déménagement & transport.<br/>Le soin à chaque étape.</p></div><div><h2>Votre projet</h2><a href="/formules/">Nos cinq formules</a><a href="/export-maritime/">Export maritime</a><a href="/services/">Services à la carte</a><a href="/entreprises/">Entreprises</a><a href="/realisations-avis/">Réalisations & avis</a></div><div><h2>Nos interventions</h2><a href="/demenagement-marseille/">Marseille & Bouches-du-Rhône</a><a href="/demenagement-nice/">Nice & Alpes-Maritimes</a><p>Var · PACA<br/>France & international<br/>Selon faisabilité</p></div><div><h2>À votre écoute</h2><a class="footer-phone" href={business.phoneHref}>{business.phone}</a><a href={`mailto:${business.email}`}>{business.email}</a><a href="/devis/">Préparer ma demande</a></div></div><div class="wrap footer-bottom"><span>© {new Date().getFullYear()} MAZAT Transport</span><div><a href="/mentions-legales/">Mentions légales</a><a href="/confidentialite/">Confidentialité</a><a href="/cookies/">Cookies</a><a href="/conditions/">CGV & médiation</a></div></div></footer>
+<div class="mobile-actions"><a href={business.phoneHref}>Appeler MAZAT</a><a href="/devis/">Devis gratuit</a></div>
+<script>
+ const toggle=document.querySelector<HTMLButtonElement>('.menu-toggle');
+ const nav=document.querySelector<HTMLElement>('#main-nav');
+ if(toggle && nav){toggle.hidden=false; document.documentElement.classList.add('js'); toggle.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')!=='true';toggle.setAttribute('aria-expanded',String(open));nav.classList.toggle('open',open);}); document.addEventListener('keydown',event=>{if(event.key==='Escape'&&toggle.getAttribute('aria-expanded')==='true'){toggle.setAttribute('aria-expanded','false');nav.classList.remove('open');toggle.focus();}});}
+</script></body></html>

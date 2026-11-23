@@ -1,0 +1,5 @@
+---
+import {offers} from '../content/offers';
+const {full=false}=Astro.props;
+---
+<div class:list={['offers',{'offers-full':full}]}>{offers.map((offer,i)=><article id={full?offer.id:undefined} class:list={['offer',{'featured':offer.id==='standard'}]}><span class="offer-index" aria-hidden="true">0{i+1}</span><p class="eyebrow">{offer.tag}</p><h3>{offer.name}</h3><p>{offer.description}</p>{full&&<><ul>{offer.included.map(item=><li>{item}</li>)}</ul><div class="offer-detail"><strong>Votre préparation</strong><p>{offer.preparation}</p><strong>À définir ensemble</strong><p>{offer.options}</p></div></>}<a class={full?'button secondary':'text-link'} href={full?`/devis/?formule=${offer.id}`:`/formules/#${offer.id}`}>{full?'Recevoir un devis':'Découvrir la formule'}</a></article>)}</div>

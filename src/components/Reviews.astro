@@ -1,0 +1,9 @@
+---
+import { fetchResource } from '../lib/forge';
+import { business } from '../site/config';
+const remote = await fetchResource('reviews');
+const valid = remote?.every(r=>typeof r.author==='string' && !!r.author.trim() && typeof r.content==='string' && !!r.content.trim());
+if (remote?.length && !valid) console.warn('[Forge reviews] Invalid fields; reviews omitted.');
+const reviews = valid ? remote : [];
+---
+<section class="section wrap"><p class="eyebrow">La confiance se construit sur le terrain</p><div class="section-heading"><h2>Leurs expériences,<br/>vos premiers repères.</h2><a class="text-link" href={business.reviewsUrl} target="_blank" rel="noopener noreferrer">Consulter les avis sur Déménagement24 <span class="sr-only">(nouvel onglet)</span></a></div>{reviews && reviews.length>0 && <div class="cards">{reviews.map(r=><blockquote class="card"><p>{String(r.content)}</p><cite>{String(r.author)}</cite></blockquote>)}</div>}</section>

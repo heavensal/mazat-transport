@@ -14,11 +14,11 @@ Exemples : `/build-language`, `/build-forge-ressources`, `/build-seo-geo-accessi
 
 ## Langues, blog, FAQ et avis
 
-| Commande | Description | Exemple de prompt |
-| --- | --- | --- |
-| `/build-language` | Configurer les langues, les contenus et les URLs selon MULTILANG.md. | `/build-language Crée ce nouveau site en français uniquement, sans i18n ni sélecteur de langue.` |
-| `/build-forge-ressources` | Intégrer ou modifier les imports Forge du blog, de la FAQ et des avis. | `/build-forge-ressources Ajoute un blog français et anglais avec les traductions, URLs et relations d'articles fournies par Forge.` |
-| `/build-faq-forge-local` | Créer une FAQ optionnelle avec de vraies questions/réponses locales adaptées au contexte et remplacement par Forge. | `/build-faq-forge-local Ajoute une FAQ sur les prestations du site avec des réponses contextualisées et un fallback local par langue.` |
+| Commande                  | Description                                                                                                         | Exemple de prompt                                                                                                                      |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `/build-language`         | Configurer les langues, les contenus et les URLs selon MULTILANG.md.                                                | `/build-language Crée ce nouveau site en français uniquement, sans i18n ni sélecteur de langue.`                                       |
+| `/build-forge-ressources` | Intégrer ou modifier les imports Forge du blog, de la FAQ et des avis.                                              | `/build-forge-ressources Ajoute un blog français et anglais avec les traductions, URLs et relations d'articles fournies par Forge.`    |
+| `/build-faq-forge-local`  | Créer une FAQ optionnelle avec de vraies questions/réponses locales adaptées au contexte et remplacement par Forge. | `/build-faq-forge-local Ajoute une FAQ sur les prestations du site avec des réponses contextualisées et un fallback local par langue.` |
 
 Autres exemples :
 
@@ -34,26 +34,26 @@ Il n'existe pas de commande dédiée `/blog` ou `/reviews` dans ce dépôt : uti
 
 ## SEO, GEO et accessibilité ciblés
 
-| Commande | Description | Exemple de prompt |
-| --- | --- | --- |
-| `/build-technical-seo` | Implémenter ou auditer métadonnées, URLs, indexation et données structurées. | `/build-technical-seo Vérifie les canonical et le sitemap des pages publiées, puis corrige les incohérences dans le dépôt.` |
-| `/build-accessibility` | Implémenter ou auditer sémantique, clavier, focus et interfaces accessibles. | `/build-accessibility Corrige le formulaire de contact et vérifie labels, erreurs et parcours clavier.` |
-| `/build-geo` | Examiner ou améliorer le contenu citable, llms.txt et les politiques de robots IA. | `/build-geo Audite en lecture seule le contenu et llms.txt. Sépare problèmes démontrés et hypothèses, sans modifier la politique des robots.` |
+| Commande               | Description                                                                        | Exemple de prompt                                                                                                                             |
+| ---------------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/build-technical-seo` | Implémenter ou auditer métadonnées, URLs, indexation et données structurées.       | `/build-technical-seo Vérifie les canonical et le sitemap des pages publiées, puis corrige les incohérences dans le dépôt.`                   |
+| `/build-accessibility` | Implémenter ou auditer sémantique, clavier, focus et interfaces accessibles.       | `/build-accessibility Corrige le formulaire de contact et vérifie labels, erreurs et parcours clavier.`                                       |
+| `/build-geo`           | Examiner ou améliorer le contenu citable, llms.txt et les politiques de robots IA. | `/build-geo Audite en lecture seule le contenu et llms.txt. Sépare problèmes démontrés et hypothèses, sans modifier la politique des robots.` |
 
 Pour invoquer un agent spécialisé en lecture seule, utiliser un prompt explicite. Les noms d'agents ne sont pas automatiquement des commandes `/` :
 
-| Agent | Description | Exemple de prompt |
-| --- | --- | --- |
-| `seo-reviewer` | Audit SEO ciblé sans modification. | « Utilise seo-reviewer pour auditer les métadonnées des pages services. » |
+| Agent                    | Description                                  | Exemple de prompt                                                                                                   |
+| ------------------------ | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `seo-reviewer`           | Audit SEO ciblé sans modification.           | « Utilise seo-reviewer pour auditer les métadonnées des pages services. »                                           |
 | `accessibility-reviewer` | Audit accessibilité ciblé sans modification. | « Utilise accessibility-reviewer pour examiner le menu et le formulaire, avec preuves et limites de vérification. » |
-| `geo-reviewer` | Audit GEO ciblé sans modification. | « Utilise geo-reviewer pour examiner le contenu français et les accès robots IA. » |
+| `geo-reviewer`           | Audit GEO ciblé sans modification.           | « Utilise geo-reviewer pour examiner le contenu français et les accès robots IA. »                                  |
 
 ## Audit et corrections réunis
 
-| Commande | Agent associé | Résultat |
-| --- | --- | --- |
+| Commande                             | Agent associé                   | Résultat                                                                                                           |
+| ------------------------------------ | ------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | `/build-seo-geo-accessibility-audit` | `seo-geo-accessibility-auditor` | Audit du site et deux checklists actualisées dans todo.md : corrections du dépôt et interventions du propriétaire. |
-| `/build-seo-geo-accessibility-fix` | `seo-geo-accessibility-fixer` | Corrections des tâches réalisables, validation et cases cochées avec preuves. |
+| `/build-seo-geo-accessibility-fix`   | `seo-geo-accessibility-fixer`   | Corrections des tâches réalisables, validation et cases cochées avec preuves.                                      |
 
 ## Auditer le site
 
@@ -105,14 +105,14 @@ Utiliser : « Lis `.agents/skills/<nom>/SKILL.md` et applique ce workflow à la 
 
 Ces commandes techniques sont distinctes des invocations `/` de l'assistant. Les lancer depuis la racine du dépôt.
 
-| Commande | Description | Exemple de demande à l'IA |
-| --- | --- | --- |
-| `pnpm install` | Installer les dépendances du projet. | « Installe les dépendances pour travailler sur le site. » |
-| `pnpm exec astro dev --background` | Démarrer le serveur de développement en arrière-plan selon AGENTS.md. | « Démarre le site en arrière-plan et donne-moi son URL. » |
-| `pnpm exec astro dev status` | Consulter l'état du serveur. | « Vérifie si le serveur de développement tourne. » |
-| `pnpm exec astro dev logs` | Lire ses journaux. | « Examine les erreurs du serveur sans afficher de secrets. » |
-| `pnpm exec astro dev stop` | Arrêter le serveur en arrière-plan. | « Arrête le serveur de développement. » |
-| `pnpm build` | Générer le site ; peut appeler Forge selon les flags et accès configurés. | « Vérifie que le build passe et explique les erreurs éventuelles. » |
-| `pnpm preview` | Prévisualiser un build déjà généré. | « Prévisualise le dernier build pour vérifier le rendu de production localement. » |
+| Commande                           | Description                                                               | Exemple de demande à l'IA                                                          |
+| ---------------------------------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `pnpm install`                     | Installer les dépendances du projet.                                      | « Installe les dépendances pour travailler sur le site. »                          |
+| `pnpm exec astro dev --background` | Démarrer le serveur de développement en arrière-plan selon AGENTS.md.     | « Démarre le site en arrière-plan et donne-moi son URL. »                          |
+| `pnpm exec astro dev status`       | Consulter l'état du serveur.                                              | « Vérifie si le serveur de développement tourne. »                                 |
+| `pnpm exec astro dev logs`         | Lire ses journaux.                                                        | « Examine les erreurs du serveur sans afficher de secrets. »                       |
+| `pnpm exec astro dev stop`         | Arrêter le serveur en arrière-plan.                                       | « Arrête le serveur de développement. »                                            |
+| `pnpm build`                       | Générer le site ; peut appeler Forge selon les flags et accès configurés. | « Vérifie que le build passe et explique les erreurs éventuelles. »                |
+| `pnpm preview`                     | Prévisualiser un build déjà généré.                                       | « Prévisualise le dernier build pour vérifier le rendu de production localement. » |
 
 La publication dépend du workflow GitHub Actions ; aucune commande `/deploy` propre au projet n'est définie ici.

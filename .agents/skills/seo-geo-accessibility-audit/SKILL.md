@@ -1,6 +1,6 @@
 ---
 name: seo-geo-accessibility-audit
-description: "Auditer le site Astro en SEO, GEO et accessibilité et mettre à jour les deux checklists de todo.md sans modifier le code."
+description: 'Auditer le site Astro en SEO, GEO et accessibilité et mettre à jour les deux checklists de todo.md sans modifier le code.'
 ---
 
 # seo-geo-accessibility-audit

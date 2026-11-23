@@ -1,6 +1,6 @@
 ---
 name: technical-seo
-description: "Implémenter ou auditer SEO technique, métadonnées, indexation, sitemap et données structurées dans ce site Astro."
+description: 'Implémenter ou auditer SEO technique, métadonnées, indexation, sitemap et données structurées dans ce site Astro.'
 ---
 
 # technical-seo

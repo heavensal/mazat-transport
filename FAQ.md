@@ -53,12 +53,12 @@ The import flag controls the source, not whether the FAQ was requested. If impor
 
 Fetch published FAQ content during Astro's build, not from the browser. Inspect the API's actual field names, validate questions and answers, and preserve its intended order (for example, ascending `position` when that is the contract).
 
-| Condition | Display |
-| --- | --- |
-| FAQ not requested | No section, fetch or FAQ schema |
-| FAQ requested, imports explicitly disabled | Complete local FAQ |
-| Valid Forge response with zero published FAQs in the current locale | Complete local FAQ for that locale |
-| Valid Forge response with one or more published FAQs in the current locale | Only those Forge FAQs |
+| Condition                                                                  | Display                            |
+| -------------------------------------------------------------------------- | ---------------------------------- |
+| FAQ not requested                                                          | No section, fetch or FAQ schema    |
+| FAQ requested, imports explicitly disabled                                 | Complete local FAQ                 |
+| Valid Forge response with zero published FAQs in the current locale        | Complete local FAQ for that locale |
+| Valid Forge response with one or more published FAQs in the current locale | Only those Forge FAQs              |
 
 One published Forge FAQ replaces the entire local list with one FAQ. Do not merge, pad or supplement Forge's list with local items. Removing all published Forge FAQs restores the complete local list after a rebuild.
 

@@ -1,6 +1,6 @@
 ---
 name: build-technical-seo
-description: "Commande build pour le workflow technical-seo du dépôt."
+description: 'Commande build pour le workflow technical-seo du dépôt.'
 ---
 
 # build-technical-seo

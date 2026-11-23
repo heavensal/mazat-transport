@@ -137,12 +137,12 @@ For new sites:
 - No duplicate prefixed version of the default language.
 - No automatic browser-language redirect.
 
-| Page ID | French (default) | English |
-| --- | --- | --- |
-| home | `/` | `/en/` |
-| about | `/a-propos/` | `/en/about/` |
-| services | `/prestations/` | `/en/services/` |
-| contact | `/contact/` | `/en/contact/` |
+| Page ID  | French (default) | English         |
+| -------- | ---------------- | --------------- |
+| home     | `/`              | `/en/`          |
+| about    | `/a-propos/`     | `/en/about/`    |
+| services | `/prestations/`  | `/en/services/` |
+| contact  | `/contact/`      | `/en/contact/`  |
 
 Preserve proper names and established technical segments when translation is inappropriate. Use lowercase, hyphen-separated slugs; avoid accents for French and English slugs.
 

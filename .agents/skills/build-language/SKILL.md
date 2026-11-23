@@ -1,6 +1,6 @@
 ---
 name: build-language
-description: "Commande build pour le workflow language du dépôt."
+description: 'Commande build pour le workflow language du dépôt.'
 ---
 
 # build-language

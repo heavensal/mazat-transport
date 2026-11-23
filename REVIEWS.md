@@ -54,13 +54,13 @@ The flag controls the import source, not whether reviews are requested. Explicit
 
 Fetch published reviews during Astro's build, not from the browser. Inspect the actual API contract, normalize field names, validate content/attribution and ratings when present, and preserve the intended ordering. Do not silently convert missing ratings to five stars.
 
-| Condition | Production display |
-| --- | --- |
-| Reviews not requested | No section, fetch or review schema |
-| Reviews requested, imports explicitly disabled | Authentic local reviews, if available |
-| Valid Forge response with zero published reviews in the current locale | Authentic local reviews for that locale, if available |
-| Valid Forge response with one or more published reviews in the current locale | Only those Forge reviews |
-| No authentic local or published Forge reviews | No public reviews section; report missing content |
+| Condition                                                                     | Production display                                    |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------- |
+| Reviews not requested                                                         | No section, fetch or review schema                    |
+| Reviews requested, imports explicitly disabled                                | Authentic local reviews, if available                 |
+| Valid Forge response with zero published reviews in the current locale        | Authentic local reviews for that locale, if available |
+| Valid Forge response with one or more published reviews in the current locale | Only those Forge reviews                              |
+| No authentic local or published Forge reviews                                 | No public reviews section; report missing content     |
 
 One published Forge review replaces the entire local list. Do not merge, pad or supplement it with local items. Removing all published Forge reviews restores the authentic local list after rebuilding, or hides the section if that list is empty.
 

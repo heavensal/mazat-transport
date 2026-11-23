@@ -2,8 +2,46 @@
 import { fetchResource } from '../lib/forge';
 import { business } from '../site/config';
 const remote = await fetchResource('reviews');
-const valid = remote?.every(r=>typeof r.author==='string' && !!r.author.trim() && typeof r.content==='string' && !!r.content.trim());
-if (remote?.length && !valid) console.warn('[Forge reviews] Invalid fields; reviews omitted.');
+const valid = remote?.every(
+  (r) =>
+    typeof r.author === 'string' &&
+    !!r.author.trim() &&
+    typeof r.content === 'string' &&
+    !!r.content.trim(),
+);
+if (remote?.length && !valid)
+  console.warn('[Forge reviews] Invalid fields; reviews omitted.');
 const reviews = valid ? remote : [];
 ---
-<section class="mx-auto w-11/12 max-w-7xl py-16 md:w-5/6 md:py-24"><p class="mb-5 text-xs font-bold uppercase tracking-widest text-sky-700">La confiance se construit sur le terrain</p><div class="mb-10 flex flex-col items-start justify-between gap-8 md:flex-row md:items-end"><h2 class="m-0 text-3xl font-bold md:text-5xl">Leurs expériences,<br/>vos premiers repères.</h2><a class="font-bold underline decoration-slate-300 underline-offset-4 hover:text-red-800" href={business.reviewsUrl} target="_blank" rel="noopener noreferrer">Consulter les avis sur Déménagement24 <span class="sr-only">(nouvel onglet)</span></a></div>{reviews && reviews.length>0 && <div class="grid gap-6 md:grid-cols-3">{reviews.map(r=><blockquote class="m-0 rounded-sm border border-slate-200 p-8"><p class="text-slate-600">{String(r.content)}</p><cite>{String(r.author)}</cite></blockquote>)}</div>}</section>
+
+<section class="mx-auto w-11/12 max-w-7xl py-16 md:w-5/6 md:py-24">
+  <p class="mb-5 text-xs font-bold uppercase tracking-widest text-sky-700">
+    La confiance se construit sur le terrain
+  </p>
+  <div class="mb-10 flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
+    <h2 class="m-0 text-3xl font-bold md:text-5xl">
+      Leurs expériences,
+      <br />
+      vos premiers repères.
+    </h2>
+    <a
+      class="font-bold underline decoration-slate-300 underline-offset-4 hover:text-red-800"
+      href={business.reviewsUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Consulter les avis sur Déménagement24{' '}
+      <span class="sr-only">(nouvel onglet)</span>
+    </a>
+  </div>
+  {reviews && reviews.length > 0 && (
+    <div class="grid gap-6 md:grid-cols-3">
+      {reviews.map((r) => (
+        <blockquote class="m-0 rounded-sm border border-slate-200 p-8">
+          <p class="text-slate-600">{String(r.content)}</p>
+          <cite>{String(r.author)}</cite>
+        </blockquote>
+      ))}
+    </div>
+  )}
+</section>

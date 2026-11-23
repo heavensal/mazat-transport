@@ -1,6 +1,6 @@
 ---
 name: seo-geo-accessibility-fix
-description: "Réaliser et vérifier les corrections SEO, GEO et accessibilité de todo.md, puis mettre à jour leur état et leurs preuves."
+description: 'Réaliser et vérifier les corrections SEO, GEO et accessibilité de todo.md, puis mettre à jour leur état et leurs preuves.'
 ---
 
 # seo-geo-accessibility-fix

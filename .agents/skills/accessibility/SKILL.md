@@ -1,6 +1,6 @@
 ---
 name: accessibility
-description: "Implémenter ou auditer accessibilité des interfaces et audits WCAG dans ce site Astro."
+description: 'Implémenter ou auditer accessibilité des interfaces et audits WCAG dans ce site Astro.'
 ---
 
 # accessibility

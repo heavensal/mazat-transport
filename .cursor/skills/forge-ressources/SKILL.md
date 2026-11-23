@@ -23,11 +23,11 @@ Read [REVIEWS.md](../../../REVIEWS.md) for review behavior: an optional section,
 
 Read a flag only as the string `true` (`import.meta.env.FORGE_*_ENABLED === 'true'`). Any other value is off. Declare each flag in `.env`, `.env.example`, and `src/env.d.ts`.
 
-| Flag | `true` | not `true` |
-|---|---|---|
-| `FORGE_FAQ_ENABLED` | FAQs come from Forge | FAQs are not provided by Forge |
-| `FORGE_REVIEWS_ENABLED` | Reviews come from Forge | Reviews are not provided by Forge |
-| `FORGE_ARTICLES_ENABLED` | Blog articles are pages of the site | `/blog` is not generated |
+| Flag                     | `true`                              | not `true`                        |
+| ------------------------ | ----------------------------------- | --------------------------------- |
+| `FORGE_FAQ_ENABLED`      | FAQs come from Forge                | FAQs are not provided by Forge    |
+| `FORGE_REVIEWS_ENABLED`  | Reviews come from Forge             | Reviews are not provided by Forge |
+| `FORGE_ARTICLES_ENABLED` | Blog articles are pages of the site | `/blog` is not generated          |
 
 `FORGE_FAQ_ENABLED=false` means FAQs are not provided by Forge. The same rule applies to reviews. The existing FAQ resolver uses local copy when its import is off or unusable. Review helpers also support local content, but a visible review section must be explicitly implemented; apply REVIEWS.md before publishing any local testimonials.
 

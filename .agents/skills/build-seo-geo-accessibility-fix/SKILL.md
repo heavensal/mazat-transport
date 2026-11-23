@@ -1,6 +1,6 @@
 ---
 name: build-seo-geo-accessibility-fix
-description: "Commande build pour le workflow seo-geo-accessibility-fix du dépôt."
+description: 'Commande build pour le workflow seo-geo-accessibility-fix du dépôt.'
 ---
 
 # build-seo-geo-accessibility-fix

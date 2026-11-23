@@ -1,6 +1,6 @@
 ---
 name: build-forge-ressources
-description: "Commande build pour le workflow forge-ressources du dépôt."
+description: 'Commande build pour le workflow forge-ressources du dépôt.'
 ---
 
 # build-forge-ressources

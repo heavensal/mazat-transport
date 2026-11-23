@@ -1,6 +1,6 @@
 ---
 name: build-geo
-description: "Commande build pour le workflow geo du dépôt."
+description: 'Commande build pour le workflow geo du dépôt.'
 ---
 
 # build-geo

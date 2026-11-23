@@ -1,6 +1,6 @@
 ---
 name: build-seo-geo-accessibility-audit
-description: "Commande build pour le workflow seo-geo-accessibility-audit du dépôt."
+description: 'Commande build pour le workflow seo-geo-accessibility-audit du dépôt.'
 ---
 
 # build-seo-geo-accessibility-audit

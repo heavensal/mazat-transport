@@ -25,6 +25,7 @@ Inspecter le HTML généré d'au moins une page par gabarit et langue touchés :
 ## Références
 
 Consulter les sources actuelles avant de modifier une politique moteur. Références consultées le 19 novembre 2026 :
+
 - [Google — données structurées](https://developers.google.com/search/docs/appearance/structured-data/sd-policies)
 - [Google — fonctions IA et SEO](https://developers.google.com/search/docs/appearance/ai-features)
 - [Astro — routage](https://docs.astro.build/en/guides/routing/)

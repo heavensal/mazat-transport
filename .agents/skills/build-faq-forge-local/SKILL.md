@@ -1,6 +1,6 @@
 ---
 name: build-faq-forge-local
-description: "Commande build pour le workflow faq-forge-local du dépôt."
+description: 'Commande build pour le workflow faq-forge-local du dépôt.'
 ---
 
 # build-faq-forge-local

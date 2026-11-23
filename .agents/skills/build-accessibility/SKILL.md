@@ -1,6 +1,6 @@
 ---
 name: build-accessibility
-description: "Commande build pour le workflow accessibility du dépôt."
+description: 'Commande build pour le workflow accessibility du dépôt.'
 ---
 
 # build-accessibility

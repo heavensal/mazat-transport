@@ -1,13 +1,494 @@
 ---
-import {offers} from '../content/offers';
-import {business} from '../site/config';
+import { offers } from '../content/offers';
+import { business } from '../site/config';
 ---
-<div class="grid gap-10 md:grid-cols-3"><aside class="md:sticky md:top-8 md:self-start"><p class="mb-5 text-xs font-bold uppercase tracking-widest text-sky-700">Un devis vraiment adapté</p><h2 class="mb-5 text-3xl font-bold">Chaque détail<br/>compte.</h2><p class="mb-4 text-slate-600">Les accès, le volume et les prestations nous aident à comprendre votre projet.</p><p>Vous préférez en parler directement ?</p><a class="font-bold underline decoration-slate-300 underline-offset-4" href={business.phoneHref}>{business.phone}</a><p class="mt-8 border-l-3 border-sky-700 bg-sky-50 px-6 py-5 text-sm text-slate-700">Cette version prépare votre demande à envoyer par email. Aucune demande n’est transmise automatiquement.</p></aside><div class="rounded-sm border border-slate-200 p-5 md:col-span-2 md:p-8"><noscript><p class="border-l-3 border-sky-700 bg-sky-50 px-6 py-5 text-slate-700">Pour préparer le récapitulatif, activez JavaScript ou contactez-nous directement par <a href={`mailto:${business.email}`}>email</a> ou par téléphone.</p></noscript><form id="quote-form" data-email={business.email}><p class="mb-5 text-sm text-slate-600">Les champs marqués * sont obligatoires. Vos informations restent dans ce navigateur jusqu’à l’envoi depuis votre messagerie.</p><p class="mb-5 text-sm font-bold text-sky-700" id="step-label" aria-live="polite"></p><progress class="mb-8 h-2 w-full accent-sky-700" id="step-progress" value="1" max="6" aria-label="Avancement de la demande" hidden></progress>
-<fieldset class="mb-8 border-0 p-0" data-step="project"><legend class="mb-6 text-2xl font-bold" tabindex="-1">Votre projet</legend><label>Votre projet *<select name="Type de projet" id="project-type" required><option value="particulier">Déménagement particulier</option><option value="entreprise">Transfert d’entreprise</option><option value="export">Export international / maritime</option></select></label><label>Formule souhaitée *<select name="Formule" id="offer" required><option value="a-definir">À définir ensemble</option>{offers.map(o=><option value={o.id}>{o.name}</option>)}</select></label><div class="form-row"><label>Date souhaitée<input type="date" name="Date souhaitée" id="moving-date"/></label><label>Votre flexibilité *<select name="Flexibilité" id="flexibility" required><option value="">Choisir</option><option value="date-fixe">Date fixe (précisez la date)</option><option value="flexible">Flexible autour de la date</option><option value="a-definir">Date à définir ensemble</option></select></label></div><label>Service complémentaire<select name="Service complémentaire" id="additional-service"><option value="aucun">Aucun / à définir</option><option value="stockage">Garde-meubles / stockage</option><option value="acces">Monte-meubles</option><option value="objets-lourds">Piano / objets lourds</option><option value="emballage">Emballage / cartons</option><option value="nettoyage">Nettoyage sur demande</option><option value="manutention">Manutention seule</option></select></label></fieldset>
-{['departure','arrival'].map((side,i)=><fieldset class="mb-8 border-0 p-0" data-step={side}><legend class="mb-6 text-2xl font-bold" tabindex="-1">{i===0?'Adresse de chargement':'Adresse de livraison'}</legend><label>Adresse complète *<input name={`${i===0?'Départ':'Arrivée'} — Adresse`} autocomplete={i===0?'section-departure street-address':'section-arrival street-address'} required maxlength="250"/></label><div class="form-row"><label>Code postal *<input name={`${i===0?'Départ':'Arrivée'} — Code postal`} autocomplete={i===0?'section-departure postal-code':'section-arrival postal-code'} required maxlength="20"/></label><label>Ville *<input name={`${i===0?'Départ':'Arrivée'} — Ville`} autocomplete={i===0?'section-departure address-level2':'section-arrival address-level2'} required maxlength="100"/></label></div><div class="form-row"><label>Pays *<input name={`${i===0?'Départ':'Arrivée'} — Pays`} autocomplete={i===0?'section-departure country-name':'section-arrival country-name'} value="France" required maxlength="80"/></label><label>Type de logement / local *<select name={`${i===0?'Départ':'Arrivée'} — Type de local`} required><option value="">Choisir</option><option>Appartement</option><option>Maison</option><option>Bureaux / local professionnel</option><option>Stockage / autre</option></select></label></div><div class="form-row"><label>Étage (0 = rez-de-chaussée) *<input type="number" name={`${i===0?'Départ':'Arrivée'} — Étage`} min="-5" max="150" required/></label><label>Ascenseur *<select name={`${i===0?'Départ':'Arrivée'} — Ascenseur`} data-elevator={side} required><option value="">Choisir</option><option value="non">Non</option><option value="oui">Oui</option></select></label></div><label data-elevator-details={side}>Dimensions et capacité de l’ascenseur (si présent)<input name={`${i===0?'Départ':'Arrivée'} — Dimensions ascenseur`} placeholder="Largeur, profondeur, hauteur, capacité ou à vérifier" maxlength="200"/></label><label>Stationnement, portage et accès<textarea name={`${i===0?'Départ':'Arrivée'} — Accès`} maxlength="1500" placeholder="Distance camion–porte, accès camion 20 m³, escalier, autorisation, monte-meubles…"/></label>{i===1&&<label>Stockage intermédiaire ou seconde livraison<textarea name="Livraison complémentaire" maxlength="1000"/></label>}</fieldset>)}
-<fieldset class="mb-8 border-0 p-0" data-step="volume"><legend class="mb-6 text-2xl font-bold" tabindex="-1">Vos biens à transporter</legend><p class="field-help">Renseignez un volume estimé ou un inventaire. Vous pourrez préciser ces éléments avec MAZAT.</p><div class="form-row"><label>Volume estimé (m³)<input name="Volume estimé (m³)" id="volume" type="number" min="0.1" max="10000" step="0.1"/></label><label>Nombre de cartons estimé *<input name="Nombre de cartons" type="number" min="0" max="100000" required/></label></div><label>Inventaire par pièce<textarea name="Inventaire" id="inventory" maxlength="5000" placeholder="Ex. salon : canapé 3 places, table, 6 chaises ; chambre : lit, armoire…"/></label><label>Objets particuliers ou fragiles<textarea name="Objets particuliers" maxlength="1500" placeholder="Piano, coffre, œuvre, meuble lourd : dimensions, poids estimé, démontage…"/></label><label>Lien vers une vidéo ou un album photo (facultatif)<input type="url" name="Lien vidéo ou album" placeholder="https://" maxlength="1000"/></label><p class="text-sm text-slate-600">Vous pouvez aussi joindre 6 à 12 photos à votre email. Aucun fichier n’est téléversé par cette version du site. Évitez les documents d’identité, visages de tiers et informations sensibles.</p></fieldset>
-<fieldset class="mb-8 border-0 p-0" data-step="export"><legend class="mb-6 text-2xl font-bold" tabindex="-1">Votre expédition internationale</legend><label>Mode d’expédition *<select name="Mode export" required><option value="">Choisir</option><option>Groupage maritime (LCL)</option><option>Conteneur dédié (FCL)</option><option>À définir ensemble</option></select></label><label>Périmètre souhaité<select name="Périmètre export"><option>À définir au devis</option><option>Porte-à-porte</option><option>Collecte et expédition</option><option>Autre périmètre</option></select></label><label>Poids estimé et inventaire valorisé<textarea name="Poids et valeur export" maxlength="1500" placeholder="Poids approximatif, valeur déclarée à étudier, inventaire disponible…"/></label><label>Statut d’importation et formalités<textarea name="Formalités export" maxlength="1500" placeholder="Résidence / changement de résidence, accompagnement souhaité, liste bilingue, biens sensibles ou réglementés…"/></label><label>Contact à destination (si connu)<input name="Contact à destination" maxlength="250"/></label><p class="notice">Les frais portuaires, taxes, assurances, formalités et modalités de livraison sont à définir au devis. Aucun calcul de fret ou de TVA n’est effectué ici.</p></fieldset>
-<fieldset class="mb-8 border-0 p-0" data-step="contact"><legend class="mb-6 text-2xl font-bold" tabindex="-1">Vos coordonnées</legend><div class="form-row"><label>Prénom *<input name="Prénom" autocomplete="given-name" required maxlength="100"/></label><label>Nom *<input name="Nom" autocomplete="family-name" required maxlength="100"/></label></div><label>Email *<input name="Email" type="email" autocomplete="email" required maxlength="254"/></label><label>Téléphone *<input name="Téléphone" type="tel" autocomplete="tel" required minlength="6" maxlength="30"/></label><div data-business><label>Société<input name="Société" autocomplete="organization" maxlength="150"/></label><label>SIRET (facultatif)<input name="SIRET" inputmode="numeric" pattern="[0-9 ]{14,18}" maxlength="18"/></label></div><label>Plage de rappel préférée<input name="Plage de rappel" maxlength="150"/></label><label>Comment nous avez-vous connus ?<select name="Provenance"><option>Non précisé</option><option>Recherche en ligne</option><option>Recommandation</option><option>Réseaux sociaux</option><option>Autre</option></select></label><label>Votre message *<textarea name="Message" required maxlength="3000"/></label><label class="check-label"><input type="checkbox" name="Information données" value="Lue et acceptée" required/><span>J’ai lu <a class="text-link" href="/confidentialite/">l’information sur mes données</a> et souhaite que MAZAT me recontacte au sujet de cette demande. *</span></label></fieldset>
-<div id="quote-review" hidden><h2 class="mb-5 text-3xl font-bold" tabindex="-1">Votre récapitulatif</h2><p class="mb-5 text-slate-600">Vérifiez les informations, puis ouvrez votre messagerie. Joignez vos photos et envoyez le message à MAZAT. La demande n’est pas encore envoyée.</p><pre id="quote-summary" class="max-h-96 overflow-y-auto whitespace-pre-wrap break-words bg-slate-100 p-5 text-sm"></pre><p class="my-5 text-sm text-slate-600">Si le brouillon ne s’ouvre pas ou semble incomplet, téléchargez le récapitulatif puis joignez-le à un email adressé à <a href={`mailto:${business.email}`}>{business.email}</a>.</p><div class="flex flex-wrap gap-3"><button type="button" id="email-draft" class="min-h-12 rounded-sm border border-red-700 bg-red-700 px-5 py-3 text-sm font-bold text-white">Ouvrir mon brouillon email</button><button type="button" id="download-summary" class="min-h-12 rounded-sm border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-800">Télécharger le récapitulatif</button></div><p id="draft-status" class="mt-5 bg-sky-50 p-4 text-slate-700" role="status" hidden></p></div>
-<div class="mt-6 flex flex-wrap justify-between gap-3" hidden><button type="button" class="min-h-12 flex-1 rounded-sm border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-800" id="previous">Retour</button><button type="submit" class="min-h-12 flex-1 rounded-sm border border-red-700 bg-red-700 px-5 py-3 text-sm font-bold text-white" id="next">Continuer</button></div></form></div></div>
+
+<div class="grid gap-10 md:grid-cols-3">
+  <aside class="md:sticky md:top-8 md:self-start">
+    <p class="mb-5 text-xs font-bold uppercase tracking-widest text-sky-700">
+      Un devis vraiment adapté
+    </p>
+    <h2 class="mb-5 text-3xl font-bold">
+      Chaque détail
+      <br />
+      compte.
+    </h2>
+    <p class="mb-4 text-slate-600">
+      Les accès, le volume et les prestations nous aident à comprendre votre
+      projet.
+    </p>
+    <p>Vous préférez en parler directement ?</p>
+    <a
+      class="font-bold underline decoration-slate-300 underline-offset-4"
+      href={business.phoneHref}
+    >
+      {business.phone}
+    </a>
+    <p class="mt-8 border-l-3 border-sky-700 bg-sky-50 px-6 py-5 text-sm text-slate-700">
+      Cette version prépare votre demande à envoyer par email. Aucune demande
+      n’est transmise automatiquement.
+    </p>
+  </aside>
+  <div class="rounded-sm border border-slate-200 p-5 md:col-span-2 md:p-8">
+    <noscript>
+      <p class="border-l-3 border-sky-700 bg-sky-50 px-6 py-5 text-slate-700">
+        Pour préparer le récapitulatif, activez JavaScript ou contactez-nous
+        directement par <a href={`mailto:${business.email}`}>email</a> ou par
+        téléphone.
+      </p>
+    </noscript>
+    <form id="quote-form" data-email={business.email}>
+      <p class="mb-5 text-sm text-slate-600">
+        Les champs marqués * sont obligatoires. Vos informations restent dans ce
+        navigateur jusqu’à l’envoi depuis votre messagerie.
+      </p>
+      <p
+        class="mb-5 text-sm font-bold text-sky-700"
+        id="step-label"
+        aria-live="polite"
+      ></p>
+      <progress
+        class="mb-8 h-2 w-full accent-sky-700"
+        id="step-progress"
+        value="1"
+        max="6"
+        aria-label="Avancement de la demande"
+        hidden
+      ></progress>
+      <fieldset class="mb-8 border-0 p-0" data-step="project">
+        <legend class="mb-6 text-2xl font-bold" tabindex="-1">
+          Votre projet
+        </legend>
+        <label>
+          Votre projet *
+          <select name="Type de projet" id="project-type" required>
+            <option value="particulier">Déménagement particulier</option>
+            <option value="entreprise">Transfert d’entreprise</option>
+            <option value="export">Export international / maritime</option>
+          </select>
+        </label>
+        <label>
+          Formule souhaitée *
+          <select name="Formule" id="offer" required>
+            <option value="a-definir">À définir ensemble</option>
+            {offers.map((o) => (
+              <option value={o.id}>{o.name}</option>
+            ))}
+          </select>
+        </label>
+        <div class="form-row">
+          <label>
+            Date souhaitée
+            <input type="date" name="Date souhaitée" id="moving-date" />
+          </label>
+          <label>
+            Votre flexibilité *
+            <select name="Flexibilité" id="flexibility" required>
+              <option value="">Choisir</option>
+              <option value="date-fixe">Date fixe (précisez la date)</option>
+              <option value="flexible">Flexible autour de la date</option>
+              <option value="a-definir">Date à définir ensemble</option>
+            </select>
+          </label>
+        </div>
+        <label>
+          Service complémentaire
+          <select name="Service complémentaire" id="additional-service">
+            <option value="aucun">Aucun / à définir</option>
+            <option value="stockage">Garde-meubles / stockage</option>
+            <option value="acces">Monte-meubles</option>
+            <option value="objets-lourds">Piano / objets lourds</option>
+            <option value="emballage">Emballage / cartons</option>
+            <option value="nettoyage">Nettoyage sur demande</option>
+            <option value="manutention">Manutention seule</option>
+          </select>
+        </label>
+      </fieldset>
+      {['departure', 'arrival'].map((side, i) => (
+        <fieldset class="mb-8 border-0 p-0" data-step={side}>
+          <legend class="mb-6 text-2xl font-bold" tabindex="-1">
+            {i === 0 ? 'Adresse de chargement' : 'Adresse de livraison'}
+          </legend>
+          <label>
+            Adresse complète *
+            <input
+              name={`${i === 0 ? 'Départ' : 'Arrivée'} — Adresse`}
+              autocomplete={
+                i === 0
+                  ? 'section-departure street-address'
+                  : 'section-arrival street-address'
+              }
+              required
+              maxlength="250"
+            />
+          </label>
+          <div class="form-row">
+            <label>
+              Code postal *
+              <input
+                name={`${i === 0 ? 'Départ' : 'Arrivée'} — Code postal`}
+                autocomplete={
+                  i === 0
+                    ? 'section-departure postal-code'
+                    : 'section-arrival postal-code'
+                }
+                required
+                maxlength="20"
+              />
+            </label>
+            <label>
+              Ville *
+              <input
+                name={`${i === 0 ? 'Départ' : 'Arrivée'} — Ville`}
+                autocomplete={
+                  i === 0
+                    ? 'section-departure address-level2'
+                    : 'section-arrival address-level2'
+                }
+                required
+                maxlength="100"
+              />
+            </label>
+          </div>
+          <div class="form-row">
+            <label>
+              Pays *
+              <input
+                name={`${i === 0 ? 'Départ' : 'Arrivée'} — Pays`}
+                autocomplete={
+                  i === 0
+                    ? 'section-departure country-name'
+                    : 'section-arrival country-name'
+                }
+                value="France"
+                required
+                maxlength="80"
+              />
+            </label>
+            <label>
+              Type de logement / local *
+              <select
+                name={`${i === 0 ? 'Départ' : 'Arrivée'} — Type de local`}
+                required
+              >
+                <option value="">Choisir</option>
+                <option>Appartement</option>
+                <option>Maison</option>
+                <option>Bureaux / local professionnel</option>
+                <option>Stockage / autre</option>
+              </select>
+            </label>
+          </div>
+          <div class="form-row">
+            <label>
+              Étage (0 = rez-de-chaussée) *
+              <input
+                type="number"
+                name={`${i === 0 ? 'Départ' : 'Arrivée'} — Étage`}
+                min="-5"
+                max="150"
+                required
+              />
+            </label>
+            <label>
+              Ascenseur *
+              <select
+                name={`${i === 0 ? 'Départ' : 'Arrivée'} — Ascenseur`}
+                data-elevator={side}
+                required
+              >
+                <option value="">Choisir</option>
+                <option value="non">Non</option>
+                <option value="oui">Oui</option>
+              </select>
+            </label>
+          </div>
+          <label data-elevator-details={side}>
+            Dimensions et capacité de l’ascenseur (si présent)
+            <input
+              name={`${i === 0 ? 'Départ' : 'Arrivée'} — Dimensions ascenseur`}
+              placeholder="Largeur, profondeur, hauteur, capacité ou à vérifier"
+              maxlength="200"
+            />
+          </label>
+          <label>
+            Stationnement, portage et accès
+            <textarea
+              name={`${i === 0 ? 'Départ' : 'Arrivée'} — Accès`}
+              maxlength="1500"
+              placeholder="Distance camion–porte, accès camion 20 m³, escalier, autorisation, monte-meubles…"
+            />
+          </label>
+          {i === 1 && (
+            <label>
+              Stockage intermédiaire ou seconde livraison
+              <textarea name="Livraison complémentaire" maxlength="1000" />
+            </label>
+          )}
+        </fieldset>
+      ))}
+      <fieldset class="mb-8 border-0 p-0" data-step="volume">
+        <legend class="mb-6 text-2xl font-bold" tabindex="-1">
+          Vos biens à transporter
+        </legend>
+        <p class="field-help">
+          Renseignez un volume estimé ou un inventaire. Vous pourrez préciser
+          ces éléments avec MAZAT.
+        </p>
+        <div class="form-row">
+          <label>
+            Volume estimé (m³)
+            <input
+              name="Volume estimé (m³)"
+              id="volume"
+              type="number"
+              min="0.1"
+              max="10000"
+              step="0.1"
+            />
+          </label>
+          <label>
+            Nombre de cartons estimé *
+            <input
+              name="Nombre de cartons"
+              type="number"
+              min="0"
+              max="100000"
+              required
+            />
+          </label>
+        </div>
+        <label>
+          Inventaire par pièce
+          <textarea
+            name="Inventaire"
+            id="inventory"
+            maxlength="5000"
+            placeholder="Ex. salon : canapé 3 places, table, 6 chaises ; chambre : lit, armoire…"
+          />
+        </label>
+        <label>
+          Objets particuliers ou fragiles
+          <textarea
+            name="Objets particuliers"
+            maxlength="1500"
+            placeholder="Piano, coffre, œuvre, meuble lourd : dimensions, poids estimé, démontage…"
+          />
+        </label>
+        <label>
+          Lien vers une vidéo ou un album photo (facultatif)
+          <input
+            type="url"
+            name="Lien vidéo ou album"
+            placeholder="https://"
+            maxlength="1000"
+          />
+        </label>
+        <p class="text-sm text-slate-600">
+          Vous pouvez aussi joindre 6 à 12 photos à votre email. Aucun fichier
+          n’est téléversé par cette version du site. Évitez les documents
+          d’identité, visages de tiers et informations sensibles.
+        </p>
+      </fieldset>
+      <fieldset class="mb-8 border-0 p-0" data-step="export">
+        <legend class="mb-6 text-2xl font-bold" tabindex="-1">
+          Votre expédition internationale
+        </legend>
+        <label>
+          Mode d’expédition *
+          <select name="Mode export" required>
+            <option value="">Choisir</option>
+            <option>Groupage maritime (LCL)</option>
+            <option>Conteneur dédié (FCL)</option>
+            <option>À définir ensemble</option>
+          </select>
+        </label>
+        <label>
+          Périmètre souhaité
+          <select name="Périmètre export">
+            <option>À définir au devis</option>
+            <option>Porte-à-porte</option>
+            <option>Collecte et expédition</option>
+            <option>Autre périmètre</option>
+          </select>
+        </label>
+        <label>
+          Poids estimé et inventaire valorisé
+          <textarea
+            name="Poids et valeur export"
+            maxlength="1500"
+            placeholder="Poids approximatif, valeur déclarée à étudier, inventaire disponible…"
+          />
+        </label>
+        <label>
+          Statut d’importation et formalités
+          <textarea
+            name="Formalités export"
+            maxlength="1500"
+            placeholder="Résidence / changement de résidence, accompagnement souhaité, liste bilingue, biens sensibles ou réglementés…"
+          />
+        </label>
+        <label>
+          Contact à destination (si connu)
+          <input name="Contact à destination" maxlength="250" />
+        </label>
+        <p class="notice">
+          Les frais portuaires, taxes, assurances, formalités et modalités de
+          livraison sont à définir au devis. Aucun calcul de fret ou de TVA
+          n’est effectué ici.
+        </p>
+      </fieldset>
+      <fieldset class="mb-8 border-0 p-0" data-step="contact">
+        <legend class="mb-6 text-2xl font-bold" tabindex="-1">
+          Vos coordonnées
+        </legend>
+        <div class="form-row">
+          <label>
+            Prénom *
+            <input
+              name="Prénom"
+              autocomplete="given-name"
+              required
+              maxlength="100"
+            />
+          </label>
+          <label>
+            Nom *
+            <input
+              name="Nom"
+              autocomplete="family-name"
+              required
+              maxlength="100"
+            />
+          </label>
+        </div>
+        <label>
+          Email *
+          <input
+            name="Email"
+            type="email"
+            autocomplete="email"
+            required
+            maxlength="254"
+          />
+        </label>
+        <label>
+          Téléphone *
+          <input
+            name="Téléphone"
+            type="tel"
+            autocomplete="tel"
+            required
+            minlength="6"
+            maxlength="30"
+          />
+        </label>
+        <div data-business>
+          <label>
+            Société
+            <input name="Société" autocomplete="organization" maxlength="150" />
+          </label>
+          <label>
+            SIRET (facultatif)
+            <input
+              name="SIRET"
+              inputmode="numeric"
+              pattern="[0-9 ]{14,18}"
+              maxlength="18"
+            />
+          </label>
+        </div>
+        <label>
+          Plage de rappel préférée
+          <input name="Plage de rappel" maxlength="150" />
+        </label>
+        <label>
+          Comment nous avez-vous connus ?
+          <select name="Provenance">
+            <option>Non précisé</option>
+            <option>Recherche en ligne</option>
+            <option>Recommandation</option>
+            <option>Réseaux sociaux</option>
+            <option>Autre</option>
+          </select>
+        </label>
+        <label>
+          Votre message *<textarea name="Message" required maxlength="3000" />
+        </label>
+        <label class="check-label">
+          <input
+            type="checkbox"
+            name="Information données"
+            value="Lue et acceptée"
+            required
+          />
+          <span>
+            J’ai lu{' '}
+            <a class="text-link" href="/confidentialite/">
+              l’information sur mes données
+            </a>{' '}
+            et souhaite que MAZAT me recontacte au sujet de cette demande. *
+          </span>
+        </label>
+      </fieldset>
+      <div id="quote-review" hidden>
+        <h2 class="mb-5 text-3xl font-bold" tabindex="-1">
+          Votre récapitulatif
+        </h2>
+        <p class="mb-5 text-slate-600">
+          Vérifiez les informations, puis ouvrez votre messagerie. Joignez vos
+          photos et envoyez le message à MAZAT. La demande n’est pas encore
+          envoyée.
+        </p>
+        <pre
+          id="quote-summary"
+          class="max-h-96 overflow-y-auto whitespace-pre-wrap break-words bg-slate-100 p-5 text-sm"
+        ></pre>
+        <p class="my-5 text-sm text-slate-600">
+          Si le brouillon ne s’ouvre pas ou semble incomplet, téléchargez le
+          récapitulatif puis joignez-le à un email adressé à{' '}
+          <a href={`mailto:${business.email}`}>{business.email}</a>.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <button
+            type="button"
+            id="email-draft"
+            class="min-h-12 rounded-sm border border-red-700 bg-red-700 px-5 py-3 text-sm font-bold text-white"
+          >
+            Ouvrir mon brouillon email
+          </button>
+          <button
+            type="button"
+            id="download-summary"
+            class="min-h-12 rounded-sm border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-800"
+          >
+            Télécharger le récapitulatif
+          </button>
+        </div>
+        <p
+          id="draft-status"
+          class="mt-5 bg-sky-50 p-4 text-slate-700"
+          role="status"
+          hidden
+        ></p>
+      </div>
+      <div class="mt-6 flex flex-wrap justify-between gap-3" hidden>
+        <button
+          type="button"
+          class="min-h-12 flex-1 rounded-sm border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-800"
+          id="previous"
+        >
+          Retour
+        </button>
+        <button
+          type="submit"
+          class="min-h-12 flex-1 rounded-sm border border-red-700 bg-red-700 px-5 py-3 text-sm font-bold text-white"
+          id="next"
+        >
+          Continuer
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
 <script src="../lib/quote-form.ts"></script>

@@ -38,6 +38,7 @@ When adding keyframes, always include `prefers-reduced-motion` media query.
 ### If User Requests Non-Standard Styling
 
 Only deviate from these rules if the user **explicitly requests**:
+
 - Arbitrary values for a specific use case
 - Custom utility layers or design tokens
 - Complex animations requiring keyframes

@@ -4,17 +4,17 @@ Generated from the original 500×500 PNG at `public/images/mazat-logo.png`. The 
 
 Run `pnpm assets:brand` to regenerate with Sharp supplied by Astro. Exports are committed; production builds do not need to generate them.
 
-| Asset | Dimensions / purpose |
-| --- | --- |
-| `/favicon.ico` | 16, 32, 48px frames for browser compatibility |
-| `favicon-*.png` | 16, 32, 48, 96px; stable URLs, square format |
-| `apple-touch-icon*.png` | 152, 167, 180px; opaque black background |
-| `/apple-touch-icon.png` | 180px conventional fallback location |
-| `android-chrome-*.png` | 192, 512px, manifest `purpose: any` |
-| `icon-maskable-*.png` | 192, 512px; entire source inside safe circle |
-| `/images/mazat-logo-{128,256,512}.{png,webp}` | Logo exports; header/footer use small responsive variants |
-| `/images/mazat-social-1200x630.png` | Native-resolution original centered on a black sharing canvas |
-| `/site.webmanifest` | French name, colors and separate any/maskable icons |
+| Asset                                         | Dimensions / purpose                                          |
+| --------------------------------------------- | ------------------------------------------------------------- |
+| `/favicon.ico`                                | 16, 32, 48px frames for browser compatibility                 |
+| `favicon-*.png`                               | 16, 32, 48, 96px; stable URLs, square format                  |
+| `apple-touch-icon*.png`                       | 152, 167, 180px; opaque black background                      |
+| `/apple-touch-icon.png`                       | 180px conventional fallback location                          |
+| `android-chrome-*.png`                        | 192, 512px, manifest `purpose: any`                           |
+| `icon-maskable-*.png`                         | 192, 512px; entire source inside safe circle                  |
+| `/images/mazat-logo-{128,256,512}.{png,webp}` | Logo exports; header/footer use small responsive variants     |
+| `/images/mazat-social-1200x630.png`           | Native-resolution original centered on a black sharing canvas |
+| `/site.webmanifest`                           | French name, colors and separate any/maskable icons           |
 
 The maskable source square is 55% of canvas width, so its diagonal fits within the central 80%-diameter circle. No text or logo content can be cut by a conforming mask. The favicon retains the original emblem; its small lettering is not expected to be readable at 16px. The page title and accessible link names communicate the business name independently.
 

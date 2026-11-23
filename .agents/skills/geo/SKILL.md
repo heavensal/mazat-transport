@@ -1,6 +1,6 @@
 ---
 name: geo
-description: "Implémenter ou auditer visibilité dans les moteurs IA, contenu citable et politiques de robots IA dans ce site Astro."
+description: 'Implémenter ou auditer visibilité dans les moteurs IA, contenu citable et politiques de robots IA dans ce site Astro.'
 ---
 
 # geo

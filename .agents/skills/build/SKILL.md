@@ -1,6 +1,6 @@
 ---
 name: build
-description: "Afficher le catalogue des commandes build du dépôt ou orienter une demande vers le workflow explicitement choisi."
+description: 'Afficher le catalogue des commandes build du dépôt ou orienter une demande vers le workflow explicitement choisi.'
 ---
 
 # build

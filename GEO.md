@@ -24,5 +24,6 @@ Séparer : faits vérifiés dans le code/HTML, recommandations documentées par 
 ## Références
 
 Consultées le 19 novembre 2026 ; revérifier avant tout changement de politique :
+
 - [Google — fonctions IA](https://developers.google.com/search/docs/appearance/ai-features)
 - [OpenAI — robots et usages distincts](https://developers.openai.com/api/docs/bots)

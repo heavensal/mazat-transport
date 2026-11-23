@@ -28,17 +28,13 @@ Copied from Laure Corrao. These are workflow recipes, not completed actions. MAZ
 ## 3. Déploiement
 
 - [ ] GitHub Pages
-
   Dépôt → **Settings → Pages → Source : GitHub Actions**. Réutiliser le workflow de déploiement existant ; sinon demander à l’IA de le créer pour Astro.
 
 - [ ] Domaine personnalisé dans GitHub
-
   **Settings → Pages → Custom domain** → saisir le domaine sans `https://` → **Save**, avant de modifier le DNS.
 
 - [ ] DNS chez le registrar
-
   Ouvrir la **zone DNS** chez le fournisseur qui gère les serveurs de noms actifs. Conserver les serveurs de noms actuels ; modifier les enregistrements suivants :
-
   | Type | Nom | Valeur |
   | --- | --- | --- |
   | A | `@` | `185.199.108.153` |
@@ -46,19 +42,15 @@ Copied from Laure Corrao. These are workflow recipes, not completed actions. MAZ
   | A | `@` | `185.199.110.153` |
   | A | `@` | `185.199.111.153` |
   | CNAME | `www` | `COMPTE.github.io` |
-
   Remplacer `COMPTE` par le compte ou l’organisation GitHub, sans nom de dépôt. Remplacer les anciens enregistrements web incompatibles ; conserver les MX et TXT existants.
 
 - [ ] Publication
-
   Vérifier avec l’IA le domaine dans Astro et les variables nécessaires au build. Pousser la version prête sur `master` → onglet **Actions** → vérifier build et déploiement réussis.
 
 - [ ] HTTPS et vérification
-
   Attendre la validation DNS et le certificat → **Settings → Pages → Enforce HTTPS**. Tester le domaine avec et sans `www`, puis une page interne.
 
 - [ ] GitHub Action — déploiement automatique après merge sur `master`
-
   Vérifier `.github/workflows/deploy.yml` : déclencheur `push` sur `master` (le merge d’une pull request le déclenche). Après merge → **Actions** → vérifier build, déploiement et site mis à jour. Ce déclencheur publie aussi les pushs directs sur `master`.
 
 [Référence GitHub — domaine et DNS](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site).
@@ -68,7 +60,6 @@ Copied from Laure Corrao. These are workflow recipes, not completed actions. MAZ
 - [ ] Affichage — modale / page dédiée / section landing page
 - [ ] Liste des champs
 - [ ] Obligatoires / facultatifs
-
 
 ## 5. Connecter la Forge
 
@@ -81,16 +72,13 @@ Dashboard Forge → ouvrir le Website concerné ou le créer.
   - [ ] FAQ
 - [ ] Renseigner l’email professionnel
 - [ ] Ajouter le token Forge au `.env` — si au moins une importation
-
   `FORGE_API_TOKEN` + `FORGE_URL` ; activer les flags des ressources retenues. Reporter les secrets dans **GitHub → Settings → Secrets and variables → Actions** pour le build distant. Ne pas committer le `.env`.
 
 - [ ] Rebuild automatique après création / modification / suppression d’un élément importé
-
   1. GitHub → **Settings du compte → Developer settings → Personal access tokens → Fine-grained tokens** : créer un token limité au dépôt, permission **Contents: read and write**.
   2. Forge → paramètres de rebuild du Website : URL `https://api.github.com/repos/COMPTE/REPO/dispatches` + token GitHub comme bearer. Ce token est distinct du token API Forge.
   3. Vérifier l’événement envoyé : `event_type: forge-rebuild`, et son écoute via `repository_dispatch` dans le workflow présent sur la branche par défaut. Sélectionner uniquement les ressources importées.
   4. Tester une modification autorisée (ex. nouvel article publié) → **GitHub Actions** → build et déploiement → changement visible sur le site. Vérifier aussi modification et suppression ; une simple lecture ne nécessite pas de rebuild.
-
   [Référence GitHub — repository dispatch](https://docs.github.com/en/rest/repos/repos#create-a-repository-dispatch-event).
 
 ## 6. Contenu client
@@ -105,7 +93,6 @@ Dashboard Forge → ouvrir le Website concerné ou le créer.
   - [ ] Conditions générales
   - [ ] Mentions légales
 - [ ] Informations manquantes → `todo.md`
-
   Placeholder explicite pendant la préparation + tâche indiquant l’information attendue et son emplacement. Exemple : « Téléphone à fournir — footer et page contact ». Remplacer le placeholder après confirmation ; aucun placeholder publié.
 - [ ] Validation client
 

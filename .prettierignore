@@ -1,0 +1,13 @@
+# Dependencies and generated output
+node_modules/
+dist/
+.astro/
+.vite/
+coverage/
+pnpm-lock.yaml
+
+# Local credentials and machine state
+.env
+.env.*
+.aws/
+.DS_Store

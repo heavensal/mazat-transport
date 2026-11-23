@@ -9,9 +9,19 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "node scripts/check-build.mjs",
+    "assets:brand": "node scripts/generate-brand-assets.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
-    "astro": "^7.4.13"
+    "@tailwindcss/vite": "^4.3.5",
+    "astro": "^7.4.13",
+    "tailwindcss": "^4.3.5"
+  },
+  "devDependencies": {
+    "prettier": "^3.10.1",
+    "prettier-plugin-astro": "^1.1.2"
   }
 }

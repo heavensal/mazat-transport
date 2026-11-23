@@ -1,0 +1,27 @@
+@import 'tailwindcss';
+
+#quote-form label {
+  @apply mb-5 block text-sm font-semibold;
+}
+
+#quote-form input,
+#quote-form select,
+#quote-form textarea {
+  @apply mt-2 min-h-12 w-full rounded-sm border border-slate-400 bg-white px-3 py-3 font-normal text-slate-800;
+}
+
+#quote-form textarea {
+  @apply min-h-24 resize-y;
+}
+
+#quote-form .form-row {
+  @apply grid gap-5 md:grid-cols-2;
+}
+
+#quote-form .check-label {
+  @apply flex items-start gap-3 font-normal;
+}
+
+#quote-form .check-label input {
+  @apply mt-1 h-5 w-5 shrink-0;
+}

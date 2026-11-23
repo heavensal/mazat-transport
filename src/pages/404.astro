@@ -1,0 +1,34 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Page introuvable | MAZAT"
+  description="Cette page n’existe pas. Retrouvez les services et les formules de déménagement MAZAT."
+  noindex
+>
+  <section class="mx-auto w-11/12 max-w-3xl py-16 md:w-5/6 md:py-24">
+    <p class="mb-5 text-xs font-bold uppercase tracking-widest text-sky-700">
+      Erreur 404
+    </p>
+    <h1 class="mb-6 text-5xl font-extrabold">Cette adresse a déménagé.</h1>
+    <p class="mb-8 text-slate-600">
+      La page demandée est introuvable. Retrouvez nos formules ou préparons
+      ensemble votre projet.
+    </p>
+    <div class="flex flex-wrap gap-3">
+      <a
+        class="inline-flex min-h-13 items-center justify-center rounded-sm border border-red-700 bg-red-700 px-6 py-4 text-sm font-bold text-white"
+        href="/"
+      >
+        Retour à l’accueil
+      </a>
+      <a
+        class="inline-flex min-h-13 items-center justify-center rounded-sm border border-slate-300 bg-white px-6 py-4 text-sm font-bold text-slate-800"
+        href="/devis/"
+      >
+        Demander un devis
+      </a>
+    </div>
+  </section>
+</Layout>

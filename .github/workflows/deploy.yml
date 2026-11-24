@@ -37,11 +37,9 @@ jobs:
           ENABLE_MULTILANG: 'false'
           PUBLICATION_READY: ${{ vars.PUBLICATION_READY || 'false' }}
           SITE_URL: ${{ vars.SITE_URL }}
-          FORGE_FAQ_ENABLED: 'true'
+          FORGE_FAQ_ENABLED: 'false'
           FORGE_REVIEWS_ENABLED: 'false'
-          FORGE_ARTICLES_ENABLED: 'true'
-          FORGE_URL: ${{ secrets.FORGE_URL }}
-          FORGE_API_TOKEN: ${{ secrets.FORGE_API_TOKEN }}
+          FORGE_ARTICLES_ENABLED: 'false'
           PUBLIC_CONTACT_FORM_URL: ${{ secrets.PUBLIC_CONTACT_FORM_URL }}
           PUBLIC_CONTACT_FORM_TOKEN: ${{ secrets.PUBLIC_CONTACT_FORM_TOKEN }}
       - run: pnpm run test

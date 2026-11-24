@@ -2,6 +2,14 @@ import { readdir, readFile, stat } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
 import assert from 'node:assert/strict';
 const root = resolve('dist');
+const publicationReady =
+  process.env.PUBLICATION_READY === 'true' && !!process.env.SITE_URL;
+const retainedNoindex = [
+  '/404.html',
+  '/mentions-legales/index.html',
+  '/confidentialite/index.html',
+  '/conditions/index.html',
+];
 async function walk(dir) {
   return (
     await Promise.all(
@@ -30,10 +38,15 @@ for (const [file, html] of contents) {
   assert.ok(title && !titles.has(title), `${file}: unique title`);
   titles.add(title);
   assert.match(html, /<meta name="description" content="[^"]+"/);
+  const keptPrivate = retainedNoindex.some((suffix) => file.endsWith(suffix));
+  const robots =
+    !publicationReady || keptPrivate ? 'noindex, follow' : 'index, follow';
   assert.match(
     html,
-    /<meta name="robots" content="noindex, follow"/,
-    'Preview must not be indexable',
+    new RegExp(`<meta name="robots" content="${robots}"`),
+    publicationReady
+      ? `${file}: expected robots ${robots}`
+      : 'Preview must not be indexable',
   );
   assert.doesNotMatch(
     html,
@@ -67,11 +80,16 @@ for (const [file, html] of contents) {
     links++;
   }
 }
-assert.doesNotMatch(
-  await readFile(join(root, 'sitemap.xml'), 'utf8'),
-  /<loc>/,
-  'Unconfigured preview sitemap must be empty',
-);
+const sitemap = await readFile(join(root, 'sitemap.xml'), 'utf8');
+if (publicationReady) {
+  assert.match(sitemap, /<loc>/, 'Published sitemap must list public URLs');
+} else {
+  assert.doesNotMatch(
+    sitemap,
+    /<loc>/,
+    'Unconfigured preview sitemap must be empty',
+  );
+}
 console.log(
-  `PASS: ${htmlFiles.length} pages, ${links} internal links/assets, titles, descriptions, headings, JSON-LD, noindex and public-content checks.`,
+  `PASS: ${htmlFiles.length} pages, ${links} internal links/assets, titles, descriptions, headings, JSON-LD, ${publicationReady ? 'publication index' : 'noindex'} and public-content checks.`,
 );

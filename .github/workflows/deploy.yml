@@ -14,8 +14,8 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages-main
-  cancel-in-progress: true
+  group: pages-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   build:
@@ -45,6 +45,9 @@ jobs:
           PUBLIC_CONTACT_FORM_URL: ${{ secrets.PUBLIC_CONTACT_FORM_URL }}
           PUBLIC_CONTACT_FORM_TOKEN: ${{ secrets.PUBLIC_CONTACT_FORM_TOKEN }}
       - run: pnpm run test
+        env:
+          PUBLICATION_READY: ${{ vars.PUBLICATION_READY || 'false' }}
+          SITE_URL: ${{ vars.SITE_URL }}
       - uses: actions/upload-pages-artifact@v5
         with:
           path: ./dist

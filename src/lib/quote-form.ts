@@ -191,15 +191,17 @@ if (form) {
     form.setAttribute('aria-busy', 'true');
 
     try {
-      const email = formFields.Email?.trim();
+      const email = formFields['Email']?.trim();
       if (!email) throw new Error('Votre adresse email est manquante.');
       await sendFormWithForge(form.dataset.forgeFormToken ?? '', {
         from_email: email,
         fields: {
           ...formFields,
-          nom: [formFields['Prénom'], formFields.Nom].filter(Boolean).join(' '),
+          nom: [formFields['Prénom'], formFields['Nom']]
+            .filter(Boolean)
+            .join(' '),
           email,
-          phone: formFields.Téléphone ?? '',
+          phone: formFields['Téléphone'] ?? '',
           message: recap,
         },
       });

@@ -138,7 +138,8 @@ if (form) {
           typeof entry[1] === 'string' && entry[1].trim().length > 0,
       )
       .map(
-        ([name, value]) => [name, selectLabels.get(name) || value.trim()] as const,
+        ([name, value]) =>
+          [name, selectLabels.get(name) || value.trim()] as const,
       );
     formFields = Object.fromEntries(entries);
     recap = `DEMANDE DE DEVIS MAZAT\nRéférence locale de préparation : ${requestReference}\nPréparée le : ${new Date().toLocaleString('fr-FR')}\n\n${entries.map(([name, value]) => `${name} : ${value}`).join('\n')}\n\nCette demande n’est pas un devis contractuel. Aucun prix n’est calculé. Référence de préparation uniquement : la date de dépôt et le numéro de dossier seront attribués à réception par MAZAT.`;

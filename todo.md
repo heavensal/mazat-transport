@@ -94,18 +94,18 @@ The six requested stages, in order (currently represented by paraphrases):
 
 Complete requested export quote information, to retain across fields, recap and the eventual validated quote:
 
-| Required information                                                          | Current coverage and follow-up                                                                                          |
-| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| Pays, ville, code postal de départ et d’arrivée                               | Fields already present; verify both addresses after EXPORT-006.                                                         |
-| Résidence fiscale / statut d’importation                                      | Separate named fields; preserved by the shared recap form-data collection; EXPORT-002.                                  |
-| Date souhaitée                                                                | Date/flexibility fields present; unknown date is currently allowed. Record explicitly when still to define.             |
-| Coordonnées des deux parties                                                  | Sender/recipient association selectors, with requester reuse, explicit pending state and structured alternate details; EXPORT-003. |
-| Liste de colisage en français/anglais si nécessaire                           | Required availability/language choice with explicit pending and to-provide options; EXPORT-004.                           |
-| m³                                                                            | Estimated-volume field or room-inventory alternative; do not treat an inventory alone as a verified cubage.             |
-| Poids estimé                                                                  | Combined export weight/value field exists; verify it reaches the recap after EXPORT-006.                                |
-| Inventaire valorisé                                                           | Combined field prompts for value/inventory; no structured document or verified valuation is claimed.                    |
-| Objets particuliers ou réglementés                                            | Special/fragile-goods field plus sensitive/regulated-goods prompt; actual exclusions must be validated under LEGAL-006. |
-| Incoterm / périmètre contractuel à définir avec le commissionnaire            | Explicit status choice and conditional field for an agreed term; fee allocation remains subject to a validated contract; EXPORT-005. |
+| Required information                                                          | Current coverage and follow-up                                                                                                                          |
+| ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Pays, ville, code postal de départ et d’arrivée                               | Fields already present; verify both addresses after EXPORT-006.                                                                                         |
+| Résidence fiscale / statut d’importation                                      | Separate named fields; preserved by the shared recap form-data collection; EXPORT-002.                                                                  |
+| Date souhaitée                                                                | Date/flexibility fields present; unknown date is currently allowed. Record explicitly when still to define.                                             |
+| Coordonnées des deux parties                                                  | Sender/recipient association selectors, with requester reuse, explicit pending state and structured alternate details; EXPORT-003.                      |
+| Liste de colisage en français/anglais si nécessaire                           | Required availability/language choice with explicit pending and to-provide options; EXPORT-004.                                                         |
+| m³                                                                            | Estimated-volume field or room-inventory alternative; do not treat an inventory alone as a verified cubage.                                             |
+| Poids estimé                                                                  | Combined export weight/value field exists; verify it reaches the recap after EXPORT-006.                                                                |
+| Inventaire valorisé                                                           | Combined field prompts for value/inventory; no structured document or verified valuation is claimed.                                                    |
+| Objets particuliers ou réglementés                                            | Special/fragile-goods field plus sensitive/regulated-goods prompt; actual exclusions must be validated under LEGAL-006.                                 |
+| Incoterm / périmètre contractuel à définir avec le commissionnaire            | Explicit status choice and conditional field for an agreed term; fee allocation remains subject to a validated contract; EXPORT-005.                    |
 | Frais de port, manutention, stockage et douane explicitement inclus ou exclus | Export page says each item must be marked included, excluded or to confirm in the validated quote; no allocation is claimed here; EXPORT-005 / EXT-002. |
 
 ### Export gaps and corrections to plan

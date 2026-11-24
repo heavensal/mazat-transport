@@ -1,16 +1,16 @@
 # Reusable delivery checklist
 
-Copied from Laure Corrao. These are workflow recipes, not completed actions. MAZAT uses `master`; hosting has not been selected. GitHub Pages/DNS instructions below are conditional on that choice and must be verified before use. See [todo.md](todo.md) for current delivery status.
+Copied from Laure Corrao. These are workflow recipes, not completed actions. MAZAT uses `main`; hosting has not been selected. GitHub Pages/DNS instructions below are conditional on that choice and must be verified before use. See [todo.md](todo.md) for current delivery status.
 
 ## 1. Nom et arborescence
 
 - [ ] Nom de domaine
-- [ ] Langue principale
-- [ ] Langues supplémentaires
-- [ ] CMS Forge
-  - [ ] Blog
-  - [ ] FAQ
-  - [ ] Avis
+- [x] Langue principale
+- [x] Pas de langue supplémentaire
+- [x] Pas de CMS
+  - [x] Blog désactivé
+  - [x] FAQ locale statique
+  - [x] Avis locaux statiques
 
 ## 2. Design
 
@@ -27,13 +27,13 @@ Copied from Laure Corrao. These are workflow recipes, not completed actions. MAZ
 
 ## 3. Déploiement
 
-- [ ] GitHub Pages
+- [x] GitHub Pages
       Dépôt → **Settings → Pages → Source : GitHub Actions**. Réutiliser le workflow de déploiement existant ; sinon demander à l’IA de le créer pour Astro.
 
-- [ ] Domaine personnalisé dans GitHub
+- [x] Domaine personnalisé dans GitHub
       **Settings → Pages → Custom domain** → saisir le domaine sans `https://` → **Save**, avant de modifier le DNS.
 
-- [ ] DNS chez le registrar
+- [x] DNS chez le registrar
       Ouvrir la **zone DNS** chez le fournisseur qui gère les serveurs de noms actifs. Conserver les serveurs de noms actuels ; modifier les enregistrements suivants :
 
   | Type                                                                                                                                                                       | Nom   | Valeur             |
@@ -46,13 +46,13 @@ Copied from Laure Corrao. These are workflow recipes, not completed actions. MAZ
   | Remplacer `COMPTE` par le compte ou l’organisation GitHub, sans nom de dépôt. Remplacer les anciens enregistrements web incompatibles ; conserver les MX et TXT existants. |
 
 - [ ] Publication
-      Vérifier avec l’IA le domaine dans Astro et les variables nécessaires au build. Pousser la version prête sur `master` → onglet **Actions** → vérifier build et déploiement réussis.
+      Vérifier avec l’IA le domaine dans Astro et les variables nécessaires au build. Pousser la version prête sur `main` → onglet **Actions** → vérifier build et déploiement réussis.
 
-- [ ] HTTPS et vérification
+- [x] HTTPS et vérification
       Attendre la validation DNS et le certificat → **Settings → Pages → Enforce HTTPS**. Tester le domaine avec et sans `www`, puis une page interne.
 
-- [ ] GitHub Action — déploiement automatique après merge sur `master`
-      Vérifier `.github/workflows/deploy.yml` : déclencheur `push` sur `master` (le merge d’une pull request le déclenche). Après merge → **Actions** → vérifier build, déploiement et site mis à jour. Ce déclencheur publie aussi les pushs directs sur `master`.
+- [x] GitHub Action — déploiement automatique après merge sur `main`
+      Vérifier `.github/workflows/deploy.yml` : déclencheur `push` sur `main` (le merge d’une pull request le déclenche). Après merge → **Actions** → vérifier build, déploiement et site mis à jour. Ce déclencheur publie aussi les pushs directs sur `main`.
 
 [Référence GitHub — domaine et DNS](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site).
 

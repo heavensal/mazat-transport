@@ -47,5 +47,4 @@ export const navigation = [
   { href: '/formules/', label: 'Nos formules' },
   { href: '/international-maritime/', label: 'International & maritime' },
   { href: '/services/', label: 'Nos services' },
-  { href: '/realisations-avis/', label: 'Réalisations & avis' },
 ];

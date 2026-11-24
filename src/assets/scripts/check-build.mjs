@@ -13,7 +13,7 @@ async function walk(dir) {
 }
 const files = await walk(root);
 const htmlFiles = files.filter((f) => f.endsWith('.html'));
-assert.equal(htmlFiles.length, 14, 'Expected 14 HTML pages including 404');
+assert.equal(htmlFiles.length, 13, 'Expected 13 HTML pages including 404');
 const titles = new Set();
 const contents = new Map(
   await Promise.all(htmlFiles.map(async (f) => [f, await readFile(f, 'utf8')])),

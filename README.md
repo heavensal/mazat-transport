@@ -61,7 +61,7 @@ References: [Google Places widget](https://developers.google.com/maps/documentat
 
 ## Google reviews (client-side)
 
-The owner requested Google instead of Forge for the public reviews component. `Reviews.astro` uses `src/lib/google-reviews.ts` on the homepage and reviews page, sharing `src/lib/google-maps.ts` with address autocomplete. Place ID: `ChIJ7WvR7za_yRIRddVA_CCPQcE` (`business.googlePlaceId`). Uses the existing `GOOGLE_MAPS_API_KEY`, Maps JavaScript API and Places API (New); the reviews field has its own Google billing tier. No Business Profile OAuth token belongs in the browser.
+The owner requested Google instead of Forge for the public reviews component. `Reviews.astro` uses `src/lib/google-reviews.ts` on the homepage only, sharing `src/lib/google-maps.ts` with address autocomplete. Place ID: `ChIJ7WvR7za_yRIRddVA_CCPQcE` (`business.googlePlaceId`). Uses the existing `GOOGLE_MAPS_API_KEY`, Maps JavaScript API and Places API (New); the reviews field has its own Google billing tier. No Business Profile OAuth token belongs in the browser.
 
 Each page load fetches current Google results without a rebuild or local storage. Google returns at most five relevance-selected reviews; the client keeps only five-star entries and sorts that subset by publication date descending. This cannot guarantee the latest review appears, nor provide real-time push updates while a page stays open. Original text, author profile, publication/visit dates when supplied, review/report links and Google attribution are rendered. No subset-derived average or review JSON-LD is added. Errors, missing key or no matching entries retain a link to all Google reviews. Forge FAQ behaviour is unchanged; the old generic Forge reviews transport remains unused by this component.
 

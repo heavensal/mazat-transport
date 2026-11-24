@@ -33,17 +33,6 @@ export const pages = [
     eyebrow: 'Services à la carte',
   },
   {
-    id: 'reviews',
-    slug: 'realisations-avis',
-    title: 'Réalisations & avis clients | MAZAT Transport',
-    heading: 'La confiance se construit\nsur le terrain.',
-    description:
-      'Consultez les expériences des clients MAZAT et découvrez notre approche de la protection, de l’emballage et du transport.',
-    intro:
-      'Protection du mobilier, organisation du chargement et suivi des étapes : notre accompagnement se définit autour de vos biens et de votre projet.',
-    eyebrow: 'Notre approche & les expériences clients',
-  },
-  {
     id: 'business',
     slug: 'entreprises',
     title: 'Déménagement de bureaux et entreprises | MAZAT',
@@ -117,7 +106,7 @@ export const pages = [
     description:
       'Informations sur la navigation MAZAT et la suggestions d’adresse Google.',
     intro:
-      'Le site n’ajoute pas de mesure d’audience ou de publicité. Les suggestions Google se chargent pendant la saisie d’une adresse ; les avis Google sont chargés sur l’accueil et la page des avis.',
+      'Le site n’ajoute pas de mesure d’audience ou de publicité. Les suggestions Google se chargent pendant la saisie d’une adresse ; les avis Google sont chargés sur l’accueil.',
     eyebrow: 'Cookies',
   },
   {

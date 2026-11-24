@@ -1,0 +1,11 @@
+---
+import RegisteredPage from '../components/RegisteredPage.astro';
+import PrivacyPage from '../views/privacy/Page.astro';
+import { getPage } from '../site/pages';
+
+const page = getPage('privacy');
+---
+
+<RegisteredPage page={page}>
+  <PrivacyPage page={page} />
+</RegisteredPage>

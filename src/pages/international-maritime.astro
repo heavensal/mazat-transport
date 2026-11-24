@@ -1,0 +1,11 @@
+---
+import RegisteredPage from '../components/RegisteredPage.astro';
+import InternationalPage from '../views/international/Page.astro';
+import { getPage } from '../site/pages';
+
+const page = getPage('export');
+---
+
+<RegisteredPage page={page}>
+  <InternationalPage page={page} />
+</RegisteredPage>

@@ -1,0 +1,101 @@
+---
+import PageHero from '../../components/PageHero.astro';
+import { business } from '../../site/config';
+import type { RegisteredContentPage } from '../../site/pages';
+
+interface Props {
+  page: RegisteredContentPage;
+}
+
+const { page } = Astro.props;
+---
+
+<PageHero page={page} />
+<section class="mx-auto max-w-3xl px-0 py-16 md:py-24">
+  <p class="mb-8 border-l-3 border-sky-700 bg-sky-50 px-6 py-5 text-slate-700">
+    Les éléments ci-dessous sont publiés à partir des informations transmises.
+    Certaines mentions contractuelles restent à confirmer avant toute mise en
+    production complète.
+  </p>
+  <h2 class="mt-10 mb-4 text-2xl font-bold">Éditeur du site</h2>
+  <p>
+    {business.legalName}
+    <br />
+    {business.legal.legalForm}
+    <br />
+    Représentant : {business.representative}
+    <br />
+    {business.address}
+    <br />
+    {business.postalCode} {business.city}
+    <br />
+    <a
+      class="underline"
+      href={business.mapsUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Voir l’établissement sur Google Maps
+    </a>
+    <br />
+    <a href={business.phoneHref}>{business.phone}</a>
+    <br />
+    <a href={`mailto:${business.email}`}>{business.email}</a>
+  </p>
+  <h2 class="mt-10 mb-4 text-2xl font-bold">Immatriculation</h2>
+  <ul class="list-disc space-y-2 pl-6">
+    <li>SIREN : {business.legal.siren}</li>
+    <li>SIRET du siège : {business.legal.siret}</li>
+    <li>RCS : {business.legal.rcs}</li>
+    <li>{business.legal.rn}</li>
+    <li>Numéro EUID : {business.legal.euid}</li>
+    <li>Capital social : {business.legal.capital}</li>
+    <li>TVA intracommunautaire : {business.legal.vat}</li>
+    <li>Activité : {business.legal.activity}</li>
+  </ul>
+  <h2 class="mt-10 mb-4 text-2xl font-bold">Publication</h2>
+  <p>
+    Directeur de la publication : Jérémy Mazari, sous réserve de confirmation
+    de sa qualité officielle.
+    <br />
+    Site édité et exploité pour MAZAT TRANSPORT sous le domaine{' '}
+    <a class="underline" href={business.domainUrl}>{business.domain}</a>.
+  </p>
+  <h2 class="mt-10 mb-4 text-2xl font-bold">Hébergement</h2>
+  <p>
+    {business.hosting.name}
+    <br />
+    {business.hosting.operator}
+    <br />
+    {business.hosting.address}
+  </p>
+  <h2 class="mt-10 mb-4 text-2xl font-bold">Nom de domaine</h2>
+  <p>Le nom de domaine {business.domain} est enregistré auprès de LWS.</p>
+  <h2 class="mt-10 mb-4 text-2xl font-bold">Conception et développement</h2>
+  <p>
+    {business.developer.name} — {business.developer.contact}
+    <br />
+    <a href={business.developer.phoneHref}>{business.developer.phone}</a>
+    <br />
+    <a href={`mailto:${business.developer.email}`}>
+      {business.developer.email}
+    </a>
+    <br />
+    <a
+      class="underline"
+      href={business.developer.website}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {business.developer.website}
+    </a>
+  </p>
+  <h2 class="mt-10 mb-4 text-2xl font-bold">Contact commercial</h2>
+  <p>
+    {business.name}
+    <br />
+    <a href={business.phoneHref}>{business.phone}</a>
+    <br />
+    <a href={`mailto:${business.email}`}>{business.email}</a>
+  </p>
+</section>

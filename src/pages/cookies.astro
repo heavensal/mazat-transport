@@ -1,0 +1,11 @@
+---
+import RegisteredPage from '../components/RegisteredPage.astro';
+import CookiesPage from '../views/cookies/Page.astro';
+import { getPage } from '../site/pages';
+
+const page = getPage('cookies');
+---
+
+<RegisteredPage page={page}>
+  <CookiesPage page={page} />
+</RegisteredPage>

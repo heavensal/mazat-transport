@@ -1,0 +1,73 @@
+---
+import PageHero from '../../components/PageHero.astro';
+import { business } from '../../site/config';
+import type { RegisteredContentPage } from '../../site/pages';
+
+interface Props {
+  page: RegisteredContentPage;
+}
+
+const { page } = Astro.props;
+---
+
+<PageHero page={page} />
+<section class="mx-auto max-w-3xl px-0 py-16 md:py-24">
+  <h2 class="mt-10 mb-4 text-2xl font-bold">Responsable du traitement</h2>
+  <p>
+    MAZAT TRANSPORT
+    <br />
+    {business.address}
+    <br />
+    {business.postalCode} {business.city}
+    <br />
+    <a href={`mailto:${business.email}`}>{business.email}</a>
+  </p>
+  <h2 class="mt-10 mb-4 text-2xl font-bold">
+    Le formulaire dans cette version
+  </h2>
+  <p>
+    Les informations du formulaire restent dans la mémoire de votre navigateur
+    pendant la préparation. Le site ne les enregistre pas dans une base de
+    données ni dans le stockage local. Une actualisation ou la fermeture de la
+    page efface la saisie.
+  </p>
+  <p>
+    Lorsque vous validez l’envoi, le navigateur transmet les champs du
+    formulaire à Forge pour acheminer la demande à MAZAT. Le site affiche le
+    résultat renvoyé par Forge, mais ne peut pas confirmer la réception finale
+    du message dans la messagerie de MAZAT. Les fichiers ne sont pas transmis ;
+    vous pouvez télécharger le récapitulatif ou les envoyer séparément par
+    email.
+  </p>
+  <h2 class="mt-10 mb-4 text-2xl font-bold">Avis Google</h2>
+  <p>
+    Sur l’accueil et la page des avis, le navigateur contacte Google pour
+    afficher une sélection d’avis. Google reçoit les données techniques de
+    connexion nécessaires. Les avis ne sont pas enregistrés dans le stockage
+    local du navigateur. La politique de confidentialité Google et les
+    conditions Google Maps s’appliquent.
+  </p>
+  <h2 class="mt-10 mb-4 text-2xl font-bold">Recherche d’adresse Google</h2>
+  <p>
+    Lorsque vous saisissez une adresse dans le formulaire, Google reçoit vos
+    recherches d’adresse et les données techniques de connexion nécessaires à
+    ce service. Vous pouvez corriger ou compléter les champs manuellement.
+    Consultez la{' '}
+    <a href="https://policies.google.com/privacy">
+      politique de confidentialité Google
+    </a>{' '}
+    et les{' '}
+    <a href="https://maps.google.com/help/terms_maps/">conditions Google Maps</a>.
+  </p>
+  <h2 class="mt-10 mb-4 text-2xl font-bold">Une question sur votre demande ?</h2>
+  <p>
+    Vous pouvez joindre MAZAT à{' '}
+    <a href={`mailto:${business.email}`}>{business.email}</a>.
+  </p>
+  <p class="mt-8 border-l-3 border-sky-700 bg-sky-50 px-6 py-5 text-slate-700">
+    La politique complète doit encore préciser les finalités et bases légales,
+    les destinataires et prestataires, les durées de conservation et les
+    modalités d’exercice des droits. Ces informations sur le traitement par
+    Forge restent à confirmer avant publication.
+  </p>
+</section>

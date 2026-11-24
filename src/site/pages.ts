@@ -12,7 +12,7 @@ export const pages = [
   },
   {
     id: 'export',
-    slug: 'export-maritime',
+    slug: 'international-maritime',
     title: 'Déménagement maritime international & conteneur | MAZAT',
     heading: 'Un nouvel horizon.\nLa même exigence.',
     description:
@@ -90,12 +90,12 @@ export const pages = [
   {
     id: 'legal',
     slug: 'mentions-legales',
-    title: 'Mentions légales — version de préparation | MAZAT',
+    title: 'Mentions légales | MAZAT Transport',
     heading: 'Mentions légales',
     description:
-      'Informations de préparation du site MAZAT Transport. Les données et mentions obligatoires restent à valider avant mise en ligne.',
+      'Identité de l’éditeur, informations légales, hébergement et coordonnées de MAZAT Transport.',
     intro:
-      'Cette page de préparation n’est pas une version juridique définitive.',
+      'Informations légales relatives à l’exploitation du site mazat-transport.fr.',
     eyebrow: 'Informations du site',
   },
   {
@@ -113,11 +113,11 @@ export const pages = [
     id: 'cookies',
     slug: 'cookies',
     title: 'Cookies et traceurs | MAZAT',
-    heading: 'Une navigation\nsans traceur ajouté.',
+    heading: 'Cookies et services externes.',
     description:
-      'Cette version du site MAZAT n’intègre ni outil publicitaire, ni mesure d’audience, ni cookie non essentiel.',
+      'Informations sur la navigation MAZAT et la suggestions d’adresse Google.',
     intro:
-      'Cette version n’installe pas de cookie publicitaire, de mesure d’audience ni de stockage local du formulaire.',
+      'Le site n’ajoute pas de mesure d’audience ou de publicité. Les suggestions Google se chargent pendant la saisie d’une adresse ; les avis Google sont chargés sur l’accueil et la page des avis.',
     eyebrow: 'Cookies',
   },
   {
@@ -132,3 +132,29 @@ export const pages = [
     eyebrow: 'Conditions & médiation',
   },
 ] as const;
+
+export type RegisteredContentPage = (typeof pages)[number];
+export type RegisteredPageId = RegisteredContentPage['id'];
+
+export function getPage(id: RegisteredPageId): RegisteredContentPage {
+  const page = pages.find((candidate) => candidate.id === id);
+  if (!page) {
+    throw new Error(`Unknown registered page: ${id}`);
+  }
+  return page;
+}
+
+export const homePage = {
+  id: 'home',
+  title: 'Déménageur Marseille, PACA & International | MAZAT',
+  description:
+    'MAZAT accompagne votre déménagement à Marseille, en PACA, en France et à l’international. Cinq formules, protection soignée et devis personnalisé.',
+} as const;
+
+export const notFoundPage = {
+  id: 'not-found',
+  title: 'Page introuvable | MAZAT',
+  description:
+    'Cette page n’existe pas. Retrouvez les services et les formules de déménagement MAZAT.',
+  noindex: true,
+} as const;

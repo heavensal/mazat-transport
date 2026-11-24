@@ -1,0 +1,17 @@
+---
+import Hero from './components/Hero.astro';
+import FormSection from './components/FormSection.astro';
+
+interface Props {
+  page: {
+    eyebrow: string;
+    heading: string;
+    intro: string;
+  };
+}
+
+const { page } = Astro.props;
+---
+
+<Hero eyebrow={page.eyebrow} heading={page.heading} intro={page.intro} />
+<FormSection />

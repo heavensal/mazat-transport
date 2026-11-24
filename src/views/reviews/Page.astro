@@ -1,0 +1,49 @@
+---
+import PageHero from '../../components/PageHero.astro';
+import Reviews from '../../components/Reviews.astro';
+import type { RegisteredContentPage } from '../../site/pages';
+
+interface Props {
+  page: RegisteredContentPage;
+}
+
+const { page } = Astro.props;
+---
+
+<PageHero page={page} />
+<section class="mx-auto grid w-11/12 max-w-7xl gap-10 py-16 md:w-5/6 md:grid-cols-2 md:py-24">
+  <div>
+    <p class="mb-5 text-xs font-bold uppercase tracking-widest text-sky-700">
+      Notre façon de travailler
+    </p>
+    <h2 class="mb-5 text-3xl font-bold md:text-5xl">
+      Des biens protégés.
+      <br />
+      Des étapes préparées.
+    </h2>
+    <p class="mb-4 text-slate-600">
+      MAZAT accompagne particuliers et professionnels dans leurs changements de
+      vie et leurs transferts d’activité. Notre approche associe organisation,
+      manutention maîtrisée et protection du mobilier.
+    </p>
+    <p class="text-slate-600">
+      Housses de literie, couvertures professionnelles, emballage renforcé,
+      démontage et remontage : nous adaptons les moyens au devis retenu.
+    </p>
+  </div>
+  <div class="border-l-3 border-sky-700 bg-slate-100 p-8">
+    <h2 class="mb-4 text-3xl font-bold">Parlons de vos biens.</h2>
+    <p class="mb-6 text-slate-600">
+      Un meuble fragile, une bibliothèque à démonter ou des effets à préparer
+      pour l’export ? Décrivez les particularités de votre déménagement pour
+      définir une prise en charge adaptée.
+    </p>
+    <a
+      class="inline-flex min-h-12 items-center justify-center rounded-sm border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-800"
+      href="/devis/"
+    >
+      Préparer mon projet
+    </a>
+  </div>
+</section>
+<Reviews />

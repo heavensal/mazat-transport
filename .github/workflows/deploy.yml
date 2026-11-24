@@ -34,9 +34,11 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm run build
         env:
+          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
           ENABLE_MULTILANG: 'false'
           PUBLICATION_READY: ${{ vars.PUBLICATION_READY || 'false' }}
           SITE_URL: ${{ vars.SITE_URL }}
+          FORGE_FORM_TOKEN: ${{ secrets.FORGE_FORM_TOKEN }}
           FORGE_FAQ_ENABLED: 'false'
           FORGE_REVIEWS_ENABLED: 'false'
           FORGE_ARTICLES_ENABLED: 'false'

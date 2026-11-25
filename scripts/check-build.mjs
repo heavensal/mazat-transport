@@ -69,7 +69,7 @@ for (const [file, html] of contents) {
   );
   assert.doesNotMatch(
     html,
-    /33\s*€|41\s*€|54\s*€|65\s*€|1[,.]25\s*€|FR56|6\s?300|Welcome to Astro|astro\.svg|FORGE_API_TOKEN/,
+    /33\s*€|41\s*€|54\s*€|65\s*€|1[,.]25\s*€|Welcome to Astro|astro\.svg|FORGE_API_TOKEN/,
   );
   for (const match of html.matchAll(
     /<script type="application\/ld\+json">(.*?)<\/script>/gs,

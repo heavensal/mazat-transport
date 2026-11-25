@@ -1,0 +1,46 @@
+---
+import { Image } from 'astro:assets';
+import seaport from '../../../assets/images/seaport.jpg';
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+  intro: string;
+}
+
+const { eyebrow, heading, intro } = Astro.props;
+---
+
+<section class="relative isolate overflow-hidden bg-slate-950 py-16 text-white md:py-24">
+  <Image
+    src={seaport}
+    alt=""
+    aria-hidden="true"
+    width={1920}
+    height={1080}
+    loading="eager"
+    class="absolute inset-0 h-full w-full object-cover"
+  />
+  <div class="absolute inset-0 bg-slate-950/75" aria-hidden="true"></div>
+  <div class="relative mx-auto w-11/12 max-w-7xl md:w-5/6">
+    <nav class="mb-8 text-sm text-slate-100" aria-label="Fil d’Ariane">
+      <a class="underline underline-offset-4" href="/">
+        Accueil
+      </a>
+      <span aria-hidden="true"> / </span>
+      <span aria-current="page">{eyebrow}</span>
+    </nav>
+    <p class="mb-5 text-xs font-bold uppercase tracking-widest text-sky-200">
+      {eyebrow}
+    </p>
+    <h1 class="mb-6 max-w-4xl text-4xl font-extrabold leading-tight md:text-6xl">
+      {heading.split('\n').map((line, index) => (
+        <>
+          {index > 0 && <br />}
+          {line}
+        </>
+      ))}
+    </h1>
+    <p class="max-w-3xl text-lg text-white">{intro}</p>
+  </div>
+</section>

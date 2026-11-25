@@ -1,6 +1,9 @@
 ---
+import AddressAutocomplete from './AddressAutocomplete.astro';
 import { offers } from '../content/offers';
 import { business } from '../site/config';
+
+const forgeFormToken = import.meta.env.FORGE_FORM_TOKEN ?? '';
 ---
 
 <div class="grid gap-10 md:grid-cols-3">
@@ -25,8 +28,8 @@ import { business } from '../site/config';
       {business.phone}
     </a>
     <p class="mt-8 border-l-3 border-sky-700 bg-sky-50 px-6 py-5 text-sm text-slate-700">
-      Cette version prépare votre demande à envoyer par email. Aucune demande
-      n’est transmise automatiquement.
+      Votre demande est envoyée à MAZAT depuis ce formulaire après votre
+      validation.
     </p>
   </aside>
   <div class="rounded-sm border border-slate-200 p-5 md:col-span-2 md:p-8">
@@ -37,10 +40,11 @@ import { business } from '../site/config';
         téléphone.
       </p>
     </noscript>
-    <form id="quote-form" data-email={business.email}>
+    <form id="quote-form" data-forge-form-token={forgeFormToken}>
       <p class="mb-5 text-sm text-slate-600">
-        Les champs marqués * sont obligatoires. Vos informations restent dans ce
-        navigateur jusqu’à l’envoi depuis votre messagerie.
+        Les champs marqués * sont obligatoires. Après vérification, votre
+        demande sera transmise à MAZAT par Forge. Pendant la saisie d’une
+        adresse, les recherches d’adresse sont transmises à Google.
       </p>
       <p
         class="mb-5 text-sm font-bold text-sky-700"
@@ -109,62 +113,8 @@ import { business } from '../site/config';
           <legend class="mb-6 text-2xl font-bold" tabindex="-1">
             {i === 0 ? 'Adresse de chargement' : 'Adresse de livraison'}
           </legend>
-          <label>
-            Adresse complète *
-            <input
-              name={`${i === 0 ? 'Départ' : 'Arrivée'} — Adresse`}
-              autocomplete={
-                i === 0
-                  ? 'section-departure street-address'
-                  : 'section-arrival street-address'
-              }
-              required
-              maxlength="250"
-            />
-          </label>
+          <AddressAutocomplete side={side as 'departure' | 'arrival'} />
           <div class="form-row">
-            <label>
-              Code postal *
-              <input
-                name={`${i === 0 ? 'Départ' : 'Arrivée'} — Code postal`}
-                autocomplete={
-                  i === 0
-                    ? 'section-departure postal-code'
-                    : 'section-arrival postal-code'
-                }
-                required
-                maxlength="20"
-              />
-            </label>
-            <label>
-              Ville *
-              <input
-                name={`${i === 0 ? 'Départ' : 'Arrivée'} — Ville`}
-                autocomplete={
-                  i === 0
-                    ? 'section-departure address-level2'
-                    : 'section-arrival address-level2'
-                }
-                required
-                maxlength="100"
-              />
-            </label>
-          </div>
-          <div class="form-row">
-            <label>
-              Pays *
-              <input
-                name={`${i === 0 ? 'Départ' : 'Arrivée'} — Pays`}
-                autocomplete={
-                  i === 0
-                    ? 'section-departure country-name'
-                    : 'section-arrival country-name'
-                }
-                value="France"
-                required
-                maxlength="80"
-              />
-            </label>
             <label>
               Type de logement / local *
               <select
@@ -321,21 +271,158 @@ import { business } from '../site/config';
           />
         </label>
         <label>
-          Statut d’importation et formalités
+          Biens sensibles ou réglementés
           <textarea
-            name="Formalités export"
+            name="Biens sensibles ou réglementés"
             maxlength="1500"
-            placeholder="Résidence / changement de résidence, accompagnement souhaité, liste bilingue, biens sensibles ou réglementés…"
+            placeholder="Objets concernés, contraintes connues ou « à confirmer »"
           />
         </label>
         <label>
-          Contact à destination (si connu)
-          <input name="Contact à destination" maxlength="250" />
+          Résidence fiscale
+          <textarea
+            name="Résidence fiscale"
+            maxlength="500"
+            placeholder="Pays de résidence fiscale ou « à confirmer »"
+          />
         </label>
+        <label>
+          Statut d’importation
+          <textarea
+            name="Statut d’importation"
+            maxlength="1500"
+            placeholder="Changement de résidence, statut d’importation ou « à confirmer »"
+          />
+        </label>
+        <label>
+          Disponibilité et langue de la liste de colisage *
+          <select name="Liste de colisage — disponibilité et langue" required>
+            <option value="">À préciser</option>
+            <option>Disponible en français</option>
+            <option>Disponible en anglais</option>
+            <option>Disponible en français et anglais</option>
+            <option>À préparer / à fournir</option>
+            <option>Disponibilité et langue à confirmer</option>
+          </select>
+        </label>
+        <p class="text-sm text-slate-600">
+          Une liste de colisage peut être nécessaire selon la destination et les
+          partenaires. Aucun document n’est téléversé ici ; vous pourrez le
+          transmettre ultérieurement si demandé.
+        </p>
+        <label>
+          Statut de l’Incoterm ou du périmètre contractuel *
+          <select id="incoterm-status" name="Incoterm / périmètre" required>
+            <option value="">Choisir</option>
+            <option value="a-definir">À définir avec le commissionnaire</option>
+            <option value="defini">Déjà défini (à préciser)</option>
+          </select>
+        </label>
+        <div id="incoterm-details" hidden>
+          <label>
+            Incoterm ou périmètre déjà convenu *
+            <input
+              id="incoterm-value"
+              name="Incoterm ou périmètre convenu"
+              maxlength="250"
+              placeholder="Terme convenu ou périmètre écrit"
+            />
+          </label>
+        </div>
+        <label>
+          Contact expéditeur pour l’adresse de départ *
+          <select id="sender-contact-status" name="Contact expéditeur" required>
+            <option value="">Choisir</option>
+            <option value="demandeur">
+              Demandeur (coordonnées à l’étape suivante)
+            </option>
+            <option value="autre">
+              Autre expéditeur (coordonnées à préciser)
+            </option>
+            <option value="a-confirmer">À confirmer</option>
+          </select>
+        </label>
+        <div id="sender-contact-fields" hidden>
+          <div class="form-row">
+            <label>
+              Nom de l’expéditeur *
+              <input
+                name="Autre expéditeur — nom"
+                autocomplete="section-export-sender name"
+                maxlength="150"
+              />
+            </label>
+            <label>
+              Téléphone de l’expéditeur *
+              <input
+                name="Autre expéditeur — téléphone"
+                type="tel"
+                autocomplete="section-export-sender tel"
+                maxlength="30"
+              />
+            </label>
+          </div>
+          <label>
+            Email de l’expéditeur *
+            <input
+              name="Autre expéditeur — email"
+              type="email"
+              autocomplete="section-export-sender email"
+              maxlength="254"
+            />
+          </label>
+        </div>
+        <label>
+          Contact destinataire pour l’adresse d’arrivée *
+          <select
+            id="recipient-contact-status"
+            name="Contact destinataire"
+            required
+          >
+            <option value="">Choisir</option>
+            <option value="demandeur">
+              Demandeur (coordonnées à l’étape suivante)
+            </option>
+            <option value="autre">
+              Autre destinataire (coordonnées à préciser)
+            </option>
+            <option value="a-confirmer">À confirmer</option>
+          </select>
+        </label>
+        <div id="recipient-contact-fields" hidden>
+          <div class="form-row">
+            <label>
+              Nom du destinataire *
+              <input
+                name="Autre destinataire — nom"
+                autocomplete="section-export-recipient name"
+                maxlength="150"
+              />
+            </label>
+            <label>
+              Téléphone du destinataire *
+              <input
+                name="Autre destinataire — téléphone"
+                type="tel"
+                autocomplete="section-export-recipient tel"
+                maxlength="30"
+              />
+            </label>
+          </div>
+          <label>
+            Email du destinataire *
+            <input
+              name="Autre destinataire — email"
+              type="email"
+              autocomplete="section-export-recipient email"
+              maxlength="254"
+            />
+          </label>
+        </div>
         <p class="notice">
-          Les frais portuaires, taxes, assurances, formalités et modalités de
-          livraison sont à définir au devis. Aucun calcul de fret ou de TVA
-          n’est effectué ici.
+          Les frais portuaires, manutention, stockage, douanes, assurance et
+          livraison seront à confirmer au devis. Aucun calcul de fret, de taxe
+          ou de TVA n’est effectué ici.
         </p>
       </fieldset>
       <fieldset class="mb-8 border-0 p-0" data-step="contact">
@@ -432,30 +519,29 @@ import { business } from '../site/config';
         </label>
       </fieldset>
       <div id="quote-review" hidden>
-        <h2 class="mb-5 text-3xl font-bold" tabindex="-1">
+        <h2 id="quote-heading" class="mb-5 text-3xl font-bold" tabindex="-1">
           Votre récapitulatif
         </h2>
         <p class="mb-5 text-slate-600">
-          Vérifiez les informations, puis ouvrez votre messagerie. Joignez vos
-          photos et envoyez le message à MAZAT. La demande n’est pas encore
-          envoyée.
+          Vérifiez les informations ci-dessous, puis envoyez votre demande à
+          MAZAT.
         </p>
         <pre
           id="quote-summary"
           class="max-h-96 overflow-y-auto whitespace-pre-wrap break-words bg-slate-100 p-5 text-sm"
         ></pre>
         <p class="my-5 text-sm text-slate-600">
-          Si le brouillon ne s’ouvre pas ou semble incomplet, téléchargez le
-          récapitulatif puis joignez-le à un email adressé à{' '}
+          Les photos et documents ne sont pas transmis par ce formulaire. Vous
+          pouvez les envoyer séparément à{' '}
           <a href={`mailto:${business.email}`}>{business.email}</a>.
         </p>
         <div class="flex flex-wrap gap-3">
           <button
             type="button"
-            id="email-draft"
+            id="send-request"
             class="min-h-12 rounded-sm border border-red-700 bg-red-700 px-5 py-3 text-sm font-bold text-white"
           >
-            Ouvrir mon brouillon email
+            Envoyer ma demande
           </button>
           <button
             type="button"
@@ -466,9 +552,18 @@ import { business } from '../site/config';
           </button>
         </div>
         <p
-          id="draft-status"
+          id="send-status"
           class="mt-5 bg-sky-50 p-4 text-slate-700"
           role="status"
+          aria-live="polite"
+          aria-atomic="true"
+          hidden
+        ></p>
+        <p
+          id="send-error"
+          class="mt-5 border-l-3 border-red-700 bg-red-50 p-4 text-slate-800"
+          role="alert"
+          aria-atomic="true"
           hidden
         ></p>
       </div>

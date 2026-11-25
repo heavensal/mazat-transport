@@ -1,0 +1,33 @@
+---
+import type { RegisteredContentPage } from '../site/pages';
+
+interface Props {
+  page: RegisteredContentPage;
+}
+
+const { page } = Astro.props;
+---
+
+<section class="bg-slate-950 py-16 text-white md:py-20">
+  <div class="mx-auto w-11/12 max-w-7xl md:w-5/6">
+    <nav class="mb-8 text-sm text-slate-300" aria-label="Fil d’Ariane">
+      <a class="underline" href="/">
+        Accueil
+      </a>
+      <span aria-hidden="true"> / </span>
+      <span aria-current="page">{page.eyebrow}</span>
+    </nav>
+    <p class="mb-5 text-xs font-bold uppercase tracking-widest text-sky-200">
+      {page.eyebrow}
+    </p>
+    <h1 class="mb-6 max-w-4xl text-4xl font-extrabold leading-tight md:text-6xl">
+      {page.heading.split('\n').map((line, index) => (
+        <>
+          {index > 0 && <br />}
+          {line}
+        </>
+      ))}
+    </h1>
+    <p class="max-w-3xl text-lg text-slate-300">{page.intro}</p>
+  </div>
+</section>

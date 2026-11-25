@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+interface Props {
+  page: {
+    id: string;
+    title: string;
+    description: string;
+    noindex?: boolean;
+  };
+}
+
+const { page } = Astro.props;
+const noindex =
+  page.noindex ??
+  (page.id === 'legal' || page.id === 'privacy' || page.id === 'terms');
+---
+
+<Layout title={page.title} description={page.description} noindex={noindex}>
+  <slot />
+</Layout>

@@ -1,0 +1,48 @@
+---
+const stages = [
+  ['Évaluer votre projet', 'Pays, villes, volume, date et nature des biens.'],
+  [
+    'Préparer l’inventaire',
+    'Visite ou vidéo, inventaire numéroté et valeur des effets.',
+  ],
+  [
+    'Protéger pour le voyage',
+    'Emballage export, fragiles et caisses sur mesure si nécessaires.',
+  ],
+  [
+    'Organiser la consolidation',
+    'Acheminement vers la zone de groupage ou le port.',
+  ],
+  [
+    'Coordonner le transport',
+    'Fret maritime et formalités selon les partenaires retenus.',
+  ],
+  [
+    'Prévoir l’arrivée',
+    'Réception, éventuel dédouanement et livraison selon l’offre.',
+  ],
+];
+---
+
+<section
+  class="bg-slate-100 py-14 md:py-20"
+  aria-labelledby="international-stages"
+>
+  <div class="mx-auto w-11/12 max-w-7xl md:w-5/6">
+    <p class="mb-5 text-xs font-bold uppercase tracking-widest text-sky-700">
+      Préparer, protéger, acheminer
+    </p>
+    <h2 id="international-stages" class="mb-8 text-3xl font-bold md:text-5xl">
+      Les étapes de votre dossier export.
+    </h2>
+    <ol class="grid gap-8 md:grid-cols-3">
+      {stages.map(([title, text], index) => (
+        <li class="border-t-2 border-slate-300 pt-5">
+          <span class="mb-4 block text-sm text-sky-700">0{index + 1}</span>
+          <h3 class="mb-2 text-lg font-bold">{title}</h3>
+          <p class="text-sm text-slate-600">{text}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

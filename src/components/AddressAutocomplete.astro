@@ -1,0 +1,106 @@
+---
+interface Props {
+  side: 'departure' | 'arrival';
+}
+const { side } = Astro.props;
+const prefix = side === 'departure' ? 'Départ' : 'Arrivée';
+// Browser key: configure website/API restrictions in Google Cloud.
+const configuredKey = import.meta.env.GOOGLE_MAPS_API_KEY?.trim() || '';
+const apiKey = configuredKey.startsWith('YOUR_') ? '' : configuredKey;
+const fields = [
+  {
+    key: 'street',
+    label: 'Adresse complète',
+    name: 'Adresse',
+    token: 'street-address',
+    max: 250,
+  },
+  {
+    key: 'postal',
+    label: 'Code postal',
+    name: 'Code postal',
+    token: 'postal-code',
+    max: 20,
+  },
+  {
+    key: 'city',
+    label: 'Ville',
+    name: 'Ville',
+    token: 'address-level2',
+    max: 100,
+  },
+  {
+    key: 'country',
+    label: 'Pays',
+    name: 'Pays',
+    token: 'country-name',
+    max: 80,
+  },
+];
+---
+
+<div data-address-autocomplete data-api-key={apiKey} data-side={side}>
+  {fields.map((field) => (
+    <div class="relative">
+      <label for={`${side}-${field.key}`}>
+        {field.label} *
+        <input
+          id={`${side}-${field.key}`}
+          data-address-field={field.key}
+          name={`${prefix} — ${field.name}`}
+          autocomplete={`section-${side} ${field.token}`}
+          value={field.key === 'country' ? 'France' : undefined}
+          aria-describedby={
+            field.key === 'street' && apiKey ? `${side}-google-help` : undefined
+          }
+          required
+          maxlength={field.max}
+        />
+      </label>
+      {field.key === 'street' && apiKey && (
+        <>
+          <div
+            data-suggestions-panel
+            hidden
+            class="mb-3 rounded-sm border border-slate-300 bg-white shadow-md"
+          >
+            <ul
+              id={`${side}-suggestions`}
+              data-suggestions
+              role="listbox"
+              aria-label={`Adresses de ${prefix.toLowerCase()} proposées`}
+              class="m-0 list-none p-0"
+            ></ul>
+            <p
+              translate="no"
+              class="m-0 border-t border-slate-200 px-3 py-2 text-right font-sans text-xs font-normal not-italic tracking-normal whitespace-nowrap text-[#5e5e5e]"
+            >
+              Google Maps
+            </p>
+          </div>
+          <p id={`${side}-google-help`} class="mb-3 text-sm text-slate-600">
+            Suggestions Google pendant la saisie. Sélectionnez une adresse pour
+            remplir les champs suivants. Vos recherches sont transmises à
+            Google.
+            <a href="https://policies.google.com/privacy" class="underline">
+              Confidentialité
+            </a>{' '}
+            ·
+            <a
+              href="https://maps.google.com/help/terms_maps/"
+              class="underline"
+            >
+              Conditions Google Maps
+            </a>
+          </p>
+          <p
+            data-search-status
+            role="status"
+            class="mb-3 text-sm text-slate-600"
+          ></p>
+        </>
+      )}
+    </div>
+  ))}
+</div>
+<script src="../lib/address-autocomplete.ts"></script>

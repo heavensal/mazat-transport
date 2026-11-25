@@ -10,7 +10,7 @@ Internal pricing is not public content and is not implemented in browser code. E
 
 ## Current delivery
 
-14 HTML pages including 404. Original logo, mobile navigation, fixed mobile call/quote actions, offer comparison, three export options, six-step export questionnaire plus review (five steps plus review for domestic requests), dynamic elevator and business fields. Local text download and explicit mail draft handoff. No submission, database, admin workflow, photo upload or automatic acknowledgement exists in this version.
+13 HTML pages including 404. Original logo, mobile navigation, fixed mobile call/quote actions, offer comparison, three export options, six-step export questionnaire plus review (five steps plus review for domestic requests), dynamic elevator and business fields. Local text download and explicit mail draft handoff. No submission, database, admin workflow, photo upload or automatic acknowledgement exists in this version.
 
 FAQ/review imports share a build-only Forge transport, with French FAQ fallback and no fictional reviews. Configure the MAZAT-specific token before live integration acceptance. No Laure credentials or business data were copied.
 

@@ -1,0 +1,59 @@
+---
+import PageHero from '../../components/PageHero.astro';
+import { business } from '../../site/config';
+import type { RegisteredContentPage } from '../../site/pages';
+
+interface Props {
+  page: RegisteredContentPage;
+}
+
+const { page } = Astro.props;
+---
+
+<PageHero page={page} />
+<section class="mx-auto grid w-11/12 max-w-7xl gap-10 py-16 md:w-5/6 md:grid-cols-2 md:py-24">
+  <div>
+    <h2 class="mb-5 text-3xl font-bold">
+      De Marseille à votre nouvelle adresse.
+    </h2>
+    <p class="mb-4 text-slate-600">
+      Marseille, Aix-en-Provence, Aubagne, La Ciotat et Martigues font partie
+      des zones prioritaires de nos interventions. Que votre trajet reste dans
+      les Bouches-du-Rhône ou se poursuive dans une autre région, votre devis
+      tient compte des deux adresses.
+    </p>
+    <p class="mb-6 text-slate-600">
+      Précisez le stationnement possible devant le logement, la distance de
+      portage entre le camion et la porte, les étages et les dimensions de
+      l’ascenseur. Si un monte-meubles est envisagé, l’accès et les
+      autorisations doivent être vérifiés.
+    </p>
+    <a
+      class="inline-flex min-h-13 items-center justify-center rounded-sm border border-red-700 bg-red-700 px-6 py-4 text-sm font-bold text-white"
+      href="/devis/"
+    >
+      Demander mon devis gratuit
+    </a>
+  </div>
+  <div class="rounded-sm border border-slate-200 p-8">
+    <p class="mb-5 text-xs font-bold uppercase tracking-widest text-sky-700">
+      Un accompagnement adapté
+    </p>
+    <h3 class="mb-3 text-xl font-bold">Local, national ou international.</h3>
+    <p class="mb-3 text-slate-600">
+      Choisissez entre cinq formules de déménagement et des services
+      spécifiques, selon les biens à transporter et la préparation que vous
+      souhaitez nous confier.
+    </p>
+    <p class="mb-5 text-slate-600">
+      Aucune adresse d’agence locale n’est annoncée ici. Pour échanger sur votre
+      projet, contactez directement notre équipe.
+    </p>
+    <a
+      class="font-bold underline decoration-slate-300 underline-offset-4"
+      href={business.phoneHref}
+    >
+      {business.phone}
+    </a>
+  </div>
+</section>

@@ -1,0 +1,36 @@
+---
+import PageHero from '../../components/PageHero.astro';
+import type { RegisteredContentPage } from '../../site/pages';
+
+interface Props {
+  page: RegisteredContentPage;
+}
+
+const { page } = Astro.props;
+---
+
+<PageHero page={page} />
+<section class="mx-auto max-w-3xl px-0 py-16 md:py-24">
+  <h2 class="mt-10 mb-4 text-2xl font-bold">Ce que cette version utilise</h2>
+  <p>
+    Aucun outil d’analyse d’audience ou de publicité n’est ajouté au site. Les
+    suggestions Google se chargent pendant la saisie d’une adresse dans le
+    formulaire. Elle établit alors une connexion avec Google ; sa{' '}
+    <a href="https://policies.google.com/privacy">
+      politique de confidentialité
+    </a>
+    s’applique. Vous pouvez compléter les champs sans sélectionner de
+    suggestion. Le formulaire n’est pas enregistré dans le stockage local.
+  </p>
+  <h2 class="mt-10 mb-4 text-2xl font-bold">Liens vers d’autres sites</h2>
+  <p>
+    Les liens des avis ouvrent Google Maps. Les avis sont chargés depuis Google
+    à l’ouverture de l’accueil. Les règles de confidentialité de ce service
+    s’appliquent après votre navigation vers ce site.
+  </p>
+  <h2 class="mt-10 mb-4 text-2xl font-bold">Évolutions à venir</h2>
+  <p>
+    L’ajout d’un service externe ou d’un outil de mesure nécessite de revoir
+    cette information et les choix proposés avant son activation.
+  </p>
+</section>

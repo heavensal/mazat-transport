@@ -1,0 +1,11 @@
+---
+import RegisteredPage from '../components/RegisteredPage.astro';
+import NicePage from '../views/nice/Page.astro';
+import { getPage } from '../site/pages';
+
+const page = getPage('nice');
+---
+
+<RegisteredPage page={page}>
+  <NicePage page={page} />
+</RegisteredPage>

@@ -1,0 +1,23 @@
+---
+import Hero from './components/Hero.astro';
+import Introduction from './components/Introduction.astro';
+import Preparation from './components/Preparation.astro';
+import Solutions from './components/Solutions.astro';
+import Stages from './components/Stages.astro';
+
+interface Props {
+  page: {
+    eyebrow: string;
+    heading: string;
+    intro: string;
+  };
+}
+
+const { page } = Astro.props;
+---
+
+<Hero eyebrow={page.eyebrow} heading={page.heading} intro={page.intro} />
+<Introduction />
+<Solutions />
+<Stages />
+<Preparation />

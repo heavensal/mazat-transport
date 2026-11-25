@@ -28,6 +28,25 @@ const contents = new Map(
 );
 let links = 0;
 for (const [file, html] of contents) {
+  const redirectTarget = html.match(
+    /<meta http-equiv="refresh" content="0;url=([^"]+)"/,
+  )?.[1];
+  if (redirectTarget) {
+    assert.ok(
+      redirectTarget.startsWith('/'),
+      `${file}: redirect must be local`,
+    );
+    assert.match(html, /<meta name="robots" content="noindex"/);
+    const target = new URL(redirectTarget, 'https://preview.invalid');
+    let path = join(root, decodeURIComponent(target.pathname));
+    try {
+      if ((await stat(path)).isDirectory()) path = join(path, 'index.html');
+      await stat(path);
+    } catch {
+      assert.fail(`${file}: broken local redirect ${redirectTarget}`);
+    }
+    continue;
+  }
   assert.match(html, /<html[^>]*lang="fr"/, 'French document language');
   assert.equal(
     (html.match(/<h1(?:\s|>)/g) || []).length,

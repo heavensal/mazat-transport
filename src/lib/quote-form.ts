@@ -1,3 +1,5 @@
+import { sendFormWithForge } from './form-forge';
+
 const form = document.querySelector<HTMLFormElement>('#quote-form');
 if (form) {
   const project = form.querySelector<HTMLSelectElement>('#project-type')!;
@@ -10,14 +12,38 @@ if (form) {
   const progress = form.querySelector<HTMLProgressElement>('#step-progress')!;
   const label = form.querySelector<HTMLElement>('#step-label')!;
   const summary = form.querySelector<HTMLElement>('#quote-summary')!;
-  const status = form.querySelector<HTMLElement>('#draft-status')!;
+  const reviewTitle = form.querySelector<HTMLElement>('#quote-heading')!;
+  const sendButton = form.querySelector<HTMLButtonElement>('#send-request')!;
+  const sendStatus = form.querySelector<HTMLElement>('#send-status')!;
+  const sendError = form.querySelector<HTMLElement>('#send-error')!;
+  const downloadButton =
+    form.querySelector<HTMLButtonElement>('#download-summary')!;
+  const formButtons = form.querySelector<HTMLElement>('.form-buttons')!;
   const volume = form.querySelector<HTMLInputElement>('#volume')!;
   const inventory = form.querySelector<HTMLTextAreaElement>('#inventory')!;
   const date = form.querySelector<HTMLInputElement>('#moving-date')!;
   const flexibility = form.querySelector<HTMLSelectElement>('#flexibility')!;
+  const senderContactStatus = form.querySelector<HTMLSelectElement>(
+    '#sender-contact-status',
+  )!;
+  const senderContactFields = form.querySelector<HTMLElement>(
+    '#sender-contact-fields',
+  )!;
+  const recipientContactStatus = form.querySelector<HTMLSelectElement>(
+    '#recipient-contact-status',
+  )!;
+  const recipientContactFields = form.querySelector<HTMLElement>(
+    '#recipient-contact-fields',
+  )!;
+  const incotermStatus =
+    form.querySelector<HTMLSelectElement>('#incoterm-status')!;
+  const incotermDetails = form.querySelector<HTMLElement>('#incoterm-details')!;
+  const incotermValue =
+    form.querySelector<HTMLInputElement>('#incoterm-value')!;
   let step = 0;
   let recap = '';
   let requestReference = '';
+  let formFields: Record<string, string> = {};
   const params = new URLSearchParams(location.search);
   function selectParam(id: string, param: string) {
     const select = form!.querySelector<HTMLSelectElement>(id)!;
@@ -50,6 +76,26 @@ if (form) {
       input.disabled = company.hidden;
     date.required =
       flexibility.value === 'date-fixe' || flexibility.value === 'flexible';
+    const senderIsOther = senderContactStatus.value === 'autre';
+    senderContactFields.hidden = !senderIsOther;
+    for (const input of senderContactFields.querySelectorAll<HTMLInputElement>(
+      'input',
+    )) {
+      input.disabled = !senderIsOther;
+      input.required = senderIsOther;
+    }
+    const recipientIsOther = recipientContactStatus.value === 'autre';
+    recipientContactFields.hidden = !recipientIsOther;
+    for (const input of recipientContactFields.querySelectorAll<HTMLInputElement>(
+      'input',
+    )) {
+      input.disabled = !recipientIsOther;
+      input.required = recipientIsOther;
+    }
+    const incotermIsDefined = incotermStatus.value === 'defini';
+    incotermDetails.hidden = !incotermIsDefined;
+    incotermValue.disabled = !incotermIsDefined;
+    incotermValue.required = incotermIsDefined;
   }
   function render(focus = true) {
     const active = steps();
@@ -80,18 +126,26 @@ if (form) {
     fieldsets.forEach((f) => (f.disabled = !active.includes(f)));
     conditionals();
     if (!requestReference) requestReference = `PREPA-${crypto.randomUUID()}`;
-    const entries = [...new FormData(form).entries()].filter(
-      ([, value]) => typeof value === 'string' && value.trim(),
-    );
     const selectLabels = new Map(
       [...form!.querySelectorAll<HTMLSelectElement>('select')].map((s) => [
         s.name,
         s.selectedOptions[0]?.textContent || s.value,
       ]),
     );
-    recap = `DEMANDE DE DEVIS MAZAT — NON ENVOYÉE\nRéférence locale de préparation : ${requestReference}\nPréparée le : ${new Date().toLocaleString('fr-FR')}\n\n${entries.map(([name, value]) => `${name} : ${selectLabels.get(name) || value}`).join('\n')}\n\nCette demande n’est pas un devis contractuel. Aucun prix n’est calculé. Référence de préparation uniquement : la date de dépôt et le numéro de dossier seront attribués à réception par MAZAT.`;
+    const entries = [...new FormData(form).entries()]
+      .filter(
+        (entry): entry is [string, string] =>
+          typeof entry[1] === 'string' && entry[1].trim().length > 0,
+      )
+      .map(
+        ([name, value]) =>
+          [name, selectLabels.get(name) || value.trim()] as const,
+      );
+    formFields = Object.fromEntries(entries);
+    recap = `DEMANDE DE DEVIS MAZAT\nRéférence locale de préparation : ${requestReference}\nPréparée le : ${new Date().toLocaleString('fr-FR')}\n\n${entries.map(([name, value]) => `${name} : ${value}`).join('\n')}\n\nCette demande n’est pas un devis contractuel. Aucun prix n’est calculé. Référence de préparation uniquement : la date de dépôt et le numéro de dossier seront attribués à réception par MAZAT.`;
     summary.textContent = recap;
-    status.hidden = true;
+    sendStatus.hidden = true;
+    sendError.hidden = true;
   }
   form.noValidate = true;
   progress.hidden = false;
@@ -120,22 +174,55 @@ if (form) {
   });
   previous.addEventListener('click', () => {
     if (step > 0) {
+      sendStatus.hidden = true;
+      sendError.hidden = true;
       step--;
       render();
     }
   });
-  form.querySelector('#email-draft')!.addEventListener('click', () => {
-    const subject = 'Demande de devis MAZAT';
-    // Keep mailto short for mail clients with limited URI length. The text attachment is the reliable full copy.
-    const short = recap.length > 1600;
-    const body = short
-      ? `Bonjour,\n\nJe souhaite recevoir un devis de déménagement.\nRéférence de préparation : ${requestReference}\n\nJe joins le récapitulatif téléchargé depuis le site ainsi que mes éventuelles photos.\n\nMerci.`
-      : recap;
-    location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    status.hidden = false;
-    status.textContent = short
-      ? 'Votre messagerie a été sollicitée. Téléchargez et joignez le récapitulatif complet avant l’envoi. Le site ne peut pas confirmer l’envoi ni la réception.'
-      : 'Votre messagerie a été sollicitée. Vérifiez le contenu, ajoutez vos pièces jointes puis envoyez le message. Le site ne peut pas confirmer l’envoi ni la réception.';
+  sendButton.addEventListener('click', async () => {
+    sendButton.disabled = true;
+    previous.disabled = true;
+    downloadButton.disabled = true;
+    sendButton.textContent = 'Envoi en cours…';
+    sendError.hidden = true;
+    sendStatus.hidden = false;
+    sendStatus.textContent = 'Envoi de votre demande en cours…';
+    form.setAttribute('aria-busy', 'true');
+
+    try {
+      const email = formFields['Email']?.trim();
+      if (!email) throw new Error('Votre adresse email est manquante.');
+      await sendFormWithForge(form.dataset.forgeFormToken ?? '', {
+        from_email: email,
+        fields: {
+          ...formFields,
+          nom: [formFields['Prénom'], formFields['Nom']]
+            .filter(Boolean)
+            .join(' '),
+          email,
+          phone: formFields['Téléphone'] ?? '',
+          message: recap,
+        },
+      });
+      reviewTitle.textContent = 'Demande envoyée';
+      sendStatus.textContent =
+        'Forge a accepté votre demande pour envoi à MAZAT. Cela ne garantit pas sa réception finale par email.';
+      sendButton.hidden = true;
+      formButtons.hidden = true;
+      reviewTitle.focus();
+    } catch (error) {
+      console.error('[Demande de devis] Échec de l’envoi Forge.', error);
+      sendStatus.hidden = true;
+      sendError.textContent = `L’envoi a échoué. ${error instanceof Error ? error.message : 'Une erreur inattendue est survenue.'} Vos réponses sont conservées sur cette page : vous pouvez réessayer ou contacter MAZAT par email.`;
+      sendError.hidden = false;
+      sendButton.disabled = false;
+      sendButton.textContent = 'Réessayer l’envoi';
+    } finally {
+      previous.disabled = false;
+      downloadButton.disabled = false;
+      form.removeAttribute('aria-busy');
+    }
   });
   form.querySelector('#download-summary')!.addEventListener('click', () => {
     const url = URL.createObjectURL(

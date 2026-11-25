@@ -1,0 +1,11 @@
+---
+import RegisteredPage from '../components/RegisteredPage.astro';
+import MarseillePage from '../views/marseille/Page.astro';
+import { getPage } from '../site/pages';
+
+const page = getPage('marseille');
+---
+
+<RegisteredPage page={page}>
+  <MarseillePage page={page} />
+</RegisteredPage>

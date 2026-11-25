@@ -1,0 +1,42 @@
+---
+import PageHero from '../../components/PageHero.astro';
+import type { RegisteredContentPage } from '../../site/pages';
+
+interface Props {
+  page: RegisteredContentPage;
+}
+
+const { page } = Astro.props;
+---
+
+<PageHero page={page} />
+<section class="mx-auto max-w-3xl px-0 py-16 md:py-24">
+  <h2 class="mt-10 mb-4 text-2xl font-bold">Demande, étude et devis</h2>
+  <p>
+    Les informations envoyées servent à étudier votre projet. La prestation, le
+    volume, les accès, les fournitures, les options, les délais et le périmètre
+    des opérations sont définis dans le devis personnalisé validé par MAZAT.
+  </p>
+  <h2 class="mt-10 mb-4 text-2xl font-bold">Réservation et prestations</h2>
+  <p>
+    L’envoi d’une demande de devis ne constitue ni une réservation ni un devis
+    contractuel.
+  </p>
+  <p class="mt-4">
+    Les inclusions et exclusions, la date d’intervention, les conditions
+    d’accès, les moyens nécessaires, le volume retenu et les prestations
+    optionnelles doivent être précisés dans un devis accepté par les parties
+    avant l’exécution de la prestation.
+  </p>
+  <h2 class="mt-10 mb-4 text-2xl font-bold">Assurance et dommages</h2>
+  <p>
+    Toute limite de responsabilité, garantie, franchise, déclaration de valeur
+    ou procédure de sinistre doit être communiquée dans les documents
+    contractuels applicables avant réservation.
+  </p>
+  <p class="mt-8 border-l-3 border-sky-700 bg-sky-50 px-6 py-5 text-slate-700">
+    Les CGV complètes, les conditions de paiement, les règles d’annulation et
+    les coordonnées du médiateur conventionné restent à intégrer après
+    validation des documents contractuels de MAZAT.
+  </p>
+</section>

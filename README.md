@@ -22,7 +22,7 @@ pnpm build
 - `src/lib/`: browser quote preparation and build-only Forge transport.
 - `src/pages/`: one Astro route entrypoint per public page, plus 404, robots and sitemap.
 - `src/views/`: one content folder per visible page, with page-specific components.
-- `public/images/mazat-logo.png`: unchanged client logo.
+- `public/images/mazat-logo.png`: current client-supplied transparent logo.
 - `.agents/skills`, `.codex/agents`, `.cursor`, `.github/agents`: reusable skills and adapters copied from Laure Corrao and adapted to this implementation.
 
 Read [AGENTS.md](AGENTS.md), [fast_commands.md](fast_commands.md), [client-brief.md](docs/client-brief.md) and [todo.md](todo.md).
@@ -49,7 +49,7 @@ No copied credentials, internal price grid, fabricated reviews, generated job ph
 
 ## Brand asset set
 
-Favicons, Apple/Android/maskable icons, manifest, PNG/WebP logo sizes and a 1200×630 sharing image are included. Regenerate deterministically with `pnpm assets:brand` using the unchanged original logo. See [asset inventory](public/favicons/README.md) for sizes, metadata, safe-zone details and scope.
+Favicons, Apple/Android/maskable icons, manifest, PNG/WebP logo sizes and a 1200×630 sharing image are included. Regenerate deterministically with `pnpm assets:brand` using the current supplied logo and favicon package. See [asset inventory](public/favicons/README.md) for sizes, metadata, safe-zone details and scope.
 
 ## Address autocomplete
 

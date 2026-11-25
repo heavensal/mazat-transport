@@ -1,7 +1,7 @@
 // Deterministic format/size exports of the supplied logo; no generated artwork.
 // Uses Sharp already bundled with Astro. No network or build-time generation required.
 import { createRequire } from 'node:module';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, copyFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
 const require = createRequire(import.meta.url);
@@ -16,13 +16,17 @@ const resize = (size) =>
     .resize(size, size, { fit: 'contain', background: '#000000' })
     .flatten({ background: '#000000' })
     .removeAlpha();
+const faviconSource = await readFile(join(root, 'favicon-96x96.png'));
+const appleSource = await readFile(join(root, 'apple-touch-icon.png'));
 for (const size of [16, 32, 48, 96]) {
-  await resize(size)
+  await sharp(faviconSource)
+    .resize(size, size)
     .png()
     .toFile(join(icons, `favicon-${size}x${size}.png`));
 }
 for (const size of [152, 167, 180]) {
-  await resize(size)
+  await sharp(appleSource)
+    .resize(size, size)
     .png()
     .toFile(
       join(
@@ -34,9 +38,10 @@ for (const size of [152, 167, 180]) {
     );
 }
 for (const size of [192, 512]) {
-  await resize(size)
-    .png()
-    .toFile(join(icons, `android-chrome-${size}x${size}.png`));
+  await copyFile(
+    join(root, `web-app-manifest-${size}x${size}.png`),
+    join(icons, `android-chrome-${size}x${size}.png`),
+  );
   // Entire source square fits inside the 80%-diameter safe circle (0.55*sqrt(2) < 0.8).
   const artworkSize = Math.floor(size * 0.55);
   const artwork = await resize(artworkSize).png().toBuffer();
@@ -49,39 +54,21 @@ for (const size of [192, 512]) {
     .png()
     .toFile(join(icons, `icon-maskable-${size}x${size}.png`));
 }
-// ICO directory with PNG frames (supported by modern browsers and OS icon consumers).
-const frames = await Promise.all(
-  [16, 32, 48].map((size) => resize(size).png().toBuffer()),
-);
-const directory = Buffer.alloc(6 + 16 * frames.length);
-directory.writeUInt16LE(1, 2);
-directory.writeUInt16LE(frames.length, 4);
-let offset = directory.length;
-for (const [index, size] of [16, 32, 48].entries()) {
-  const entry = 6 + index * 16;
-  directory[entry] = size;
-  directory[entry + 1] = size;
-  directory.writeUInt16LE(1, entry + 4);
-  directory.writeUInt16LE(32, entry + 6);
-  directory.writeUInt32LE(frames[index].length, entry + 8);
-  directory.writeUInt32LE(offset, entry + 12);
-  offset += frames[index].length;
-}
-await writeFile(
-  join(root, 'favicon.ico'),
-  Buffer.concat([directory, ...frames]),
-);
-await resize(180).png().toFile(join(root, 'apple-touch-icon.png'));
+// Supplied favicon.ico, favicon.svg and root Apple icon are preserved verbatim.
 for (const size of [128, 256, 512]) {
-  await resize(size)
+  await sharp(source)
+    .resize(size, size)
     .png()
     .toFile(join(root, `images/mazat-logo-${size}.png`));
-  await resize(size)
+  await sharp(source)
+    .resize(size, size)
     .webp({ quality: 92 })
     .toFile(join(root, `images/mazat-logo-${size}.webp`));
 }
-// A share canvas, not a new logo: source stays at its native 500px resolution.
+// Keep the sharing canvas at its declared 1200×630 dimensions for any source size.
 await sharp(source)
+  .resize(500, 500)
+  .flatten({ background: '#000000' })
   .extend({ top: 65, bottom: 65, left: 350, right: 350, background: '#000000' })
   .png()
   .toFile(join(root, 'images/mazat-social-1200x630.png'));

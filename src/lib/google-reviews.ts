@@ -19,6 +19,9 @@ function appendLink(parent: HTMLElement, text: string, url?: string) {
     if (safe.protocol !== 'https:') return;
     const link = document.createElement('a');
     link.href = safe.href;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.setAttribute('aria-description', 'S’ouvre dans un nouvel onglet');
     link.textContent = text;
     link.className = 'underline underline-offset-4';
     parent.append(link);
@@ -87,6 +90,7 @@ for (const root of document.querySelectorAll<HTMLElement>(
             review.authorAttribution.displayName!,
             review.authorAttribution.uri,
           );
+          holder.querySelector('a')?.classList.remove('underline');
           if (holder.childNodes.length) author.replaceChildren(holder);
         }
         const text = card.querySelector<HTMLElement>('[data-review-text]')!;
@@ -122,6 +126,7 @@ for (const root of document.querySelectorAll<HTMLElement>(
         more.addEventListener('click', () => {
           const complete = card.cloneNode(true) as HTMLElement;
           complete.querySelector('[data-review-more]')?.remove();
+          complete.querySelector<HTMLElement>('[data-review-details]')!.hidden = false;
           fullReview.replaceChildren(complete);
           dialog.showModal();
           dialog.scrollTop = 0;

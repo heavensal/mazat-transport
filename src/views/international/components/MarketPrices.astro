@@ -1,0 +1,134 @@
+---
+const sources = {
+  canada: 'https://sirelo.fr/demenagement-par-container/container-france-canada/',
+  usa: 'https://sirelo.fr/demenager-a-etranger/demenager-aux-etats-unis/',
+  containers: 'https://sirelo.fr/demenagement-par-container/',
+  overseas: 'https://www.iftl.fr/contact',
+};
+const comparisons = [
+  {
+    id: 'canada',
+    title: 'France → Canada',
+    source: 'Sirelo · novembre 2026',
+    url: sources.canada,
+    context: 'Estimations porte-à-porte depuis la région parisienne. Le trajet depuis Marseille doit faire l’objet d’une étude distincte. Assurance, inspection douanière éventuelle et stockage généralement exclus selon la source.',
+    rows: [
+      ['Groupage maritime (LCL)', '1 700 à 5 000 €', 'Fourchette globale ; le volume et la ville d’arrivée font varier le budget.'],
+      ['Conteneur dédié 20 pieds', '3 000 à 8 000 €', 'Acheminement intérieur à préciser selon la destination canadienne.'],
+      ['Conteneur dédié 40 pieds', '6 000 à 12 000 €', 'À comparer à prestations et adresses équivalentes.'],
+    ],
+  },
+  {
+    id: 'usa',
+    title: 'France → États-Unis',
+    source: 'Sirelo · octobre 2026',
+    url: sources.usa,
+    context: 'Repères pour de petits volumes en groupage. Ports, adresses, prestations incluses et frais à destination doivent être précisés avant toute comparaison avec votre projet.',
+    rows: [
+      ['Groupage de 3 à 5 m³', 'À partir d’environ 2 000 €', 'Prix d’appel ; ce montant ne garantit pas une prestation complète.'],
+      ['Groupage de 5 à 15 m³', '3 000 à 5 500 €', 'La livraison dans les terres peut modifier sensiblement le budget.'],
+    ],
+  },
+  {
+    id: 'overseas',
+    title: 'France métropolitaine → Outre-mer',
+    source: 'IFTL · prix du mois affichés, mois non précisé',
+    url: sources.overseas,
+    context: 'Prix d’appel pour le premier m³ en groupage uniquement. Ce ne sont ni des prix au m³ applicables à tout le chargement, ni des budgets totaux. Sens exact, dépôts ou ports, frais et validité à confirmer auprès de la source.',
+    rows: [
+      ['La Réunion · premier m³', 'Dès 500 €', 'Groupage ; enlèvement et livraison à domicile à vérifier.'],
+      ['Guadeloupe · premier m³', 'Dès 500 €', 'Groupage ; périmètre et suppléments à vérifier.'],
+      ['Martinique · premier m³', 'Dès 500 €', 'Groupage ; périmètre et suppléments à vérifier.'],
+      ['Guyane · premier m³', 'Dès 600 €', 'Groupage ; périmètre et suppléments à vérifier.'],
+    ],
+  },
+];
+const budgetItems = [
+  ['Au départ', 'Volume, accès, emballage, enlèvement et trajet jusqu’au dépôt ou au port.'],
+  ['Pendant le transport', 'Groupage ou conteneur dédié, fret, manutention et assurance selon l’offre.'],
+  ['À destination', 'Formalités, éventuels droits et taxes, frais portuaires, stockage et livraison finale.'],
+];
+---
+
+<section aria-labelledby="market-prices-title" class="border-t border-slate-200 bg-slate-50 py-16 md:py-24">
+  <div class="mx-auto w-11/12 min-w-0 max-w-7xl md:w-5/6">
+    <p class="mb-5 text-xs font-bold uppercase tracking-widest text-sky-700">Votre budget export maritime</p>
+    <h2 id="market-prices-title" class="max-w-3xl text-3xl font-bold md:text-5xl">Des repères concrets pour préparer votre projet.</h2>
+    <p class="mt-6 max-w-3xl text-slate-600">
+      Quel budget prévoir pour expédier vos effets personnels ? Nous avons rapproché des estimations publiques pour le Canada, les États-Unis et l’Outre-mer afin de vous donner un premier ordre de grandeur avant l’étude de votre déménagement.
+    </p>
+    <p class="mt-6 border-l-4 border-sky-700 bg-white p-5 text-sm text-slate-700">
+      Ces montants sont des repères de marché publiés par des tiers, pas des tarifs MAZAT ni une moyenne statistique du marché. Votre devis MAZAT est personnalisé selon votre volume, vos adresses, vos dates et les prestations retenues. Les tableaux ne sont pas directement comparables entre eux.
+    </p>
+    <p class="mt-4 text-sm text-slate-600">Sources consultées le <time datetime="2026-11-26">26 novembre 2026</time> · Montants en euros · Régime fiscal à confirmer pour chaque offre ; aucune équivalence HT/TTC présumée.</p>
+
+    <div class="mt-10 space-y-10">
+      {comparisons.map((comparison) => (
+        <div class="min-w-0">
+          <h3 id={`prices-${comparison.id}`} class="text-2xl font-bold">{comparison.title}</h3>
+          <p class="mt-3 max-w-4xl text-sm text-slate-600">{comparison.context}</p>
+          <p class="mt-3 text-sm">
+            Source : <a href={comparison.url} target="_blank" rel="noopener noreferrer" aria-description="S’ouvre dans un nouvel onglet" class="font-semibold underline underline-offset-4 hover:text-red-800">{comparison.source}</a>
+          </p>
+          <div role="region" aria-labelledby={`prices-${comparison.id}`} tabindex="0" class="relative mt-5 max-w-full overflow-x-auto rounded-sm border border-slate-200 bg-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sky-700">
+            <table class="w-full min-w-[38rem] border-collapse text-left text-sm">
+              <caption class="px-5 py-4 text-left font-semibold text-slate-600">Repères indicatifs — {comparison.title}</caption>
+              <thead class="bg-slate-900 text-white">
+                <tr><th scope="col">Scénario</th><th scope="col">Budget publié</th><th scope="col">À prendre en compte</th></tr>
+              </thead>
+              <tbody>
+                {comparison.rows.map(([scenario, price, note]) => (
+                  <tr class="border-t border-slate-200 even:bg-slate-50">
+                    <th scope="row" class="font-semibold">{scenario}</th>
+                    <td class="font-bold text-sky-800">{price}</td>
+                    <td class="text-slate-600">{note}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p class="mt-2 text-xs text-slate-600 md:hidden">Faites défiler le tableau horizontalement pour lire toutes les colonnes.</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-12 border-t border-slate-300 pt-8">
+      <h3 class="text-2xl font-bold">Comparer le même service, du départ à l’arrivée.</h3>
+      <p class="mt-4 max-w-3xl text-slate-600">Pour passer de ces repères à votre budget, nous étudions les postes suivants et précisons le périmètre retenu dans votre devis.</p>
+      <dl class="mt-6 grid gap-6 md:grid-cols-3">
+        {budgetItems.map(([title, text]) => (
+          <div class="border-t-2 border-sky-700 pt-4">
+            <dt class="font-bold">{title}</dt>
+            <dd class="mt-2 text-sm text-slate-600">{text}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <details class="mt-10 rounded-sm border border-slate-200 bg-white p-5">
+      <summary class="cursor-pointer font-semibold">Méthode et sources de la comparaison</summary>
+      <div class="mt-4 space-y-4 text-sm text-slate-600">
+        <p>Cette comparaison documentaire actualise les références de l’étude initiale du 5 novembre 2026. Elle reprend les montants et périmètres visibles à la date de consultation, sans calculer de moyenne ni extrapoler un tarif MAZAT. Elle ne repose pas sur des devis négociés pour votre trajet.</p>
+        <p>Les anciennes fourchettes Canada ont été remplacées par les estimations de novembre 2026 de la page dédiée. Les repères États-Unis sont datés d’octobre 2026. IFTL présente des prix du mois sans identifier le mois de validité : une confirmation reste nécessaire avant de les utiliser pour un projet.</p>
+        <ul class="list-disc space-y-3 pl-5">
+          {comparisons.map((comparison) => (
+            <li><a href={comparison.url} target="_blank" rel="noopener noreferrer" aria-description="S’ouvre dans un nouvel onglet" class="underline underline-offset-4">{comparison.title} — {comparison.source}</a></li>
+          ))}
+          <li><a href={sources.containers} target="_blank" rel="noopener noreferrer" aria-description="S’ouvre dans un nouvel onglet" class="underline underline-offset-4">Sirelo — guide général du déménagement par conteneur</a> : consulté pour le contexte ; ses estimations de janvier 2026 ne sont pas mélangées aux chiffres des pages par destination.</li>
+        </ul>
+        <p>La consultation d’une page confirme les chiffres qui y figurent, pas leur disponibilité pour vos dates. Une offre port-à-port, une prestation porte-à-porte et un prix d’appel pour le premier m³ couvrent des services différents.</p>
+      </div>
+    </details>
+    <div class="mt-10 text-center">
+      <a href="/devis/?type=export" class="inline-flex min-h-13 items-center justify-center rounded-sm bg-red-700 px-6 py-4 text-sm font-bold text-white hover:bg-red-800">Faire étudier mon budget export</a>
+      <p class="mt-3 text-sm text-slate-600">Votre destination, votre volume, vos besoins : une étude adaptée à votre projet.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  th, td {
+    padding: 1rem 1.25rem;
+    vertical-align: top;
+  }
+</style>

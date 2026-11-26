@@ -24,16 +24,16 @@ import { business } from '../site/config';
       <NavbarLinks />
     </nav>
     <address class="mx-6 space-y-3 border-t border-slate-200 py-6 text-sm not-italic">
-      <img src="/images/mazat-logo-128.png" alt={business.legalName} width="128" height="128" class="mx-auto mb-5 h-16 w-16" />
-      <a class="flex items-start gap-3 font-semibold underline underline-offset-4" href={business.phoneHref}>
+      <img src="/images/mazat-logo-256.webp" alt={business.legalName} width="128" height="128" class="mx-auto mb-5 h-32 w-32" />
+      <a class="flex items-start gap-3 font-semibold no-underline" href={business.phoneHref}>
         <span aria-hidden="true" class="w-5 shrink-0 text-center">☎</span>
         <span>{business.phone}</span>
       </a>
-      <a class="flex items-start gap-3 underline underline-offset-4" href={business.mapsUrl}>
+      <a class="flex items-start gap-3 no-underline" href={business.mapsUrl} target="_blank" rel="noopener noreferrer" aria-description="S’ouvre dans un nouvel onglet">
         <span aria-hidden="true" class="w-5 shrink-0 text-center">📍</span>
         <span>{business.address}<br />{business.postalCode} {business.city}</span>
       </a>
-      <a class="flex items-start gap-3 underline underline-offset-4" href={`mailto:${business.email}`}>
+      <a class="flex items-start gap-3 no-underline" href={`mailto:${business.email}`}>
         <span aria-hidden="true" class="w-5 shrink-0 text-center">✉</span>
         <span class="min-w-0 wrap-anywhere">{business.email}</span>
       </a>

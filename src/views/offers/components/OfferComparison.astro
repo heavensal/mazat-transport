@@ -1,0 +1,150 @@
+---
+import { offers } from '../../../content/offers';
+const rows = [
+          [
+            'Chargement, transport, déchargement',
+            'Inclus',
+            'Inclus',
+            'Inclus',
+            'Inclus',
+            'Inclus',
+          ],
+          [
+            'Protection du mobilier',
+            'Usuelle',
+            'Renforcée',
+            'Selon devis',
+            'Adaptée',
+            'Adaptée',
+          ],
+          [
+            'Cartons et adhésif',
+            'En option',
+            'Selon devis',
+            'Fragiles selon devis',
+            'Adaptés',
+            'Adaptés',
+          ],
+          [
+            'Démontage / remontage',
+            'Selon devis',
+            'Si prévu au devis',
+            'Meubles démontables',
+            'Inclus selon périmètre',
+            'Inclus selon périmètre',
+          ],
+          [
+            'Emballage des fragiles',
+            'Par le client',
+            'Par le client',
+            'Inclus',
+            'Inclus',
+            'Inclus',
+          ],
+          [
+            'Emballage du contenu',
+            'Par le client',
+            'Par le client',
+            'Hors fragiles : client',
+            'Inclus',
+            'Inclus',
+          ],
+          [
+            'Remise en place des placards',
+            'Non incluse',
+            'Non incluse',
+            'Non incluse',
+            'Selon devis',
+            'Incluse',
+          ],
+          [
+            'Nettoyage',
+            'Sur demande',
+            'Sur demande',
+            'Sur demande',
+            'Sur demande',
+            'Selon zone et devis',
+          ],
+        ];
+function indicator(value: string) {
+  if (['Inclus', 'Incluse', 'Usuelle', 'Renforcée', 'Adaptée', 'Adaptés', 'Meubles démontables'].includes(value)) {
+    return { symbol: '✓', color: 'bg-emerald-100 text-emerald-800' };
+  }
+  if (['Non incluse', 'Par le client', 'Hors fragiles : client'].includes(value)) {
+    return { symbol: '−', color: 'bg-slate-200 text-slate-700' };
+  }
+  return { symbol: '•', color: 'bg-amber-100 text-amber-900' };
+}
+---
+
+<div data-offer-comparison class="relative mt-10 max-w-full overflow-x-auto" tabindex="0" role="region" aria-label="Comparatif des formules">
+  <table class="w-full border-collapse text-sm">
+    <caption class="mb-4 text-left font-bold">Les principaux niveaux de prise en charge</caption>
+    <thead class="bg-slate-100">
+      <tr>
+        <th class="service-heading border border-slate-200 p-4 text-left" scope="col">Prestation</th>
+        <th data-mobile-heading scope="col" class="border border-slate-200 p-2 text-center">
+          <div class="flex items-center justify-between gap-1">
+            <button type="button" data-offer-prev aria-label="Formule précédente" class="flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-full text-2xl text-sky-800 hover:bg-sky-100 focus-visible:outline-2 focus-visible:outline-sky-700"><span aria-hidden="true">‹</span></button>
+            <button type="button" data-offer-next aria-label="Formule suivante" class="flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-full text-2xl text-sky-800 hover:bg-sky-100 focus-visible:outline-2 focus-visible:outline-sky-700"><span aria-hidden="true">›</span></button>
+          </div>
+          <span data-offer-name aria-live="polite" aria-atomic="true" class="mt-1 block">Économique</span>
+          <span data-offer-position class="mt-1 block text-xs font-normal text-slate-600">1 / 5</span>
+        </th>
+        {offers.map((offer) => <th data-desktop-heading scope="col" class="border border-slate-200 p-4 text-left">{offer.name}</th>)}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map(([service, ...values]) => (
+        <tr>
+          <th scope="row" class="border border-slate-200 p-4 text-left">{service}</th>
+          {values.map((value, index) => {
+            const { symbol, color } = indicator(value);
+            return (
+              <td data-offer-column={index} data-selected={index === 0 ? '' : undefined} class="border border-slate-200 p-4">
+                <span class="flex flex-col items-center gap-2 text-center lg:items-start lg:text-left">
+                  <span aria-hidden="true" class:list={['inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full font-bold', color]}>{symbol}</span>
+                  <span>{value}</span>
+                </span>
+              </td>
+            );
+          })}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  [data-mobile-heading] { display: none; }
+  th, td { min-width: 8rem; }
+  @media (max-width: 63.999rem) {
+    [data-ready] table { table-layout: fixed; }
+    [data-ready] th, [data-ready] td { min-width: 0; overflow-wrap: anywhere; padding: 0.75rem; }
+    [data-ready] .service-heading { width: 54%; }
+    [data-ready] [data-mobile-heading] { display: table-cell; }
+    [data-ready] [data-desktop-heading],
+    [data-ready] [data-offer-column]:not([data-selected]) { display: none; }
+  }
+</style>
+
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>('[data-offer-comparison]')) {
+    const headings = Array.from(root.querySelectorAll<HTMLElement>('[data-desktop-heading]'));
+    const columns = root.querySelectorAll<HTMLElement>('[data-offer-column]');
+    const name = root.querySelector<HTMLElement>('[data-offer-name]')!;
+    const position = root.querySelector<HTMLElement>('[data-offer-position]')!;
+    let selected = 0;
+    function select(offset: number) {
+      selected = (selected + offset + headings.length) % headings.length;
+      for (const column of columns) {
+        column.toggleAttribute('data-selected', Number(column.dataset.offerColumn) === selected);
+      }
+      name.textContent = headings[selected].textContent;
+      position.textContent = `${selected + 1} / ${headings.length}`;
+    }
+    root.querySelector('[data-offer-prev]')!.addEventListener('click', () => select(-1));
+    root.querySelector('[data-offer-next]')!.addEventListener('click', () => select(1));
+    root.dataset.ready = '';
+  }
+</script>

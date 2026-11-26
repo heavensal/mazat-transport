@@ -5,14 +5,7 @@ Liste des modifications demandées ; aucune réalisation présumée.
 ## Page d’accueil
 
 - [ ] Refaire le design des formules.
-- [ ] Ajouter une image de fond avec des cartons pour la section « Nos formules ».
-- [ ] Centrer le bouton « Étudier mon export maritime ».
-- [ ] Uniformiser la taille des cartes d’avis Google.
-- [ ] Limiter les avis à 5 lignes de texte.
-- [ ] Ajouter un bouton « Voir + » ouvrant une modale avec l’avis complet.
-- [ ] Transformer les avis en carrousel horizontal avec `scroll-snap-x`, en laissant dépasser l’avis suivant.
-- [ ] Ajouter le lien et le logo de Déménagement24.
-- [ ] Centrer le bouton « Demander mon devis gratuit » dans la section « Échange ».
+- [x] Centrer le bouton « Demander mon devis gratuit » dans la section « Échange ».
 - [ ] Transformer le tableau de prise en charge en carrousel avec des icônes indiquant les prestations incluses ou non incluses.
 
 ## Footer
@@ -38,7 +31,6 @@ Liste des modifications demandées ; aucune réalisation présumée.
 - [ ] Corriger toutes les coquilles du site.
 - [ ] Supprimer les notes de développement visibles sur le site.
 
-
 # Suivi antérieur — tâches ouvertes
 
 Traduction et nettoyage du suivi existant ; états techniques issus des notes du 24 novembre 2026, sans nouvel audit ni test. Les tâches cochées sont retirées ; les tâches implémentées mais encore à vérifier restent ouvertes. Les nouvelles demandes priment en cas de conflit, notamment pour le nom « MAZAT TRANSPORT ».
@@ -50,8 +42,8 @@ MAZAT TRANSPORT — EURL ; SIREN 952 688 554 ; SIRET 952 688 554 00072 ; RCS 952
 ## Routes et corrections éditoriales
 
 - [ ] **INV-001** — P1 — Vérification des routes statiques, en attente. Après la séparation entre `src/pages/*.astro` et `src/views/`, construire sans pnpm selon la consigne de cette tâche et comparer les routes et le sitemap à `src/site/pages.ts`. Chaque slug, dont `/devis/`, doit être généré une seule fois ; aucun chemin de composant/vue ne doit devenir une route. Interaction : EXPORT-006.
-- [ ] **EDIT-001** — P2 — Identité de marque. Ancienne demande « MAZAT TRANSPORT DÉMÉNAGEMENT » remplacée par la nouvelle consigne « MAZAT TRANSPORT » ci-dessous. Vérifier header et hero (`src/layouts/Layout.astro`, `src/views/home/components/Hero.astro`) ; conserver le h1 et le logo original. Traiter avec la tâche de renommage, sans doublon.
-- [ ] **EDIT-002** — P1 — Introduction du hero. Dans `src/views/home/components/Hero.astro`, afficher intégralement sous le h1 : « À Marseille, dans toute la région PACA, partout en France et à l’international, notre équipe vous accompagne avec méthode, protection et soin. » Vérifier le texte visible généré.
+- [x] **EDIT-001** — P2 — Identité de marque. Ancienne demande « MAZAT TRANSPORT DÉMÉNAGEMENT » remplacée par la nouvelle consigne « MAZAT TRANSPORT » ci-dessous. Vérifier header et hero (`src/layouts/Layout.astro`, `src/views/home/components/Hero.astro`) ; conserver le h1 et le logo original. Traiter avec la tâche de renommage, sans doublon.
+- [x] **EDIT-002** — P1 — Introduction du hero. Dans `src/views/home/components/Hero.astro`, afficher intégralement sous le h1 : « À Marseille, dans toute la région PACA, partout en France et à l’international, notre équipe vous accompagne avec méthode, protection et soin. » Vérifier le texte visible généré.
 - [ ] **EDIT-003** — P2 — CTA principal. Dans le hero, remplacer « Demander mon devis gratuit » par « Obtenir mon devis gratuit », en conservant `/devis/`. Cette demande ne concerne pas tous les CTA, notamment celui de la section Échange ; elle ne prouve pas la réception du formulaire (EXT-001).
 - [ ] **EDIT-004** — P1 — Présentation de l’entreprise. Ajouter une section identifiable « Qui sommes-nous ? » dans `src/views/home/Page.astro` avec les deux paragraphes client conservés en référence ci-dessous, intégralement, y compris la limite des prestations incluses au devis. Les anciens extraits de la page avis retirée ne suffisent pas.
 - [ ] **EDIT-005** — P1 — Descriptions des engagements. Conserver les quatre titres de `src/views/home/components/TrustStrip.astro` et intégrer les descriptions client conservées ci-dessous, dans leurs blocs visibles, avec les réserves liées à l’offre et à la faisabilité.
@@ -65,6 +57,14 @@ MAZAT TRANSPORT — EURL ; SIREN 952 688 554 ; SIRET 952 688 554 00072 ; RCS 952
 - [ ] **EXPORT-006** — P0 — Initialisation du devis : hook restauré, parcours à vérifier. `.form-buttons` est présent dans QuoteForm et le HTML généré ; build réussi le 24 novembre. Tester visibilité de navigation, présélection export, parcours national/export, validation, retour, récapitulatif et téléchargement. Ne pas utiliser les anciens tests de `docs/validation.md` comme preuve actuelle. Réception serveur : EXT-001.
 
 ## Tarification privée
+
+### Comparaison publique demandée le 26 novembre 2026
+
+La demande explicite du propriétaire autorise désormais une section de repères publics sourcés sur `/international-maritime/`, sans publication de la grille tarifaire privée du PDF. Implémentation : `src/views/international/components/MarketPrices.astro`, appelée en dernier dans `src/views/international/Page.astro`. Les anciennes références ci-dessous restent conservées comme historique interne ; elles ne sont pas recopiées telles quelles dans la page.
+
+- **PRICE-002 — vérification documentaire partielle (26/11/2026)** : SRC-PRICE-01 affiche désormais LCL 1 700–5 000 €, 20 pieds 3 000–8 000 €, 40 pieds 6 000–12 000 €, estimations porte-à-porte depuis la région parisienne, mise à jour novembre 2026. Les trois anciennes fourchettes ne sont plus corroborées par cette page. Assurance, inspection éventuelle et stockage généralement exclus. SRC-PRICE-02 confirme les deux repères de groupage USA fournis, mise à jour octobre 2026. SRC-PRICE-04 affiche bien 500 € pour le premier m³ Réunion/Guadeloupe/Martinique et 600 € Guyane, sous « prix du mois », sans mois explicite ; cela ne prouve pas leur validité pour un projet. SRC-PRICE-03 consultée pour contexte, chiffres de janvier 2026 non mélangés aux autres tableaux. Restent à confirmer par offre : ports/adresses, inclusions exactes, fiscalité et validité. Les tâches d’achats et de prix MAZAT restent ouvertes.
+- **PRICE-005 — périmètre actualisé** : la section demandée présente des repères tiers, sans estimation automatique ni engagement tarifaire MAZAT. Montants en euros, dates et réserves visibles ; liens sources en nouvel onglet, tableaux à défilement horizontal clavier sur mobile. Aucun déploiement autorisé ou effectué. Validation de cette intervention : `pnpm build`, `pnpm test` (14 pages, 570 liens/assets) et `git diff --check` réussis. Aperçu mobile de la section et du tableau Canada affiché dans le navigateur à la demande du propriétaire ; pas de recette exhaustive desktop/mobile.
+
 
 - [ ] **PRICE-001** — P1 — Phrase tarifaire déplacée, build à revérifier. Contrôler dans `/international-maritime/` : « Export maritime : prix personnalisé après étude du volume, de la destination et du mode de transport. » Source : `src/views/international/components/Introduction.astro`. L’assertion HTML du 24 novembre précédait le déplacement ; aucun tarif concurrent ou fret garanti à ajouter.
 - [ ] **PRICE-002** — P1 — Comparaison tarifaire à revérifier extérieurement (MAZAT/Adam). Consulter les quatre sources SRC-PRICE-01–04, dater consultation et publication disponible, documenter les six scénarios : sens du trajet, ports, volume, prestation, inclusions/exclusions, devise et régime fiscal. Préciser mois IFTL et validité du premier m³. Chaque valeur historique doit être corroborée ou marquée obsolète/non vérifiée ; ne pas remplacer silencieusement le tableau du 05/11/2026 ni déduire HT/TTC.
@@ -93,26 +93,16 @@ MAZAT TRANSPORT — EURL ; SIREN 952 688 554 ; SIRET 952 688 554 00072 ; RCS 952
 - [ ] **SGA-001** — P1 — SEO/juridique, dépend de EXT-003. Remplacer les textes préparatoires, configurer SITE_URL, vérifier canonical/OG/sitemap et retirer le noindex approprié seulement après validation. Critère : domaine et pages juridiques corrects dans le HTML généré et en production.
 - [ ] **SGA-002** — P1 — Accessibilité à vérifier : lecteur d’écran, zoom 200 %, appareils iOS/Android après contenus définitifs. Parcours critiques utilisables sans focus masqué ni perte de contenu. Des tests partiels ne prouvent pas une conformité WCAG.
 
-## Vérifications Google Maps et avis
-
-- [ ] **MAPS-002** — P1 — Vérification réelle par le propriétaire. Configurer GOOGLE_MAPS_API_KEY localement et dans les secrets Actions (clé visible au navigateur), Maps JavaScript API/Places API (New), facturation et quotas. Restreindre API et référents à https://mazat-transport.fr/* et aux autres origines réellement utilisées ; clé distincte pour localhost. Vérifier suggestions France/international, clavier/lecteur d’écran, 320 px, deux adresses indépendantes, corrections, code postal absent, retour/suivant/récapitulatif et modes hors ligne/clé refusée. Build antérieur réussi (14 pages), saisie manuelle et ancien widget vérifiés sur localhost:4322 ; ces essais ne valident pas la nouvelle saisie directe après 3 caractères (300 ms). Le propriétaire a demandé de vérifier lui-même cette révision, sans nouveaux tests localhost/navigateur. Vérifier encore remplissage, attribution Google et confidentialité. Références : https://developers.google.com/maps/documentation/javascript/place-autocomplete-new ; https://developers.google.com/maps/api-security-best-practices .
-- [ ] **REV-GOOGLE-002** — P1 — Vérification réelle par le propriétaire. Vérifier clé, Maps JavaScript API/Places API (New), champ avis/facturation et domaine de production ; contrôler établissement pour Place ID ChIJ7WvR7za_yRIRddVA_CCPQcE, auteurs/textes/dates/liens, mobile/clavier et états vide/erreur. Avis sur l’accueil uniquement depuis le retrait de la page avis. Pas de localhost à la demande du propriétaire. Limite du suivi existant : cinq avis au plus sélectionnés par pertinence ; trier ce sous-ensemble ne garantit pas les derniers avis cinq étoiles. Actualisation à l’ouverture, pas de push/polling. Si tous les avis récents sont nécessaires, étudier une intégration Business Profile authentifiée côté serveur, sans OAuth dans le navigateur. Références : https://developers.google.com/maps/documentation/javascript/place-reviews ; https://developers.google.com/maps/documentation/places/web-service/reference/rest/v1/places ; https://developers.google.com/maps/documentation/places/web-service/policies .
-
 ## SEO / GEO / Accessibilité — Intervention du propriétaire
 
 Référencer les tâches EXT-001 à EXT-006 et LEGAL ci-dessus ; ne pas les dupliquer. Aucun déploiement, audit juridique, configuration Search Console ou envoi réel n’est déclaré réalisé ici.
 
-## Phases ultérieures
-
-- [ ] Anglais pour l’export et blog/conseils — P2, facultatifs, non activés.
-- [ ] Pages villes supplémentaires — uniquement avec contenu original utile et photos réelles.
-
 ## Textes client conservés — EDIT-004 et EXPORT-001
 
-  > MAZAT Transport Déménagement accompagne les particuliers et les professionnels dans leurs changements de vie et leurs transferts d’activité. Notre approche associe organisation, manutention maîtrisée, protection du mobilier et suivi de chaque étape. Nous intervenons au départ ou à destination de Marseille et de la Côte d’Azur, sur les trajets nationaux et, selon les projets, sur les opérations internationales.
-  >
-  > Notre savoir-faire est particulièrement orienté vers l’emballage soigné : housses de literie, couvertures professionnelles, protections renforcées, démontage et remontage selon la formule, mise en place du mobilier, et préparations spécifiques pour l’export. L’objectif : adapter la prestation aux biens, aux accès et au budget, sans promettre ce qui n’est pas inclus au devis.
-  > Vous déménagez à l’étranger, vers les DOM ou depuis la France métropolitaine ? MAZAT vous accompagne dans la préparation et l’organisation de votre expédition maritime, de l’étude du volume à la remise à destination, selon le périmètre retenu. Nous étudions les solutions de groupage maritime (LCL) pour les petits et moyens volumes et de conteneur dédié (FCL) pour les projets plus importants, avec des partenaires de transport et de destination lorsque nécessaire.
+> MAZAT Transport Déménagement accompagne les particuliers et les professionnels dans leurs changements de vie et leurs transferts d’activité. Notre approche associe organisation, manutention maîtrisée, protection du mobilier et suivi de chaque étape. Nous intervenons au départ ou à destination de Marseille et de la Côte d’Azur, sur les trajets nationaux et, selon les projets, sur les opérations internationales.
+>
+> Notre savoir-faire est particulièrement orienté vers l’emballage soigné : housses de literie, couvertures professionnelles, protections renforcées, démontage et remontage selon la formule, mise en place du mobilier, et préparations spécifiques pour l’export. L’objectif : adapter la prestation aux biens, aux accès et au budget, sans promettre ce qui n’est pas inclus au devis.
+> Vous déménagez à l’étranger, vers les DOM ou depuis la France métropolitaine ? MAZAT vous accompagne dans la préparation et l’organisation de votre expédition maritime, de l’étude du volume à la remise à destination, selon le périmètre retenu. Nous étudions les solutions de groupage maritime (LCL) pour les petits et moyens volumes et de conteneur dédié (FCL) pour les projets plus importants, avec des partenaires de transport et de destination lorsque nécessaire.
 
 ## Descriptions client — EDIT-005
 

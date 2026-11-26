@@ -1,0 +1,104 @@
+---
+import NavbarLinks from './NavbarLinks.astro';
+import { business } from '../site/config';
+---
+
+<header class="relative z-10 border-b border-slate-200 bg-white">
+  <div class="mx-auto flex min-h-24 w-11/12 max-w-7xl items-center justify-between gap-3 py-4 md:w-5/6 lg:gap-6">
+    <a class="flex min-w-0 items-center gap-3 lg:shrink-0" href="/" aria-label="MAZAT TRANSPORT, accueil">
+      <img class="h-16 w-16 rounded-full md:h-18 md:w-18" src="/images/mazat-logo-128.png" srcset="/images/mazat-logo-128.webp 128w, /images/mazat-logo-256.webp 256w" sizes="70px" width="76" height="76" alt="" />
+      <span class="text-xl font-black leading-tight tracking-widest md:text-2xl">MAZAT TRANSPORT<small class="mt-2 block text-xs tracking-wide">TRANSPORT & DÉMÉNAGEMENT</small></span>
+    </a>
+    <button class="min-h-11 shrink-0 border border-slate-300 bg-white px-4 py-2 lg:hidden" type="button" aria-expanded="false" aria-haspopup="dialog" aria-controls="mobile-nav"><span class="sr-only">Ouvrir le menu</span><span aria-hidden="true">☰</span></button>
+    <nav class="hidden flex-wrap items-center gap-6 text-sm font-semibold lg:flex" aria-label="Navigation principale">
+      <NavbarLinks />
+    </nav>
+  </div>
+  <dialog id="mobile-nav" aria-label="Menu principal" class="fixed inset-y-0 right-0 left-auto m-0 h-dvh max-h-none w-[min(21rem,88vw)] max-w-none overflow-y-auto bg-white text-slate-800 shadow-2xl backdrop:bg-black/60">
+    <div class="flex justify-end p-4">
+      <form method="dialog">
+        <button type="submit" autofocus aria-label="Fermer le menu" class="min-h-11 min-w-11 text-3xl">×</button>
+      </form>
+    </div>
+    <nav aria-label="Navigation principale" class="flex flex-col px-6 pb-8 text-sm font-semibold">
+      <NavbarLinks />
+    </nav>
+    <address class="mx-6 space-y-3 border-t border-slate-200 py-6 text-sm not-italic">
+      <img src="/images/mazat-logo-128.png" alt={business.legalName} width="128" height="128" class="mx-auto mb-5 h-16 w-16" />
+      <a class="flex items-start gap-3 font-semibold underline underline-offset-4" href={business.phoneHref}>
+        <span aria-hidden="true" class="w-5 shrink-0 text-center">☎</span>
+        <span>{business.phone}</span>
+      </a>
+      <a class="flex items-start gap-3 underline underline-offset-4" href={business.mapsUrl}>
+        <span aria-hidden="true" class="w-5 shrink-0 text-center">📍</span>
+        <span>{business.address}<br />{business.postalCode} {business.city}</span>
+      </a>
+      <a class="flex items-start gap-3 underline underline-offset-4" href={`mailto:${business.email}`}>
+        <span aria-hidden="true" class="w-5 shrink-0 text-center">✉</span>
+        <span class="min-w-0 wrap-anywhere">{business.email}</span>
+      </a>
+    </address>
+  </dialog>
+</header>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    dialog {
+      transform: translateX(100%);
+      transition: transform 240ms ease, display 240ms allow-discrete, overlay 240ms allow-discrete;
+    }
+
+    dialog[open] {
+      transform: translateX(0);
+    }
+
+    dialog::backdrop {
+      opacity: 0;
+      transition: opacity 240ms ease, display 240ms allow-discrete, overlay 240ms allow-discrete;
+    }
+
+    dialog[open]::backdrop {
+      opacity: 1;
+    }
+
+    @starting-style {
+      dialog[open] {
+        transform: translateX(100%);
+      }
+
+      dialog[open]::backdrop {
+        opacity: 0;
+      }
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('button[aria-controls="mobile-nav"]');
+  const menu = document.querySelector<HTMLDialogElement>('#mobile-nav');
+
+  if (toggle && menu) {
+    toggle.addEventListener('click', () => {
+      menu.showModal();
+      toggle.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('overflow-hidden');
+    });
+
+    menu.addEventListener('click', (event) => {
+      if (event.target !== menu) return;
+      const panel = menu.getBoundingClientRect();
+      if (event.clientX < panel.left || event.clientX > panel.right) menu.close();
+    });
+
+    menu.addEventListener('close', () => {
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('overflow-hidden');
+      toggle.focus();
+    });
+
+    const desktop = window.matchMedia('(min-width: 64rem)');
+    desktop.addEventListener('change', () => {
+      if (desktop.matches && menu.open) menu.close();
+    });
+  }
+</script>

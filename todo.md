@@ -1,145 +1,141 @@
-# MAZAT delivery tracking
+# MAZAT TRANSPORT — Modifications à réaliser
 
-Updated 2026-11-24. This is a preparation branch, not a deployed production service.
+Liste des modifications demandées ; aucune réalisation présumée.
 
-## Implemented
+## Page d’accueil
 
-- [x] Copy shared skills, agent profiles, rules and command catalog from Laure Corrao; adapt runtime references for French-only MAZAT.
-- [x] Original logo and supplied commercial contacts integrated; internal rates excluded from source/browser output.
-- [x] Home, five offers and comparison, maritime export, services, business transfers, review source, Marseille and Nice pages.
-- [x] Conditional quote questionnaire, native validation, review, text download and explicit email-draft handoff were implemented in the initial delivery. No receipt claim. **The EXPORT-006 initialization hook is restored locally; interactive rechecking remains before considering the present flow functional.**
-- [ ] **INV-001 · P1 · Static route verification · pending.** Evidence: each registered page now has an explicit `src/pages/*.astro` entrypoint and a page folder under `src/views/`; build verification has not been run after the route split. Action: build without pnpm and compare generated routes and sitemap URLs with `src/site/pages.ts`. Acceptance: every registered slug renders exactly once, including `/devis/`, and no view/component path becomes a route. Browser-flow verification remains under EXPORT-006.
-- [x] FAQ local fallback and shared Forge build transport; remote credentials absent, warnings explicit.
-- [x] Preview noindex; robots/sitemap endpoints and shared metadata; no fabricated canonical domain.
+- [ ] Refaire le design des formules.
+- [ ] Ajouter une image de fond avec des cartons pour la section « Nos formules ».
+- [ ] Centrer le bouton « Étudier mon export maritime ».
+- [ ] Uniformiser la taille des cartes d’avis Google.
+- [ ] Limiter les avis à 5 lignes de texte.
+- [ ] Ajouter un bouton « Voir + » ouvrant une modale avec l’avis complet.
+- [ ] Transformer les avis en carrousel horizontal avec `scroll-snap-x`, en laissant dépasser l’avis suivant.
+- [ ] Ajouter le lien et le logo de Déménagement24.
+- [ ] Centrer le bouton « Demander mon devis gratuit » dans la section « Échange ».
+- [ ] Transformer le tableau de prise en charge en carrousel avec des icônes indiquant les prestations incluses ou non incluses.
 
-- [x] Complete brand asset set (2026-11-23): ICO, 16/32/48/96px PNGs, Apple 152/167/180px, Android and maskable 192/512px, PNG/WebP logo exports, 1200×630 share image and manifest. Dimensions, ICO frames, opaque mask safe zones and unchanged original verified; build and 536 internal links/assets pass.
-- [x] Legal identity details supplied: MAZAT TRANSPORT — EURL, SIREN 952 688 554, SIRET 952 688 554 00072, RCS 952 688 554 R.C.S. NICE, TVA FR56 952 688 554, capital 6 300 €, code NAF/APE 49.41A.
-- [x] Publication contact supplied: Jérémy Mazari, 44 Avenue Vincent-Van-Gogh, 13012 Marseille, 07 62 29 88 14, contact@mazat-transport.fr, Google Maps link.
-- [x] Domain and infrastructure supplied: mazat-transport.fr, GitHub Pages, domain registered by LWS.
-- [x] Developer identity supplied: 1344 Solutions — Adam Lamouri, 06 13 67 61 79, adamlamouri@1344.fr, 1344.fr.
+## Footer
 
-## Client editorial review — 24 November 2026
+- [x] Intégrer les liens légaux au même niveau que les autres liens du footer, notamment le plan du site.
+- [x] Uniformiser leur positionnement et leur présentation.
 
-Scope: the owner's supplied hero, company introduction, four commitments and service-area instructions. Compared against current repository sources, including local uncommitted changes. This is a source-content review, not a production or browser verification. Existing tasks and confirmations below are preserved; no website source was changed during this review.
+## Formulaire de devis
 
-### Requirements already respected
+- [ ] Modifier la couleur du breadcrumb.
+- [ ] Empêcher la sélection d’une date souhaitée dans le passé.
+- [ ] Autoriser la sélection de plusieurs services complémentaires.
+- [ ] Ajouter un placeholder explicatif pour « Stockage intermédiaire ou seconde livraison ».
+- [ ] Ajouter un champ d’envoi de photos ; prise en charge API indiquée par le client.
+- [ ] Proposer des plages de rappel par jour, matin et après-midi, en incluant aujourd’hui.
+- [ ] Rendre le message facultatif et proposer un champ « Questions complémentaires ».
+- [ ] Générer le récapitulatif au format PDF.
+- [ ] Faire occuper toute la largeur disponible aux boutons.
+- [ ] Utiliser SweetAlert pour afficher l’état d’envoi puis la confirmation, à la place de la carte de devis.
 
-- [x] Main heading: “Votre déménagement, notre savoir-faire.” appears in the homepage h1 (`src/views/home/components/Hero.astro`).
-- [x] Brand identity is visible in the shared header: “MAZAT” and “TRANSPORT & DÉMÉNAGEMENT” (`src/layouts/Layout.astro`). The meaning is respected; the exact requested spelling without “&” remains EDIT-001.
-- [x] The four requested commitment headings are present on the homepage: Protection maîtrisée, Devis personnalisé, Savoir-faire terrain, France & international. Their descriptions remain EDIT-005.
-- [x] Priority cities Marseille, Aix-en-Provence, Aubagne, La Ciotat and Martigues, plus Bouches-du-Rhône, are present in the rendered Marseille route content (`src/views/marseille/Page.astro`; route `/demenagement-marseille/`).
-- [x] Nice, Cannes, Antibes, Monaco and Alpes-Maritimes are present in the Nice route content (`src/views/nice/Page.astro`; route `/demenagement-nice/`).
-- [x] Var, PACA, France and international coverage are mentioned in the footer and/or FAQ; the FAQ explicitly retains “selon faisabilité” (`src/layouts/Layout.astro`, `src/content/faq.ts`). This does not complete the requested geographic presentation; see EDIT-006.
-- [x] Several protection details are already represented elsewhere: bedding covers, furniture protection, assembly/disassembly and room placement in `src/content/offers.ts`; export preparation in the service/export content. These scattered mentions do not replace the full company introduction requested in EDIT-004.
+## Finitions générales
 
-### Editorial corrections in the repository
+- [ ] Corriger toutes les coquilles du site.
+- [ ] Supprimer les notes de développement visibles sur le site.
 
-These facts and texts have already been supplied by the client. Owner: developer. No additional client information is required to implement these corrections. Check each task only after inspecting the generated visible content; do not interpret this review as a request to implement them now.
 
-- [ ] **EDIT-001 · P2 · Brand wording · partial.** Evidence: shared header in `src/layouts/Layout.astro` shows “MAZAT” followed by “TRANSPORT & DÉMÉNAGEMENT”; homepage eyebrow in `src/views/home/components/Hero.astro` is “Déménagement · Transport · Export maritime”. Action: align the prominent text brand label with the requested “MAZAT TRANSPORT DÉMÉNAGEMENT”. Acceptance: the full wording is visible as text in the header/hero, while retaining the existing h1 and original logo.
-- [ ] **EDIT-002 · P1 · Hero introduction · partial.** Evidence: `src/views/home/components/Hero.astro` currently says “D’une rue à l’autre, d’un pays à l’autre. Nous accompagnons votre prochain départ avec méthode, protection et soin.” The location band and metadata mention some coverage, but the requested visible paragraph is absent. Action: use “À Marseille, dans toute la région PACA, partout en France et à l’international, notre équipe vous accompagne avec méthode, protection et soin.” Acceptance: this complete paragraph appears directly below the homepage h1, with no information lost through abbreviation.
-- [ ] **EDIT-003 · P2 · Primary CTA wording · partial.** Evidence: the homepage hero button reads “Demander mon devis gratuit” and links to `/devis/` (`src/views/home/components/Hero.astro`). Action: change that primary button label to “Obtenir mon devis gratuit”. Acceptance: exact requested label and existing `/devis/` destination retained. This requirement concerns the hero; it does not require renaming every other CTA or imply that automatic reception is implemented (EXT-001).
-- [ ] **EDIT-004 · P1 · Company introduction · partial.** Evidence: no “Qui sommes-nous ?” section exists on the homepage. Before the reviews page was retired, `src/views/reviews/Page.astro` contained two shortened paragraphs under “Notre façon de travailler”. The geographical scope, detailed protection approach and adaptation to the budget are scattered or omitted there. Action: add an identifiable “Qui sommes-nous ?” presentation on the homepage (`src/views/home/Page.astro`). Acceptance: the following two supplied paragraphs are present in full, including the limits of the signed quote:
+# Suivi antérieur — tâches ouvertes
+
+Traduction et nettoyage du suivi existant ; états techniques issus des notes du 24 novembre 2026, sans nouvel audit ni test. Les tâches cochées sont retirées ; les tâches implémentées mais encore à vérifier restent ouvertes. Les nouvelles demandes priment en cas de conflit, notamment pour le nom « MAZAT TRANSPORT ».
+
+## Informations déjà confirmées — ne pas redemander
+
+MAZAT TRANSPORT — EURL ; SIREN 952 688 554 ; SIRET 952 688 554 00072 ; RCS 952 688 554 R.C.S. NICE ; TVA FR56 952 688 554 ; capital 6 300 € ; NAF/APE 49.41A. Contact : Jérémy Mazari, 44 Avenue Vincent-Van-Gogh, 13012 Marseille, 07 62 29 88 14, contact@mazat-transport.fr. Domaine mazat-transport.fr, GitHub Pages, registrar LWS. Développeur : 1344 Solutions — Adam Lamouri, 06 13 67 61 79, adamlamouri@1344.fr, 1344.fr. Les rôles juridiques et le statut précis de l’adresse restent à confirmer ci-dessous. Conserver le logo original ; ne pas publier les documents ni tarifs internes. Site français uniquement, anglais et blog en phase ultérieure.
+
+## Routes et corrections éditoriales
+
+- [ ] **INV-001** — P1 — Vérification des routes statiques, en attente. Après la séparation entre `src/pages/*.astro` et `src/views/`, construire sans pnpm selon la consigne de cette tâche et comparer les routes et le sitemap à `src/site/pages.ts`. Chaque slug, dont `/devis/`, doit être généré une seule fois ; aucun chemin de composant/vue ne doit devenir une route. Interaction : EXPORT-006.
+- [ ] **EDIT-001** — P2 — Identité de marque. Ancienne demande « MAZAT TRANSPORT DÉMÉNAGEMENT » remplacée par la nouvelle consigne « MAZAT TRANSPORT » ci-dessous. Vérifier header et hero (`src/layouts/Layout.astro`, `src/views/home/components/Hero.astro`) ; conserver le h1 et le logo original. Traiter avec la tâche de renommage, sans doublon.
+- [ ] **EDIT-002** — P1 — Introduction du hero. Dans `src/views/home/components/Hero.astro`, afficher intégralement sous le h1 : « À Marseille, dans toute la région PACA, partout en France et à l’international, notre équipe vous accompagne avec méthode, protection et soin. » Vérifier le texte visible généré.
+- [ ] **EDIT-003** — P2 — CTA principal. Dans le hero, remplacer « Demander mon devis gratuit » par « Obtenir mon devis gratuit », en conservant `/devis/`. Cette demande ne concerne pas tous les CTA, notamment celui de la section Échange ; elle ne prouve pas la réception du formulaire (EXT-001).
+- [ ] **EDIT-004** — P1 — Présentation de l’entreprise. Ajouter une section identifiable « Qui sommes-nous ? » dans `src/views/home/Page.astro` avec les deux paragraphes client conservés en référence ci-dessous, intégralement, y compris la limite des prestations incluses au devis. Les anciens extraits de la page avis retirée ne suffisent pas.
+- [ ] **EDIT-005** — P1 — Descriptions des engagements. Conserver les quatre titres de `src/views/home/components/TrustStrip.astro` et intégrer les descriptions client conservées ci-dessous, dans leurs blocs visibles, avec les réserves liées à l’offre et à la faisabilité.
+- [ ] **EDIT-006** — P1 — Zones desservies. Compléter le bloc visible de `src/views/home/components/Hero.astro` : priorité Marseille, Aix-en-Provence, Aubagne, La Ciotat, Martigues et Bouches-du-Rhône (13) ; couverture régionale Toulon/Var (83), Nice/Cannes/Antibes/Alpes-Maritimes (06) et Monaco comme destination distincte ; France et international selon faisabilité. Réutiliser les liens existants, harmoniser footer/FAQ sans inventer de pages ou d’adresses.
+
+## Export et formulaire
+
+- [ ] **EXPORT-001** — P1 — Introduction export déplacée, build à revérifier. Contrôler `/international-maritime/`, `src/views/international/Page.astro` et `components/Introduction.astro` après déplacement des vues. Le build du 24 novembre précédait ce déplacement. Conserver intégralement le paragraphe client ci-dessous, la signature, les départs métropolitains, DOM, LCL/FCL et partenaires, sans étendre le périmètre contractuel.
+- [ ] **EXPORT-003** — P1 — Coordonnées des deux parties : code présent, interactions à vérifier. Dans `src/components/QuoteForm.astro` et `src/lib/quote-form.ts`, vérifier association expéditeur/destinataire aux adresses existantes, réutilisation du demandeur, état « À confirmer », champs nom/téléphone/email obligatoires pour les autres contacts, validation conditionnelle, retour et récapitulatif. Build et assertions statiques réussis le 24 novembre ; aucune validation navigateur complète. Ne pas dupliquer les adresses.
+- [ ] **EXPORT-005** — P1 — Incoterm : code présent, interactions à vérifier. Vérifier les choix explicites « à définir »/« déjà défini », le champ conditionnel et le récapitulatif dans QuoteForm et la page maritime. Le build du 24 novembre ne valide pas ces interactions. Répartition réelle des frais : contrat validé sous EXT-002 et LEGAL-006.
+- [ ] **EXPORT-006** — P0 — Initialisation du devis : hook restauré, parcours à vérifier. `.form-buttons` est présent dans QuoteForm et le HTML généré ; build réussi le 24 novembre. Tester visibilité de navigation, présélection export, parcours national/export, validation, retour, récapitulatif et téléchargement. Ne pas utiliser les anciens tests de `docs/validation.md` comme preuve actuelle. Réception serveur : EXT-001.
+
+## Tarification privée
+
+- [ ] **PRICE-001** — P1 — Phrase tarifaire déplacée, build à revérifier. Contrôler dans `/international-maritime/` : « Export maritime : prix personnalisé après étude du volume, de la destination et du mode de transport. » Source : `src/views/international/components/Introduction.astro`. L’assertion HTML du 24 novembre précédait le déplacement ; aucun tarif concurrent ou fret garanti à ajouter.
+- [ ] **PRICE-002** — P1 — Comparaison tarifaire à revérifier extérieurement (MAZAT/Adam). Consulter les quatre sources SRC-PRICE-01–04, dater consultation et publication disponible, documenter les six scénarios : sens du trajet, ports, volume, prestation, inclusions/exclusions, devise et régime fiscal. Préciser mois IFTL et validité du premier m³. Chaque valeur historique doit être corroborée ou marquée obsolète/non vérifiée ; ne pas remplacer silencieusement le tableau du 05/11/2026 ni déduire HT/TTC.
+- [ ] **PRICE-003** — P1 — Modèle privé de chiffrage export manquant. Prévoir séparément : enlèvement/emballage, préacheminement, emballage caisse, groupage/conteneur, manutention portuaire, assurance, livraison et douanes. Pour chaque poste : montant, inclusions/exclusions, offre partenaire et périmètre contractuel ; distinguer zéro, non applicable et inconnu. Validation MAZAT, dépendances EXT-002/EXPORT-005. Jamais dans les assets publics ou le navigateur ; ne rien présumer d’un tableur externe.
+- [ ] **PRICE-004** — P1 — Achats et rentabilité à valider. Avant chaque proposition, obtenir les prix d’achat actuels auprès des transitaires/partenaires, avec identité, date/validité, trajet, périmètre, montant et devise. Faire valider marge, aléas et conditions de paiement par MAZAT, avec ventilation coût/prix de vente. Aucune valeur par défaut ni déduction depuis Sirelo/IFTL autorisée. Dépendances PRICE-003, EXT-002 et LEGAL-003/006.
+- [ ] **PRICE-005** — P2 — Cas chiffrés facultatifs, non bloquants pour le lancement. Uniquement si MAZAT en demande et valide sens, ports/adresses, destination, volume, mode, date/validité, prestations, inclusions/exclusions, prix et présentation fiscale. Les présenter comme exemples, pas devis garantis ; sinon les laisser absents. Les fourchettes historiques ne suffisent pas. Dépendances PRICE-002–004 ; distinct du PDF contractuel EXT-002.
+
+## Dépendances client et infrastructure
+
+- [ ] **EXT-001** — P0 — Réception partielle, à vérifier. Le navigateur appelle Forge `send_form` avec `FORGE_FORM_TOKEN`, public dans le HTML. Vérifier envoi et livraison réels avec le jeton configuré. Fichiers : QuoteForm, `src/lib/form-forge.ts`, `src/lib/quote-form.ts`, `src/pages/devis.astro`, `src/views/quote/Page.astro`. Restent à valider : stockage serveur horodaté/identifié, anti-spam, accusé au prospect, statuts administratifs, conservation des pièces jointes et réception de tests local/national/export. Confidentialité : EXT-003.
+- [ ] **EXT-002** — P0 — PDF de devis contractuel bloqué. MAZAT fournit « Devis parfait (5).pdf », identité validée, CGV, assurance, déclaration de valeur, règles TVA/paiement, médiation et signature. Valider modèle, calculs taxes/totaux, contrôle métier manuel, annexe inventaire, signature et PDF test. Aucun PDF contractuel automatique réalisé ; distinguer le nouveau PDF de récapitulatif demandé.
+- [ ] **EXT-003** — P0 — Publication/juridique bloquée. Vérifier les éléments encore manquants sans redemander les faits déjà confirmés ci-dessous : hébergeur, directeur, Kbis/RNE actuel, médiateur, bases/conservation/sous-traitants et autorisations export. Fichiers : `src/site/config.ts`, `src/site/pages.ts`, vues legal/privacy/terms et `.env.example`. Pages validées et origine canonique configurée avant PUBLICATION_READY.
+- [ ] **EXT-004** — P1 — Photos/avis à fournir ou confirmer : équipe, chantiers, transport/export, droits, témoignages approuvés et URL des avis Google. Sources : `public/images`, accueil et Reviews ; l’ancienne vue avis a été retirée. Galerie/hero authentiques et optimisés sans identifier de client non autorisé. Lien Déménagement24 déjà signalé comme présent : vérifier avec la nouvelle demande de logo/lien, sans copier de note.
+- [ ] **EXT-005** — P1 — Configurer le jeton Website MAZAT et vérifier le contrat actuel FAQ/avis Forge dans `src/lib/forge.ts` et `.env.example` : 0/N éléments, français, absence de fusion du fallback et rebuild. Aucun secret Laure réutilisé. Distinguer les avis Google chargés côté navigateur à la demande du propriétaire.
+- [ ] **EXT-006** — P1 — Choisir statistiques et consentement, vérifier la propriété Search Console puis configurer les événements appel/email/export/formulaire après réception réelle. Aucun traceur installé selon le suivi antérieur.
+- [ ] **LEGAL-001** — P0 — Confirmer si Jérémy Mazari est gérant et si l’adresse marseillaise est l’adresse administrative complète ou celle d’un établissement ; préciser une éventuelle adresse de facturation/correspondance distincte.
+- [ ] **LEGAL-002** — P0 — Confirmer Jérémy Mazari comme directeur de publication ou fournir nom et fonction exacts.
+- [ ] **LEGAL-003** — P0 — Fournir CGV approuvées, paiement, annulation, assurance, déclaration de valeur, TVA, médiateur, litiges et modèle de devis contractuel.
+- [ ] **LEGAL-004** — P0 — Confirmer responsable de traitement, finalités/bases légales, destinataires/sous-traitants, conservation, sécurité, transferts et exercice des droits.
+- [ ] **LEGAL-005** — P0 — Valider le canal de réception retenu (Forge/email, CRM ou backend), stockage, accès, anti-spam, accusé, pièces jointes et suppression.
+- [ ] **LEGAL-006** — P1 — Confirmer assureur/police, autorisations de transport, pays, partenaires, responsabilités douanières et exclusions de marchandises.
+- [ ] **LEGAL-007** — P1 — Confirmer cookies, statistiques, pixels publicitaires, cartes, vidéos et services tiers réellement présents avant publication.
+
+## SEO / GEO / Accessibilité — Corrections dans le dépôt
+
+- [ ] **SGA-001** — P1 — SEO/juridique, dépend de EXT-003. Remplacer les textes préparatoires, configurer SITE_URL, vérifier canonical/OG/sitemap et retirer le noindex approprié seulement après validation. Critère : domaine et pages juridiques corrects dans le HTML généré et en production.
+- [ ] **SGA-002** — P1 — Accessibilité à vérifier : lecteur d’écran, zoom 200 %, appareils iOS/Android après contenus définitifs. Parcours critiques utilisables sans focus masqué ni perte de contenu. Des tests partiels ne prouvent pas une conformité WCAG.
+
+## Vérifications Google Maps et avis
+
+- [ ] **MAPS-002** — P1 — Vérification réelle par le propriétaire. Configurer GOOGLE_MAPS_API_KEY localement et dans les secrets Actions (clé visible au navigateur), Maps JavaScript API/Places API (New), facturation et quotas. Restreindre API et référents à https://mazat-transport.fr/* et aux autres origines réellement utilisées ; clé distincte pour localhost. Vérifier suggestions France/international, clavier/lecteur d’écran, 320 px, deux adresses indépendantes, corrections, code postal absent, retour/suivant/récapitulatif et modes hors ligne/clé refusée. Build antérieur réussi (14 pages), saisie manuelle et ancien widget vérifiés sur localhost:4322 ; ces essais ne valident pas la nouvelle saisie directe après 3 caractères (300 ms). Le propriétaire a demandé de vérifier lui-même cette révision, sans nouveaux tests localhost/navigateur. Vérifier encore remplissage, attribution Google et confidentialité. Références : https://developers.google.com/maps/documentation/javascript/place-autocomplete-new ; https://developers.google.com/maps/api-security-best-practices .
+- [ ] **REV-GOOGLE-002** — P1 — Vérification réelle par le propriétaire. Vérifier clé, Maps JavaScript API/Places API (New), champ avis/facturation et domaine de production ; contrôler établissement pour Place ID ChIJ7WvR7za_yRIRddVA_CCPQcE, auteurs/textes/dates/liens, mobile/clavier et états vide/erreur. Avis sur l’accueil uniquement depuis le retrait de la page avis. Pas de localhost à la demande du propriétaire. Limite du suivi existant : cinq avis au plus sélectionnés par pertinence ; trier ce sous-ensemble ne garantit pas les derniers avis cinq étoiles. Actualisation à l’ouverture, pas de push/polling. Si tous les avis récents sont nécessaires, étudier une intégration Business Profile authentifiée côté serveur, sans OAuth dans le navigateur. Références : https://developers.google.com/maps/documentation/javascript/place-reviews ; https://developers.google.com/maps/documentation/places/web-service/reference/rest/v1/places ; https://developers.google.com/maps/documentation/places/web-service/policies .
+
+## SEO / GEO / Accessibilité — Intervention du propriétaire
+
+Référencer les tâches EXT-001 à EXT-006 et LEGAL ci-dessus ; ne pas les dupliquer. Aucun déploiement, audit juridique, configuration Search Console ou envoi réel n’est déclaré réalisé ici.
+
+## Phases ultérieures
+
+- [ ] Anglais pour l’export et blog/conseils — P2, facultatifs, non activés.
+- [ ] Pages villes supplémentaires — uniquement avec contenu original utile et photos réelles.
+
+## Textes client conservés — EDIT-004 et EXPORT-001
 
   > MAZAT Transport Déménagement accompagne les particuliers et les professionnels dans leurs changements de vie et leurs transferts d’activité. Notre approche associe organisation, manutention maîtrisée, protection du mobilier et suivi de chaque étape. Nous intervenons au départ ou à destination de Marseille et de la Côte d’Azur, sur les trajets nationaux et, selon les projets, sur les opérations internationales.
   >
   > Notre savoir-faire est particulièrement orienté vers l’emballage soigné : housses de literie, couvertures professionnelles, protections renforcées, démontage et remontage selon la formule, mise en place du mobilier, et préparations spécifiques pour l’export. L’objectif : adapter la prestation aux biens, aux accès et au budget, sans promettre ce qui n’est pas inclus au devis.
-
-- [ ] **EDIT-005 · P1 · Commitment descriptions · partial.** Evidence: the four-item homepage array in `src/views/home/components/TrustStrip.astro` uses only “Des emballages adaptés à vos biens.”, “Un périmètre clair, étudié ensemble.”, “Des accès aux manutentions spécifiques.” and “Des solutions selon votre destination.” Action: retain the four existing headings and replace their descriptions with the supplied details. Acceptance: all four descriptions below appear in their corresponding visible blocks, including offer/faisability qualifications (not only elsewhere in the site):
-
-  | Commitment             | Required description                                                                                 |
-  | ---------------------- | ---------------------------------------------------------------------------------------------------- |
-  | Protection maîtrisée   | Emballages adaptés, housses et couvertures ; protection renforcée et export selon l’offre souscrite. |
-  | Devis personnalisé     | Cubage, adresses, étages, ascenseurs, portage, kilomètres et prestations détaillés.                  |
-  | Savoir-faire terrain   | Déménagements particuliers, bureaux, manutentions complexes et longues distances.                    |
-  | France & international | Déménagements régionaux, nationaux et projets d’expédition à l’étranger selon faisabilité.           |
-
-- [ ] **EDIT-006 · P1 · Complete service-area presentation · partial.** Evidence: cities already listed above are present across the Marseille/Nice pages; Var is mentioned in the footer and FAQ. “Toulon” and the department labels “(13)”, “(83)” and “(06)” are absent from site copy. There is no consolidated visible block distinguishing commercial priority, regional service and wider coverage. Action: complete the homepage service-area presentation in `src/views/home/components/Hero.astro`, reusing existing city-route links and keeping footer/FAQ wording consistent if changed. Acceptance: include Marseille, Aix-en-Provence, Aubagne, La Ciotat, Martigues and Bouches-du-Rhône (13) as the commercial priority; Toulon and Var (83), Nice, Cannes, Antibes, Monaco and Alpes-Maritimes (06) as regional coverage; all France and international destinations under feasibility study. Present Monaco as a separate destination, without implying that it belongs to department 06. This does not require new city pages, addresses or keyword-stuffed content.
-
-## Client export review — 24 November 2026
-
-Scope: implementation of the owner's supplied “Export Maritime International” instructions on `/international-maritime/` and `/devis/?type=export`. Page content is composed by `src/views/international/Page.astro` and its components. `/export-maritime/` redirects to the preserved route. The updated source and static build output were checked before moving the view under `src/views/`; no interactive browser test, production verification or real submission was performed for the moved page. Content and fields are present, but this does not establish a working request-reception service. Existing reception/PDF/contract dependencies remain EXT-001, EXT-002 and LEGAL-006; they are not duplicated here.
-
-### Requirements already represented in the source
-
-- [x] Commercial name “MAZAT EXPORT MARITIME”: homepage export illustration (`src/views/home/components/ExportSection.astro`) and export page eyebrow (`src/site/pages.ts`, rendered uppercase by `src/views/international/components/Hero.astro`).
-- [x] Exact signature “Vos effets personnels voyagent loin. Notre exigence reste la même.”: export page intro in `src/site/pages.ts`; also split across the homepage export heading.
-- [x] Exact CTA “Obtenir un devis export personnalisé”, targeting `/devis/?type=export`: `src/views/international/components/Preparation.astro`. The target exists; the initialization hook is restored, with interactive verification pending under EXPORT-006.
-- [x] Groupage maritime / LCL: few cartons and small/medium volumes, consolidation-dependent schedule, packaging and detailed inventory are explained in `src/views/international/components/Solutions.astro`. This is a faithful paraphrase of the supplied content.
-- [x] Dedicated container / FCL: large volumes/full homes; 20/40 feet conditional on volume, itinerary, feasibility and loading conditions, in the same array.
-- [x] Door-to-door offer: collection, export packing, port operations, transport and final delivery according to contract, with destination partners. The current title “Accompagnement porte-à-porte” and destination partners convey the requested service/correspondents; no substantive missing feature is inferred from this wording difference.
-- [x] All six ordered export stages are present in `src/views/international/components/Stages.astro`: project evaluation; visit/video and numbered inventory; export protection and custom crates if needed; consolidation area/port; freight and partner formalities; reception, possible customs clearance and delivery according to the offer.
-- [x] Departure/arrival address, postal code, city and country fields exist in `src/components/QuoteForm.astro`. Project date and flexibility, estimated m³/inventory, estimated weight/valued inventory and special/fragile goods fields also exist. Date is conditional and volume may be replaced by inventory; presence is not evidence of completed data collection.
-- [x] Residence fiscale, import status, packing-list availability/language, export contacts and Incoterm are now explicitly collected in the export questionnaire; see EXPORT-002–005 for verification status. Existing fields retain transport mode, weight/value and special-goods details.
-- [x] Port fees, handling, storage, customs formalities, insurance and delivery are named in the page's “Un périmètre défini par écrit” block; it explicitly states inclusions/exclusions will be specified in the quote. This is an editorial statement, not a completed contractual quote (EXT-002).
-
-### Complete export reference retained from the client
-
-Use this reference with EXPORT-001–005; it is source material already supplied, not a request for the client to provide it again. Exact service introduction is retained in EXPORT-001; name, signature and CTA are retained in the checked items above. No source URLs accompanied the previous editorial/export excerpts; their source is the owner's pasted client instructions.
-
-| Solution requested    | Client profile                        | Content to explain                                                                                            |
-| --------------------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| Groupage maritime     | Quelques cartons à petit/moyen volume | Consolidation avec d’autres expéditions, calendrier variable, emballage et inventaire détaillés.              |
-| Conteneur dédié       | Volume important / logement complet   | Conteneur 20 ou 40 pieds selon cubage, itinéraire, faisabilité et conditions de chargement.                   |
-| Service porte-à-porte | Accompagnement étendu                 | Collecte, emballage export, opérations portuaires, transport, correspondants, livraison finale selon contrat. |
-
-The six requested stages, in order (currently represented by paraphrases):
-
-1. Évaluation (pays, villes, volume, date, nature des biens).
-2. Visite/vidéo et inventaire numéroté.
-3. Emballage export (fragiles, caisses sur mesure si nécessaires).
-4. Acheminement vers zone de consolidation ou port.
-5. Fret maritime et formalités selon partenaires.
-6. Réception, dédouanement éventuel et livraison selon offre.
-
-Complete requested export quote information, to retain across fields, recap and the eventual validated quote:
-
-| Required information                                                          | Current coverage and follow-up                                                                                                                          |
-| ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Pays, ville, code postal de départ et d’arrivée                               | Fields already present; verify both addresses after EXPORT-006.                                                                                         |
-| Résidence fiscale / statut d’importation                                      | Separate named fields; preserved by the shared recap form-data collection; EXPORT-002.                                                                  |
-| Date souhaitée                                                                | Date/flexibility fields present; unknown date is currently allowed. Record explicitly when still to define.                                             |
-| Coordonnées des deux parties                                                  | Sender/recipient association selectors, with requester reuse, explicit pending state and structured alternate details; EXPORT-003.                      |
-| Liste de colisage en français/anglais si nécessaire                           | Required availability/language choice with explicit pending and to-provide options; EXPORT-004.                                                         |
-| m³                                                                            | Estimated-volume field or room-inventory alternative; do not treat an inventory alone as a verified cubage.                                             |
-| Poids estimé                                                                  | Combined export weight/value field exists; verify it reaches the recap after EXPORT-006.                                                                |
-| Inventaire valorisé                                                           | Combined field prompts for value/inventory; no structured document or verified valuation is claimed.                                                    |
-| Objets particuliers ou réglementés                                            | Special/fragile-goods field plus sensitive/regulated-goods prompt; actual exclusions must be validated under LEGAL-006.                                 |
-| Incoterm / périmètre contractuel à définir avec le commissionnaire            | Explicit status choice and conditional field for an agreed term; fee allocation remains subject to a validated contract; EXPORT-005.                    |
-| Frais de port, manutention, stockage et douane explicitement inclus ou exclus | Export page says each item must be marked included, excluded or to confirm in the validated quote; no allocation is claimed here; EXPORT-005 / EXT-002. |
-
-### Export gaps and corrections to plan
-
-Owner: developer unless a contract/business validation is explicitly referenced. The implementation and static-build evidence are recorded below; items requiring interactive or contractual verification remain unchecked. This review does not authorise publication or contract approval.
-
-- [ ] **EXPORT-001 · P1 · Service introduction · moved, build verification pending.** Evidence: `/international-maritime/` is composed by `src/views/international/Page.astro`; the exact supplied introduction is in `src/views/international/components/Introduction.astro`, and the existing signature remains in `src/site/pages.ts` and the page hero. Static build and generated HTML assertions passed on 24 November 2026 before this view move. Re-run the build and inspect the route before closing this task. Acceptance: the full paragraph names metropolitan departures, DOM, LCL/FCL and destination partners without extending contractual scope.
-
   > Vous déménagez à l’étranger, vers les DOM ou depuis la France métropolitaine ? MAZAT vous accompagne dans la préparation et l’organisation de votre expédition maritime, de l’étude du volume à la remise à destination, selon le périmètre retenu. Nous étudions les solutions de groupage maritime (LCL) pour les petits et moyens volumes et de conteneur dédié (FCL) pour les projets plus importants, avec des partenaires de transport et de destination lorsque nécessaire.
 
-- [x] **EXPORT-002 · P1 · Tax residence / import status · completed in build.** Evidence: separate named fields in the export step of `src/components/QuoteForm.astro`; the existing recap in `src/lib/quote-form.ts` collects named form values without deriving a tax or customs regime. Static build and generated markup assertions passed on 24 November 2026. Legal/privacy processing remains under LEGAL-004/006.
-- [ ] **EXPORT-003 · P1 · Both parties' contact details · implementation complete, interaction to verify.** Evidence: the export step in `src/components/QuoteForm.astro` now associates sender and recipient contacts with the existing departure/arrival addresses, reuses requester details when selected, and exposes explicit “À confirmer” states. Alternate contacts have required name, telephone and email fields; `src/lib/quote-form.ts` toggles these fields and the shared recap includes their named values. Static build and markup assertions passed on 24 November 2026; conditional validation, recap and back-navigation were not browser-tested. No duplicate address entry is required.
-- [x] **EXPORT-004 · P1 · Packing list and its language · completed in build.** Evidence: the export step in `src/components/QuoteForm.astro` collects availability and French/English status, including “à préparer” and “à confirmer”; the shared recap collects the selected option. Static build and generated markup assertions passed on 24 November 2026. No upload is claimed; documents remain under EXT-001.
-- [ ] **EXPORT-005 · P1 · Incoterm and commissioner-defined scope · implementation complete, interaction to verify.** Evidence: `/international-maritime/` explains the scope and fee limits; `src/components/QuoteForm.astro` requires an explicit “à définir” or “déjà défini” choice and a term when supplied; the shared recap includes the selected status and value. Static build and markup assertions passed on 24 November 2026, but conditional validation/recap was not browser-tested. No fee allocation is claimed; actual contractual allocation remains subject to EXT-002 and LEGAL-006.
-- [ ] **EXPORT-006 · P0 · Quote-flow initialization · hook restored, interaction to verify.** Evidence: `src/components/QuoteForm.astro` now exposes the `.form-buttons` hook expected by `src/lib/quote-form.ts`; generated `/devis/` HTML contains the hook and module scripts, and the static build passed on 24 November 2026. No browser interaction test was performed this turn, so navigation visibility, export preselection, domestic/export journeys, validation, back navigation, recap and download remain unverified. Do not treat earlier checks in `docs/validation.md` as current proof. Missing backend receipt remains EXT-001.
+## Descriptions client — EDIT-005
 
-## Client export pricing review — 24 November 2026
+| Engagement | Description |
+| --- | --- |
+| Protection maîtrisée | Emballages adaptés, housses et couvertures ; protection renforcée et export selon l’offre souscrite. |
+| Devis personnalisé | Cubage, adresses, étages, ascenseurs, portage, kilomètres et prestations détaillés. |
+| Savoir-faire terrain | Déménagements particuliers, bureaux, manutentions complexes et longues distances. |
+| France & international | Déménagements régionaux, nationaux et projets d’expédition à l’étranger selon faisabilité. |
 
-Scope: the owner's supplied comparative maritime-export pricing study, labelled as consulted on **5 November 2026**. Compared against current local site sources and repository documentation. This review does not revalidate market rates or the content of third-party URLs as of today. The amounts below are faithfully retained client-supplied historical references, not confirmed current prices, MAZAT rates, purchase costs or door-to-door quotes. PRICE-001 is implemented on `/international-maritime/`; this does not verify external research or add any historical price to the website.
+## Référence export fournie — à conserver lors des changements
 
-### Requirements already respected
+Solutions : groupage maritime pour petits/moyens volumes avec calendrier variable et inventaire détaillé ; conteneur 20/40 pieds selon volume, trajet, faisabilité et chargement ; porte-à-porte selon contrat avec partenaires de destination.
 
-- [x] Public pricing is personalised: homepage export section says “Tarif personnalisé. Itinéraires et prestations selon faisabilité.” (`src/views/home/components/ExportSection.astro`); `/international-maritime/` now displays the exact personalized-pricing sentence requested by PRICE-001.
-- [x] No supplied Sirelo/IFTL price ranges, competitor attribution or automatic freight quote appears in the current site sources/public text assets. Their absence from the sales page is intentional compliance, not content to add to that page.
-- [x] No unverified priced case study or guaranteed door-to-door price is displayed. Do not invent one to fill the site; see the conditional PRICE-005 task.
-- [x] Export page names packaging, port fees, handling, storage, customs formalities, insurance and delivery as items to clarify in the quote (`src/views/international/components/Preparation.astro`). This does not prove an internal costing breakdown exists.
-- [x] Existing project documentation states internal prices are not public content and export is individually quoted (`docs/client-brief.md`). Form copy says no freight/TVA calculation occurs (`src/components/QuoteForm.astro`). Actual request reception and contractual quotes remain tracked under EXT-001/002; the EXPORT-006 hook is restored locally, pending interaction verification.
-- [x] The six historical scenarios, their caveats and all four source names/URLs are now recorded below for Adam. This closes the documentation capture only, not rate verification or implementation.
+Ordre : évaluation → visite/vidéo et inventaire numéroté → emballage export/caisses si nécessaire → consolidation/port → fret et formalités partenaires → réception, dédouanement éventuel et livraison selon offre.
 
-### Complete client-supplied comparison — internal reference only
+Conserver dans les champs et le récapitulatif : pays/ville/code postal et adresses des deux côtés ; résidence fiscale/statut d’importation ; date ou état à définir ; contacts expéditeur/destinataire ; disponibilité et langue de la liste de colisage ; volume ou inventaire (non équivalent à un cubage vérifié) ; poids et inventaire valorisé ; biens particuliers/réglementés ; Incoterm et périmètre ; frais port/manutention/stockage/douane inclus, exclus ou à confirmer. Aucune allocation contractuelle ni réception réelle ne se déduit de la présence des champs. Références : EXPORT-003/005/006, EXT-001/002, LEGAL-004/006.
 
-**Client's study date: 05/11/2026.** Values were described by the client as published by third-party sites. They vary with **direction of travel, ports, volume, service and exclusions**. They are **neither a MAZAT tariff nor a door-to-door quote**. Keep these caveats attached to every internal reuse. Do not copy this table into `src/`, `public/`, metadata, JSON-LD, an automatic estimator or a sales page as MAZAT pricing.
+## Comparaison historique client — référence interne uniquement
 
-| Reference supplied by client                   | Scenario                 | Historical published order of magnitude as supplied             | Caveat to retain                                                                                                  | Source ID    |
+Étude fournie datée du 05/11/2026. Les montants dépendent du sens du trajet, des ports, du volume, de la prestation et des exclusions. Ni tarifs MAZAT, ni coûts d’achat, ni devis porte-à-porte ; non revérifiés lors de cette mise à jour. Ne pas copier dans src/, public/, métadonnées, JSON-LD, estimateur ou page commerciale. Conserver toutes les réserves avec les chiffres.
+
+| Référence fournie par le client                   | Scénario                 | Ordre de grandeur historique fourni             | Réserve à conserver                                                                                                  | Identifiant source    |
 | ---------------------------------------------- | ------------------------ | --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ------------ |
 | Sirelo France–Canada (2026)                    | Groupage maritime / LCL  | 1 400 à 3 400 €                                                 | Périmètre d’inclusion à vérifier.                                                                                 | SRC-PRICE-01 |
 | Sirelo France–Canada (2026)                    | Conteneur dédié 20 pieds | 3 200 à 5 900 €                                                 | Fret/transport maritime, hors plusieurs frais possibles.                                                          | SRC-PRICE-01 |
@@ -148,63 +144,11 @@ Scope: the owner's supplied comparative maritime-export pricing study, labelled 
 | Sirelo France–USA (octobre 2026)               | Groupage 5 à 15 m³       | Environ 3 000 à 5 500 €.                                        | Fourchette indicative ; conditions et exclusions à vérifier.                                                      | SRC-PRICE-02 |
 | IFTL – DOM (prix du mois dans l’étude fournie) | 1er m³ en groupage       | Dès 500 € Réunion / Guadeloupe / Martinique ; dès 600 € Guyane. | Prix d’appel du premier m³, pas un prix total d’expédition ; mois exact, sens du trajet et périmètre à revalider. | SRC-PRICE-04 |
 
-### All comparison sources to retain for Adam
+### Sources de comparaison à conserver pour Adam
 
-| ID           | Source name                         | Exact supplied URL                                                    | Use / verification status                                                                                                                  |
+| ID           | Nom de la source                         | URL fournie                                                    | Utilisation / état de vérification                                                                                                                  |
 | ------------ | ----------------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| SRC-PRICE-01 | Sirelo — France–Canada              | https://sirelo.fr/demenagement-par-container/container-france-canada/ | Source supplied for the three Canada scenarios; not rechecked during this review.                                                          |
-| SRC-PRICE-02 | Sirelo — Déménager aux États-Unis   | https://sirelo.fr/demenager-a-etranger/demenager-aux-etats-unis/      | Source supplied for the two USA scenarios; not rechecked during this review.                                                               |
-| SRC-PRICE-03 | Sirelo — Déménagement par conteneur | https://sirelo.fr/demenagement-par-container/                         | General comparison/context source; no separate numerical row was attributed to this URL in the client's table.                             |
-| SRC-PRICE-04 | IFTL — Outre-mer / contact          | https://www.iftl.fr/contact                                           | Supplied reference for DOM first-m³ figures; the URL alone does not establish a current tariff. Obtain a dated supporting offer if needed. |
-
-### Public positioning, internal costing and profitability gaps
-
-- [ ] **PRICE-001 · P1 · Public pricing sentence · moved, build verification pending.** Evidence: `src/views/international/components/Introduction.astro` contains “Export maritime : prix personnalisé après étude du volume, de la destination et du mode de transport.” The generated HTML assertion passed on 24 November 2026 before the view move. Re-run the build and inspect `/international-maritime/` before closing this task; no competitor price or guaranteed freight rate was added.
-- [ ] **PRICE-002 · P1 · Revalidate comparative evidence · to verify externally.** Evidence: the historical study is now captured above, but no current corroborating evidence is available in the repository. Owner: MAZAT/Adam. Action: consult **all four sources SRC-PRICE-01–04**, record the consultation date and actual publication/update date where supplied, and attach the relevant passage or dated offer for each of the **six scenario rows**. Check direction of travel, departure/arrival ports, volume, service level, inclusions, exclusions, currency and tax presentation; clarify the IFTL month and whether the first-m³ offer still applies. Acceptance: every historical value is either corroborated with dated evidence or explicitly marked obsolete/unverified; do not silently replace the 05/11/2026 historical table or infer an HT/TTC regime. No source verification is claimed merely because its URL is listed here.
-- [ ] **PRICE-003 · P1 · Internal export cost breakdown · missing in the repository.** Evidence: there is no internal costing/admin model; the public page's list of possible fees is not such a model. Owner: developer with MAZAT validation. Action: design the private costing worksheet/model for **each of the following eight items**, retaining separate amounts and inclusions/exclusions: **(1) enlèvement/emballage ; (2) préacheminement ; (3) emballage caisse ; (4) groupage ou conteneur ; (5) manutention portuaire ; (6) assurance ; (7) livraison ; (8) douanes**. Location: future private quotation/admin implementation, coordinated with EXT-002 and EXPORT-005, never in static public assets or browser code. Acceptance: each item can be costed separately and associated with a partner offer and the contractual scope; zero, not applicable and unknown are distinguishable. No claim is made about a separate MAZAT spreadsheet outside this repository.
-- [ ] **PRICE-004 · P1 · Purchase cost and profitability validation · not evidenced.** Owner: MAZAT and its freight forwarder/partners; developer for the future private workflow. Action: **obtain an up-to-date purchase price from a transitaire/partenaire for every quoted line before a client proposal**; account for **marge, aléas et conditions de paiement**. Retain partner identity, offer date/validity, route, scope, purchase amount and currency, margin method/value, allowance for contingencies and agreed payment conditions. Missing actual supplier prices, margin policy, contingency method and payment conditions must be supplied/validated; none may be inferred from Sirelo/IFTL or the historical grid. Acceptance: MAZAT validates a complete internal cost/sale-price breakdown, dated supporting purchase offers, margins/contingencies and payment conditions before release of the customer quote. Dependencies: PRICE-003, EXT-002 and LEGAL-003/006; no automatic default margin or payment percentage is authorised by this review.
-- [ ] **PRICE-005 · P2 · Optional priced case studies · conditional, not required for launch.** The client's instruction is to show case types **only once their scope has been verified**, not to invent or publish some immediately. Current omission complies. If MAZAT chooses to add examples, obtain a validated case specifying **direction, ports/addresses, destination, volume, transport mode, date/validity, services, inclusions, exclusions and verified price/tax presentation**. Owner: MAZAT for facts, developer for public integration in the export page. Acceptance: each example is attributed to its actual scenario, clearly illustrative and not a guaranteed quote; otherwise keep examples absent. Historical competitor ranges alone cannot satisfy this condition. Dependencies: PRICE-002–004 as applicable; not a duplicate of EXT-002's contractual PDF task.
-
-## Client and infrastructure dependencies
-
-- [ ] **EXT-001 · P0 · Reception infrastructure · partial, verification pending.** The quote form now posts directly from the browser to Forge `send_form` using the form-scoped `FORGE_FORM_TOKEN`; the token is public in generated HTML. Files: `src/components/QuoteForm.astro`, `src/lib/form-forge.ts`, `src/lib/quote-form.ts`, `src/pages/devis.astro`, `src/views/quote/Page.astro`. Verify a test submission with the configured token and confirm Forge delivery. Remaining acceptance: server-side storage with timestamp/ID, anti-spam, prospect acknowledgement, admin statuses and attachment retention; local/national/export submissions received in a test environment. Privacy and provider-retention details remain under EXT-003.
-- [ ] **EXT-002 · P0 · Contractual quote PDF · blocked.** MAZAT supplies original “Devis parfait (5).pdf”, approved business identity, CGV, insurance, declaration of value, VAT/payment rules, mediation and signature workflow. Acceptance: approved template and tax/total calculations, manual business validation, inventory annex, signature and test PDF. No automatic contractual PDF implemented.
-- [ ] **EXT-003 · P0 · Publication/legal · blocked.** Confirm domain, hosting identity, publication director, current Kbis/RNE, mediator, privacy bases/retention/processors and export authorisations. Locations: `src/site/config.ts`, `src/site/pages.ts`, `src/views/legal/Page.astro`, `src/views/privacy/Page.astro`, `src/views/terms/Page.astro`, `.env.example`. Acceptance: validated legal pages and configured canonical origin before enabling PUBLICATION_READY.
-  - [ ] **LEGAL-001 · P0 · Professional identity.** Confirm whether Jérémy Mazari is gérant and whether the Marseille address is the complete administrative address or an establishment address. Also confirm whether MAZAT needs a separate billing or postal address.
-  - [ ] **LEGAL-002 · P0 · Publication.** Confirm Jérémy Mazari as publication director or supply the exact name and role of the publication director.
-  - [ ] **LEGAL-003 · P0 · Contract documents.** Supply approved CGV, payment terms, cancellation terms, insurance policy, declaration-of-value rules, VAT rules, mediator details, dispute procedure and contractual quote model.
-  - [ ] **LEGAL-004 · P0 · Privacy.** Name the data controller, final purposes and legal bases, recipients and processors, data-retention periods, security measures, data-transfer conditions and exercise-of-rights procedure.
-  - [ ] **LEGAL-005 · P0 · Reception.** Choose email, CRM or backend receiver; confirm storage location, access rules, anti-spam, acknowledgement, attachment retention and deletion periods.
-  - [ ] **LEGAL-006 · P1 · Business and export scope.** Confirm insurance identity and policy, official transport authorisations, countries served, partners, customs responsibilities and exclusions of transported goods.
-  - [ ] **LEGAL-007 · P1 · Trackers.** Confirm the absence or presence of cookies, analytics, advertising pixels, embedded maps, videos or other third-party tools before the production launch.
-- [ ] **EXT-004 · P1 · Photos/reviews · blocked.** MAZAT supplies authorised team/job/transport/export photos, photo rights, approved testimonials and Google review URL. Locations: `public/images`, `src/views/home`, `src/views/reviews/Page.astro` and `src/components/Reviews.astro`. Acceptance: real optimised gallery and hero without identifying unauthorised clients. External Déménagement24 link already present; no rating copied.
-- [ ] **EXT-005 · P1 · Forge · blocked.** Configure MAZAT website token and verify current published FAQ/review contract. Locations: `src/lib/forge.ts`, `.env.example`. Acceptance: 0 and N live items, French locale, no merge with fallback, rebuild trigger. No secret from Laure is reused.
-- [ ] **EXT-006 · P1 · Analytics/Search Console · to do.** Choose tools and consent approach, verify domain ownership, configure relevant call/email/export/form events after a real receiver exists. No trackers currently installed.
-
-## SEO / GEO / Accessibilité — Corrections dans le dépôt
-
-- [ ] **SGA-001 · P1 · SEO/legal · blocked by EXT-003.** Replace preparation legal text, configure SITE_URL, verify canonical/OG/sitemap and remove appropriate noindex only after approval of facts. Owner: developer. Acceptance: correct domain and verified legal pages in generated HTML and production.
-- [ ] **SGA-002 · P1 · Accessibility · to verify.** Complete screen-reader, 200% zoom and actual iOS/Android acceptance after final content. Owner: developer/QA. Acceptance: critical navigation/form journeys usable, no hidden focus or content loss. Partial browser tests do not establish WCAG conformity.
-
-## SEO / GEO / Accessibilité — Intervention du propriétaire
-
-External evidence and approvals are tracked once in EXT-001 through EXT-006 above; do not duplicate them here. No Search Console, analytics, legal review, deployment or real email delivery is claimed.
-
-## Later phases
-
-- [ ] Optional English export and blog/conseils (P2, not enabled).
-- [ ] Additional city pages only when original useful content and real photos are available.
-
-## Address autocomplete — 24 November 2026
-
-- [x] **MAPS-001 · P1 · implementation.** Reusable `src/components/AddressAutocomplete.astro` integrated twice in `QuoteForm.astro`; current Google Places widget, shared on-demand loader, French UI, international results, editable address/postcode/city/country, manual fallback and asynchronous status messages. No supplied sample key copied. Privacy/cookie information updated; `.env.example`, environment typing and GitHub Actions build variable documented.
-- [ ] **MAPS-002 · P1 · owner / live verification.** Configure `GOOGLE_MAPS_API_KEY` in local `.env` and GitHub repository Actions secret (browser-visible key); enable Maps JavaScript API and Places API (New), billing and suitable quotas. Restrict APIs and HTTP referrers to `https://mazat-transport.fr/*`, www/preview origins only if used; use a separate development key for `http://localhost:4321/*`. Rebuild. References: Google Places widget — https://developers.google.com/maps/documentation/javascript/place-autocomplete-new ; Google API security — https://developers.google.com/maps/api-security-best-practices . Verify real French and international suggestions, keyboard/screen-reader use, 320px/mobile display, two independent addresses, manual corrections, missing postcode, back/next and recap; check denied-key/offline fallback. Confirm Google service/privacy configuration before production. Validation locale : `pnpm build` réussi (14 pages) ; widget Google affiché après activation dans le navigateur sur localhost:4322 ; saisie manuelle du départ et passage à l’arrivée vérifiés. La sélection complète des suggestions n’a pas pu être vérifiée de façon fiable par l’automatisation (champ interne en shadow DOM fermé). Paramètres du compte Google, autorisations de production, quotas, facturation et lecteur d’écran restent à vérifier.
-
-### MAPS-001 — Direct address input update
-
-At the owner’s request, suggestions now appear directly beneath each existing address input after three characters (300 ms debounce). The separate activation button and extra search field are removed. Selecting a suggestion fills street, postcode, city and country; all fields remain editable. Keyboard arrows, Enter, Escape and Tab are handled, stale requests are ignored, and departure/arrival have separate session tokens. Google attribution and privacy copy reflect typing-triggered requests. Compilation/format checks only for this revision: the owner requested no further localhost/browser checks and will verify suggestions, keyboard use, mobile rendering and field filling. MAPS-002 remains open for live acceptance; earlier widget browser checks do not validate this replacement.
-
-## Google reviews — 24 November 2026
-
-- [x] **REV-GOOGLE-001 · implementation.** Owner requested client-side Google reviews, overriding the Forge build-only rule for this component. `src/components/Reviews.astro` and `src/lib/google-reviews.ts` initially fetched Place ID `ChIJ7WvR7za_yRIRddVA_CCPQcE` at each page opening on `/` and `/realisations-avis/`; since the reviews page was retired on 24 November 2026, reviews load on `/` only. Shared Maps loader with autocomplete. Five-star filter, descending publication date within returned subset, original text, author/profile, supplied dates, review/report links, Google attribution, no local persistence or fabricated rating. Privacy information updated.
-- [ ] **REV-GOOGLE-002 · P1 · live verification by owner.** Verify the existing key permits Maps JavaScript API + Places API (New) and the reviews field/billing on the deployed domain. Check correct business for this Place ID, real author/text/date links, mobile/keyboard and failure/empty states. No localhost opened at owner request. Google returns at most five relevance-selected reviews: sorting this subset cannot guarantee the latest published five-star reviews. Each page opening refreshes results, but no live push or polling while open. If all latest reviews are required later, assess a server-side authenticated Business Profile integration (never put OAuth credentials in browser). Sources: Google Place Reviews — https://developers.google.com/maps/documentation/javascript/place-reviews ; Places response limits — https://developers.google.com/maps/documentation/places/web-service/reference/rest/v1/places ; Google attribution policies — https://developers.google.com/maps/documentation/places/web-service/policies .
+| SRC-PRICE-01 | Sirelo — France–Canada              | https://sirelo.fr/demenagement-par-container/container-france-canada/ | Source des trois cas Canada ; non revérifiée lors de cette revue.                                                          |
+| SRC-PRICE-02 | Sirelo — Déménager aux États-Unis   | https://sirelo.fr/demenager-a-etranger/demenager-aux-etats-unis/      | Source des deux cas États-Unis ; non revérifiée lors de cette revue.                                                               |
+| SRC-PRICE-03 | Sirelo — Déménagement par conteneur | https://sirelo.fr/demenagement-par-container/                         | Source générale de comparaison ; aucune ligne chiffrée distincte attribuée à cette URL.                             |
+| SRC-PRICE-04 | IFTL — Outre-mer / contact          | https://www.iftl.fr/contact                                           | Référence fournie pour le premier m³ vers les DOM ; cette URL ne prouve pas un tarif actuel. Obtenir une offre datée si nécessaire. |

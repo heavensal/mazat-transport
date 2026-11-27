@@ -1,10 +1,10 @@
-# MAZAT client brief — implementation scope
+# MAZAT Transport client brief — implementation scope
 
 Source: `MAZAT_Cahier_des_charges_Site_Web_Adam.pdf`, supplied by the owner, version 5 November 2026 (16 pages). Logo: `MAZAT_logo_original.png`, preserved unchanged in `public/images/mazat-logo.png`. The confidential source PDF is deliberately not copied into public assets or Git.
 
 ## Product requirements
 
-French brochure site: dark anthracite, red, white and steel blue. Real MAZAT photography only; no generated photographs pretending to be completed jobs. Five offers (Économique, Éco+, Standard, Premium, Luxe/VIP), dedicated maritime export, services, businesses, local Marseille/Nice pages, real-review source, FAQ and a multi-step quote journey. Use the confirmed commercial phone and email from the brief.
+French brochure site: dark anthracite, red, white and steel blue. Real MAZAT Transport photography only; no generated photographs pretending to be completed jobs. Five offers (Économique, Éco+, Standard, Premium, Luxe/VIP), dedicated maritime export, services, businesses, local Marseille/Nice pages, real-review source, FAQ and a multi-step quote journey. Use the confirmed commercial phone and email from the brief.
 
 Internal pricing is not public content and is not implemented in browser code. Export is individually quoted. Do not turn estimates into contractual quotes or publish insurance/payment/tax assumptions. English export and blog are later P2 work.
 

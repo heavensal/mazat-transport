@@ -37,7 +37,7 @@ The fetch runs while Astro generates the site. The HTML is written then. Do not 
 
 `fetchForge` calls `{FORGE_URL}/{path}?locale=` with `Authorization: Bearer ${FORGE_API_TOKEN}` and `Accept: application/json`. `FORGE_URL` defaults to `https://forge.1344.fr/api/v1`. A list response is `{ updated_at, data }`. An empty token or a failed response is a failed fetch.
 
-## MAZAT implementation
+## MAZAT Transport implementation
 
 The build-only transport is src/lib/forge.ts. Faq.astro selects src/content/faq.ts on a valid empty list or a reported failure. Reviews.astro omits testimonials when there are no valid approved remote entries; no fictional local reviews are supplied. Both render plain text safely.
 

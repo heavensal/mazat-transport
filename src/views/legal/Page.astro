@@ -34,7 +34,7 @@ const { page } = Astro.props;
       href={business.mapsUrl}
       target="_blank"
       rel="noopener noreferrer"
-    >
+     aria-description="S’ouvre dans un nouvel onglet">
       Voir l’établissement sur Google Maps
     </a>
     <br />
@@ -89,7 +89,7 @@ const { page } = Astro.props;
       href={business.developer.website}
       target="_blank"
       rel="noopener noreferrer"
-    >
+     aria-description="S’ouvre dans un nouvel onglet">
       {business.developer.website}
     </a>
   </p>

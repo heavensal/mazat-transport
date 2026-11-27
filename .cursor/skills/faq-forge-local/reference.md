@@ -1,4 +1,4 @@
-# MAZAT FAQ integration
+# MAZAT Transport FAQ integration
 
 Read [FAQ.md](../../../FAQ.md) and [MULTILANG.md](../../../MULTILANG.md). French only; no translation runtime.
 

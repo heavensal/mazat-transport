@@ -204,6 +204,6 @@ Verify the following when implementing language changes:
 
 Report the checks performed and anything unverified.
 
-## MAZAT publication
+## MAZAT Transport publication
 
 This new site publishes French only. English export and a blog are P2 extensions, not enabled in this delivery. Use src/site/publication.ts; no i18n runtime.

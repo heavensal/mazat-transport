@@ -1,32 +1,31 @@
 ---
 import { business } from '../site/config';
+import googleLogo from '../assets/images/reviews/Google_logo.svg?url';
+import demenagement24Logo from '../assets/images/reviews/logo_demengement24.svg?url';
 const configuredKey = import.meta.env.GOOGLE_MAPS_API_KEY?.trim() || '';
 const apiKey = configuredKey.startsWith('YOUR_') ? '' : configuredKey;
 const reviewsUrl = `https://www.google.com/maps/search/?api=1&query=MAZAT%20Transport&query_place_id=${business.googlePlaceId}`;
 ---
 
 <section
-  class="mx-auto w-11/12 max-w-7xl py-16 md:w-5/6 md:py-24"
+  class="mx-auto min-w-0 w-11/12 max-w-7xl [overflow-wrap:anywhere] py-16 md:w-5/6 md:py-24"
   data-google-reviews
   data-api-key={apiKey}
   data-place-id={business.googlePlaceId}
 >
-  <p class="mb-5 text-xs font-bold uppercase tracking-widest text-sky-700">
-    La confiance se construit sur le terrain
-  </p>
-  <div class="mb-6 flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
+  <div class="mb-6 flex flex-col gap-8">
     <h2 class="m-0 text-3xl font-bold md:text-5xl">
       Leurs expériences,
       <br />
       vos premiers repères.
     </h2>
     <a
-      class="font-bold underline decoration-slate-300 underline-offset-4 hover:text-red-800"
+      class="relative inline-flex min-h-11 items-center justify-center gap-2 self-center font-bold hover:text-red-800"
       href={reviewsUrl}
       target="_blank"
       rel="noopener noreferrer"
-    >
-      Tous les avis sur Google Maps <span class="sr-only">(nouvel onglet)</span>
+     aria-description="S’ouvre dans un nouvel onglet">
+      Nos avis <img src={googleLogo} alt="Google" width="1000" height="480" class="h-20 w-auto max-w-full" /> <span class="sr-only">(nouvel onglet)</span>
     </a>
   </div>
   <p class="mb-6 text-sm text-slate-600">
@@ -38,20 +37,39 @@ const reviewsUrl = `https://www.google.com/maps/search/?api=1&query=MAZAT%20Tran
   <noscript>
     Consultez les avis directement sur Google Maps grâce au lien ci-dessus.
   </noscript>
-  <div data-reviews-list class="grid gap-6 md:grid-cols-3"></div>
+  <div data-reviews-list role="region" aria-label="Avis Google" tabindex="0" class="relative flex min-w-0 w-full max-w-full snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain pb-4 [contain:inline-size] md:grid md:grid-cols-3 md:gap-6"></div>
   <div data-reviews-attributions class="mt-4 text-sm text-slate-600"></div>
   <p class="mt-5 text-sm text-slate-600">
     Les avis sont chargés depuis Google lors de votre visite.{' '}
-    <a href="https://policies.google.com/privacy" class="underline">
+    <a href="https://policies.google.com/privacy" class="underline" target="_blank" rel="noopener noreferrer" aria-description="S’ouvre dans un nouvel onglet">
       Confidentialité Google
     </a>{' '}
     ·{' '}
-    <a href="https://maps.google.com/help/terms_maps/" class="underline">
+    <a href="https://maps.google.com/help/terms_maps/" class="underline" target="_blank" rel="noopener noreferrer" aria-description="S’ouvre dans un nouvel onglet">
       Conditions Google Maps
     </a>
   </p>
+  <aside class="mt-8 flex flex-col items-center gap-4 border-t border-slate-200 pt-6 text-center">
+    <a href={business.reviewsUrl} class="inline-flex min-h-11 max-w-full items-center" target="_blank" rel="noopener noreferrer" aria-description="S’ouvre dans un nouvel onglet">
+      <img src={demenagement24Logo} alt="Déménagement24" width="223" height="32" class="h-auto w-64 max-w-full" />
+    </a>
+    <a href={business.reviewsUrl} class="font-semibold underline underline-offset-4" target="_blank" rel="noopener noreferrer" aria-description="S’ouvre dans un nouvel onglet">Consultez également nos avis sur Déménagement24 !</a>
+  </aside>
+  <dialog data-review-dialog aria-labelledby="review-dialog-title" class="review-dialog fixed inset-0 m-auto h-[80dvh] w-[80dvw] max-w-xl overflow-y-auto rounded-lg bg-white p-5 text-slate-900 backdrop:bg-black/60 md:h-auto md:max-h-[80dvh]">
+    <div class="mb-4 flex items-center justify-between gap-4">
+      <h3 id="review-dialog-title" class="flex items-center gap-2 text-xl font-bold">
+        <img src="https://www.gstatic.com/images/branding/product/1x/gsa_48dp.png" width="24" height="24" alt="" />
+        Avis Google
+      </h3>
+      <form method="dialog">
+        <button autofocus aria-label="Fermer l’avis" class="min-h-11 min-w-11 text-3xl">×</button>
+      </form>
+    </div>
+    <div data-review-full class="flex flex-1 flex-col"></div>
+  </dialog>
   <template data-review-template>
-    <article class="rounded-sm border border-slate-200 bg-white p-6">
+    <!-- Contain absolutely positioned screen-reader labels inside each scrolling card. -->
+    <article class="review-card relative flex min-w-0 max-w-full shrink-0 basis-[85%] snap-start flex-col rounded-sm border border-slate-200 bg-white p-5">
       <p data-review-author class="font-bold"></p>
       <p class="my-3 text-amber-700">
         <span aria-hidden="true">★★★★★</span>
@@ -60,17 +78,78 @@ const reviewsUrl = `https://www.google.com/maps/search/?api=1&query=MAZAT%20Tran
       <p data-review-date class="mb-3 text-sm text-slate-600"></p>
       <blockquote
         data-review-text
-        class="m-0 whitespace-pre-line break-words text-slate-700"
+        class="review-excerpt m-0 whitespace-pre-line wrap-break-word leading-6 text-slate-700"
       ></blockquote>
-      <p data-review-visit class="mt-3 text-sm text-slate-600"></p>
-      <div data-review-links class="mt-4 flex flex-wrap gap-4 text-sm"></div>
-      <p
-        translate="no"
-        class="mt-4 font-sans text-xs font-normal not-italic tracking-normal whitespace-nowrap text-[#5e5e5e]"
-      >
-        Google Maps
-      </p>
+      <button type="button" data-review-more class="mt-2 min-h-11 self-center font-semibold underline underline-offset-4">Voir +</button>
+      <fieldset data-review-details hidden class="min-w-0 border-0 p-0">
+        <legend class="block w-full text-sm text-slate-600">
+          <span data-review-visit class="mb-3 block empty:hidden"></span>
+          <span data-review-links class="flex flex-wrap gap-4"></span>
+          <img src={googleLogo} alt="Google" width="1000" height="480" class="mt-4 h-16 w-auto max-w-full" />
+        </legend>
+      </fieldset>
     </article>
   </template>
 </section>
+<style>
+  .review-dialog[open] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  [data-review-full] .review-card {
+    flex: 1;
+    border: 0;
+    padding: 0;
+  }
+
+  [data-review-full] [data-review-details] {
+    margin-top: auto;
+    padding-top: 2rem;
+  }
+
+  [data-review-details] legend {
+    float: left;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 1rem;
+  }
+
+  [data-reviews-list] .review-excerpt {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    overflow: hidden;
+    height: 7.5rem;
+  }
+
+  [data-reviews-list] .review-excerpt[data-truncated] {
+    mask-image: linear-gradient(#000 78%, transparent);
+  }
+
+  @media (min-width: 48rem) {
+    [data-reviews-list] .review-card:nth-child(n + 4) {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .review-dialog {
+      opacity: 0;
+      transition: opacity 200ms ease, display 200ms allow-discrete, overlay 200ms allow-discrete;
+    }
+
+    .review-dialog[open] { opacity: 1; }
+
+    .review-dialog::backdrop {
+      opacity: 0;
+      transition: opacity 200ms ease, display 200ms allow-discrete, overlay 200ms allow-discrete;
+    }
+
+    .review-dialog[open]::backdrop { opacity: 1; }
+
+    @starting-style {
+      .review-dialog[open], .review-dialog[open]::backdrop { opacity: 0; }
+    }
+  }
+</style>
 <script src="../lib/google-reviews.ts"></script>

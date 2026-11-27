@@ -2,7 +2,7 @@ export const localFaqs = [
   {
     question: 'Comment obtenir un devis pour mon déménagement ?',
     answer:
-      'Décrivez les adresses de départ et d’arrivée, les accès, le volume et la date souhaitée. MAZAT étudie votre demande et prépare un devis personnalisé. Une visite ou un échange vidéo peut aider à préciser le cubage.',
+      'Décrivez les adresses de départ et d’arrivée, les accès, le volume et la date souhaitée. MAZAT Transport étudie votre demande et prépare un devis personnalisé. Une visite ou un échange vidéo peut aider à préciser le cubage.',
   },
   {
     question: 'Quelle formule choisir ?',
@@ -27,6 +27,6 @@ export const localFaqs = [
   {
     question: 'La demande en ligne est-elle un devis définitif ?',
     answer:
-      'Non. Elle permet de préparer l’étude de votre projet. Le devis définitif est établi et validé par MAZAT après vérification des accès, du volume, des prestations et des conditions applicables.',
+      'Non. Elle permet de préparer l’étude de votre projet. Le devis définitif est établi et validé par MAZAT Transport après vérification des accès, du volume, des prestations et des conditions applicables.',
   },
 ];

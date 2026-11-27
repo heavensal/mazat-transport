@@ -2,6 +2,7 @@
 import PageHero from '../../components/PageHero.astro';
 import { business } from '../../site/config';
 import type { RegisteredContentPage } from '../../site/pages';
+import niceCity from '../../assets/images/nice-city.jpg';
 
 interface Props {
   page: RegisteredContentPage;
@@ -10,7 +11,7 @@ interface Props {
 const { page } = Astro.props;
 ---
 
-<PageHero page={page} />
+<PageHero page={page} image={niceCity} />
 <section class="mx-auto grid w-11/12 max-w-7xl gap-10 py-16 md:w-5/6 md:grid-cols-2 md:py-24">
   <div>
     <h2 class="mb-5 text-3xl font-bold">

@@ -1,6 +1,6 @@
 # MAZAT Transport Déménagement
 
-French Astro brochure website based on the client brief of 5 November 2026. Original MAZAT logo, five moving packages, maritime export, services, quote preparation and shared assistant workflows.
+French Astro brochure website based on the client brief of 5 November 2026. Original MAZAT Transport logo, five moving packages, maritime export, services, quote preparation and shared assistant workflows.
 
 ## Run locally
 
@@ -29,9 +29,9 @@ Read [AGENTS.md](AGENTS.md), [fast_commands.md](fast_commands.md), [client-brief
 
 ## Quote form
 
-The form validates project, departure/destination access, volume or inventory, export-specific details and contact information. The review can be downloaded as a text file before the request is sent.
+The form validates project, departure/destination access, volume or inventory, export-specific details and contact information. The detailed plain-text recap is sent to the company only, with no visitor download or raw recap display. Services support multiple selections; moving dates cannot be in the past; callback preferences cover today and the following six days in Europe/Paris. Message and additional questions are optional.
 
-After confirmation, the browser posts the request directly to Forge's `send_form` API. A successful response means Forge accepted the request for sending; it does not prove delivery to MAZAT's mailbox. Form data remains in browser memory until submission, is not stored locally by the site, and is cleared by refreshing. Photos and other files are not uploaded. The six-step export flow includes a seventh review screen.
+After confirmation, the browser posts the request directly to Forge's `send_form` API. A successful response means Forge accepted the request for sending; it does not prove delivery to MAZAT's mailbox. Form data remains in browser memory until submission, is not stored locally by the site, and is cleared by refreshing. Up to three optional photos are converted to JPEG and resized in the browser, then sent as base64 `attachments` (`filename`, `content_type`, `data`). The local Forge contract accepts at most 3 JPEGs of 1,200,000 bytes each; client output is capped at 900 KiB per photo. Inputs accept JPEG/PNG/WebP up to 25 MiB each. Other documents are not uploaded. Native sending/success/error panels replace the form temporarily, preserving answers and photos on failure. The six-step export flow includes a seventh review screen.
 
 Configure `FORGE_FORM_TOKEN` locally in `.env` and as the GitHub Actions repository secret of the same name. **This must be a public, form-scoped Forge token:** its value is embedded in the generated HTML and visible to every site visitor. Never use a private account or administrative token. The production request-reception workflow still lacks server-side storage, anti-spam, automatic acknowledgement, admin dashboard and attachment retention; see EXT-001 in todo.md. Contractual quotes, signature and payment remain out of scope (EXT-002).
 
@@ -45,7 +45,7 @@ No copied credentials, internal price grid, fabricated reviews, generated job ph
 
 ## Verification
 
-`pnpm build` produces static HTML. `pnpm test` checks generated links/anchors, metadata, French language, preview noindex, JSON-LD and exclusion of internal rates/starter assets. Browser acceptance and remaining limits are recorded in [validation.md](docs/validation.md).
+`pnpm build` produces static HTML. `pnpm test` checks generated links/anchors, metadata, French language, preview noindex, JSON-LD and exclusion of internal rates/starter assets. `pnpm test:quote` checks Paris dates, callback windows, photo constraints and Forge submission states with mocked DOM/canvas/network (no live email). Browser acceptance and remaining limits are recorded in [validation.md](docs/validation.md).
 
 ## Brand asset set
 

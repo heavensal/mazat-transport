@@ -19,6 +19,9 @@ function appendLink(parent: HTMLElement, text: string, url?: string) {
     if (safe.protocol !== 'https:') return;
     const link = document.createElement('a');
     link.href = safe.href;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.setAttribute('aria-description', 'S’ouvre dans un nouvel onglet');
     link.textContent = text;
     link.className = 'underline underline-offset-4';
     parent.append(link);
@@ -34,6 +37,20 @@ for (const root of document.querySelectorAll<HTMLElement>(
   const template = root.querySelector<HTMLTemplateElement>(
     '[data-review-template]',
   )!;
+  const dialog = root.querySelector<HTMLDialogElement>('[data-review-dialog]')!;
+  const fullReview = dialog.querySelector<HTMLElement>('[data-review-full]')!;
+  const excerpts = new ResizeObserver((entries) => {
+    for (const { target } of entries) {
+      if (!target.clientHeight) continue;
+      target.toggleAttribute('data-truncated', target.scrollHeight > target.clientHeight);
+    }
+  });
+  dialog.addEventListener('click', (event) => {
+    if (event.target !== dialog) return;
+    const bounds = dialog.getBoundingClientRect();
+    if (event.clientX < bounds.left || event.clientX > bounds.right ||
+        event.clientY < bounds.top || event.clientY > bounds.bottom) dialog.close();
+  });
   async function renderReviews() {
     if (!root.dataset.apiKey) {
       status.textContent =
@@ -73,6 +90,7 @@ for (const root of document.querySelectorAll<HTMLElement>(
             review.authorAttribution.displayName!,
             review.authorAttribution.uri,
           );
+          holder.querySelector('a')?.classList.remove('underline');
           if (holder.childNodes.length) author.replaceChildren(holder);
         }
         const text = card.querySelector<HTMLElement>('[data-review-text]')!;
@@ -103,7 +121,18 @@ for (const root of document.querySelectorAll<HTMLElement>(
         const links = card.querySelector<HTMLElement>('[data-review-links]')!;
         appendLink(links, 'Voir l’avis sur Google', review.googleMapsURI);
         appendLink(links, 'Signaler cet avis', review.flagContentURI);
+        const more = card.querySelector<HTMLButtonElement>('[data-review-more]')!;
+        more.setAttribute('aria-label', `Voir + : avis complet de ${review.authorAttribution!.displayName}`);
+        more.addEventListener('click', () => {
+          const complete = card.cloneNode(true) as HTMLElement;
+          complete.querySelector('[data-review-more]')?.remove();
+          complete.querySelector<HTMLElement>('[data-review-details]')!.hidden = false;
+          fullReview.replaceChildren(complete);
+          dialog.showModal();
+          dialog.scrollTop = 0;
+        });
         list.append(card);
+        excerpts.observe(text);
       }
       const attributions = root.querySelector<HTMLElement>(
         '[data-reviews-attributions]',

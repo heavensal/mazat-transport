@@ -1,16 +1,42 @@
 ---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import type { RegisteredContentPage } from '../site/pages';
 
 interface Props {
   page: RegisteredContentPage;
+  image?: ImageMetadata;
 }
 
-const { page } = Astro.props;
+const { page, image } = Astro.props;
 ---
 
-<section class="bg-slate-950 py-16 text-white md:py-20">
-  <div class="mx-auto w-11/12 max-w-7xl md:w-5/6">
-    <nav class="mb-8 text-sm text-slate-300" aria-label="Fil d’Ariane">
+<section
+  class:list={[
+    'bg-slate-950 py-16 text-white md:py-20',
+    image && 'relative isolate overflow-hidden',
+  ]}
+>
+  {
+    image && (
+      <Image
+        src={image}
+        alt=""
+        aria-hidden="true"
+        width={1152}
+        height={768}
+        loading="eager"
+        fetchpriority="high"
+        class="absolute inset-0 h-full w-full object-cover"
+      />
+    )
+  }
+  {image && <div class="absolute inset-0 bg-slate-950/75" aria-hidden="true" />}
+  <div class="relative mx-auto w-11/12 max-w-7xl md:w-5/6">
+    <nav
+      class:list={['mb-8 text-sm', image ? 'text-slate-100' : 'text-slate-300']}
+      aria-label="Fil d’Ariane"
+    >
       <a class="underline" href="/">
         Accueil
       </a>
@@ -28,6 +54,8 @@ const { page } = Astro.props;
         </>
       ))}
     </h1>
-    <p class="max-w-3xl text-lg text-slate-300">{page.intro}</p>
+    <p class:list={['max-w-3xl text-lg', image ? 'text-white' : 'text-slate-300']}>
+      {page.intro}
+    </p>
   </div>
 </section>

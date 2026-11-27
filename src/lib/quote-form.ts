@@ -1,4 +1,8 @@
 import { sendFormWithForge } from './form-forge';
+import { resizeContactPhotos } from './quote-photos';
+import { parisDate, callbackSlots } from './quote-schedule';
+import { setupValidation } from './quote-validation';
+import { setupPhotoPicker } from './quote-photo-picker';
 
 const form = document.querySelector<HTMLFormElement>('#quote-form');
 if (form) {
@@ -11,14 +15,20 @@ if (form) {
   const next = form.querySelector<HTMLButtonElement>('#next')!;
   const progress = form.querySelector<HTMLProgressElement>('#step-progress')!;
   const label = form.querySelector<HTMLElement>('#step-label')!;
-  const summary = form.querySelector<HTMLElement>('#quote-summary')!;
-  const reviewTitle = form.querySelector<HTMLElement>('#quote-heading')!;
   const sendButton = form.querySelector<HTMLButtonElement>('#send-request')!;
-  const sendStatus = form.querySelector<HTMLElement>('#send-status')!;
-  const sendError = form.querySelector<HTMLElement>('#send-error')!;
-  const downloadButton =
-    form.querySelector<HTMLButtonElement>('#download-summary')!;
-  const formButtons = form.querySelector<HTMLElement>('.form-buttons')!;
+  const confirmation = form.querySelector<HTMLElement>('#quote-confirmation')!;
+  const photos = form.querySelector<HTMLInputElement>('#quote-photos')!;
+  const photoSelection = form.querySelector<HTMLElement>('#photos-selection')!;
+  const clearPhotos = form.querySelector<HTMLButtonElement>('#clear-photos')!;
+  const callback = form.querySelector<HTMLSelectElement>('#callback-slot')!;
+  const panel = document.querySelector<HTMLElement>('#submission-panel')!;
+  const panelTitle = panel.querySelector<HTMLElement>('#submission-title')!;
+  const panelMessage = panel.querySelector<HTMLElement>('#submission-message')!;
+  const panelIcon = panel.querySelector<HTMLElement>('#submission-icon')!;
+  const returnButton =
+    panel.querySelector<HTMLButtonElement>('#return-to-quote')!;
+  let sending = false;
+  let sent = false;
   const volume = form.querySelector<HTMLInputElement>('#volume')!;
   const inventory = form.querySelector<HTMLTextAreaElement>('#inventory')!;
   const date = form.querySelector<HTMLInputElement>('#moving-date')!;
@@ -53,7 +63,57 @@ if (form) {
   }
   selectParam('#project-type', 'type');
   selectParam('#offer', 'formule');
-  selectParam('#additional-service', 'service');
+  for (const checkbox of form.querySelectorAll<HTMLInputElement>(
+    '[data-service]',
+  )) {
+    checkbox.checked = params
+      .getAll('service')
+      .includes(checkbox.dataset.service!);
+  }
+  function refreshSchedule() {
+    date.min = parisDate();
+    date.setCustomValidity(
+      date.value && date.value < date.min
+        ? 'Choisissez une date à partir d’aujourd’hui.'
+        : '',
+    );
+    const selected = callback.value;
+    const options = callbackSlots();
+    callback.replaceChildren(new Option('Sans préférence', ''));
+    for (const slot of options) {
+      const option = new Option(slot.label, slot.value);
+      option.disabled = slot.disabled;
+      callback.append(option);
+    }
+    if (
+      selected &&
+      !options.some((slot) => slot.value === selected && !slot.disabled)
+    ) {
+      const expired = new Option(
+        'Créneau passé — choisissez une autre plage',
+        selected,
+      );
+      expired.disabled = true;
+      callback.append(expired);
+      callback.setCustomValidity(
+        'Ce créneau est passé. Choisissez une autre plage ou « Sans préférence ».',
+      );
+    } else {
+      callback.setCustomValidity('');
+    }
+    callback.value = selected;
+  }
+  const validation = setupValidation(form);
+  const photoPicker = setupPhotoPicker(
+    photos,
+    form.querySelector<HTMLElement>('#photos-preview')!,
+    photoSelection,
+    clearPhotos,
+    validation.show,
+  );
+  date.addEventListener('input', refreshSchedule);
+  callback.addEventListener('change', refreshSchedule);
+  window.addEventListener('focus', refreshSchedule);
   const steps = () =>
     fieldsets.filter(
       (f) => f.dataset.step !== 'export' || project.value === 'export',
@@ -105,15 +165,16 @@ if (form) {
       f.disabled = !current;
     });
     conditionals();
+    refreshSchedule();
     const isReview = step === active.length;
     review.hidden = !isReview;
     next.hidden = isReview;
     previous.hidden = step === 0;
     progress.max = active.length + 1;
     progress.value = step + 1;
-    label.textContent = `Étape ${step + 1} sur ${active.length + 1} · ${isReview ? 'Récapitulatif' : active[step].querySelector('legend')!.textContent}`;
+    label.textContent = `Étape ${step + 1} sur ${active.length + 1} · ${isReview ? 'Confirmation' : active[step].querySelector('legend')!.textContent}`;
     next.textContent =
-      step === active.length - 1 ? 'Vérifier ma demande' : 'Continuer';
+      step === active.length - 1 ? 'Préparer l’envoi' : 'Continuer';
     if (focus)
       (isReview
         ? review.querySelector<HTMLElement>('h2')
@@ -139,13 +200,28 @@ if (form) {
       )
       .map(
         ([name, value]) =>
-          [name, selectLabels.get(name) || value.trim()] as const,
+          [
+            name,
+            name === 'Téléphone'
+              ? `+33${value.trim().replace(/^0/, '')}`
+              : selectLabels.get(name) || value.trim(),
+          ] as const,
       );
-    formFields = Object.fromEntries(entries);
-    recap = `DEMANDE DE DEVIS MAZAT\nRéférence locale de préparation : ${requestReference}\nPréparée le : ${new Date().toLocaleString('fr-FR')}\n\n${entries.map(([name, value]) => `${name} : ${value}`).join('\n')}\n\nCette demande n’est pas un devis contractuel. Aucun prix n’est calculé. Référence de préparation uniquement : la date de dépôt et le numéro de dossier seront attribués à réception par MAZAT.`;
-    summary.textContent = recap;
-    sendStatus.hidden = true;
-    sendError.hidden = true;
+    formFields = {};
+    for (const [name, value] of entries) {
+      formFields[name] = formFields[name]
+        ? `${formFields[name]}, ${value}`
+        : value;
+    }
+    formFields['Photos jointes'] = String(photoPicker.getFiles().length);
+    recap = `DEMANDE DE DEVIS MAZAT\nRéférence locale de préparation : ${requestReference}\nPréparée le : ${new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })}\n\n${Object.entries(
+      formFields,
+    )
+      .map(([name, value]) => `${name} : ${value}`)
+      .join(
+        '\n',
+      )}\n\nCette demande n’est pas un devis contractuel. Aucun prix n’est calculé.`;
+    confirmation.textContent = `${photoPicker.getFiles().length} photo(s) accompagneront votre demande. Nous vous recontacterons aux coordonnées indiquées.`;
   }
   form.noValidate = true;
   progress.hidden = false;
@@ -154,10 +230,15 @@ if (form) {
     conditionals();
   });
   [volume, inventory].forEach((input) =>
-    input.addEventListener('input', () => volume.setCustomValidity('')),
+    input.addEventListener('input', () => {
+      volume.setCustomValidity('');
+      if (volume.getAttribute('aria-invalid')) validation.show(volume);
+    }),
   );
   form.addEventListener('submit', (event) => {
     event.preventDefault();
+    if (sending || sent) return;
+    refreshSchedule();
     const active = steps();
     const fieldset = active[step];
     if (!fieldset) return;
@@ -167,33 +248,80 @@ if (form) {
           ? 'Indiquez un volume estimé ou décrivez votre inventaire.'
           : '',
       );
-    if (!form.reportValidity()) return;
+    if (!validation.validate(fieldset)) return;
     step++;
     if (step === active.length) buildSummary();
     render();
   });
   previous.addEventListener('click', () => {
     if (step > 0) {
-      sendStatus.hidden = true;
-      sendError.hidden = true;
       step--;
       render();
     }
   });
+  function showSubmission(state: 'sending' | 'success' | 'error', detail = '') {
+    form!.hidden = true;
+    panel.hidden = false;
+    returnButton.hidden = state !== 'error';
+    panelIcon.textContent =
+      state === 'sending' ? '…' : state === 'success' ? '✓' : '!';
+    panelIcon.className = `mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full text-3xl ${state === 'error' ? 'bg-red-100 text-red-800' : state === 'success' ? 'bg-emerald-100 text-emerald-800' : 'bg-sky-100 text-sky-800 motion-safe:animate-pulse'}`;
+    panelTitle.textContent =
+      state === 'sending'
+        ? 'En cours d’envoi'
+        : state === 'success'
+          ? 'Envoi réussi'
+          : 'L’envoi a échoué';
+    panelMessage.textContent =
+      state === 'sending'
+        ? 'Préparation des photos et transmission de votre demande…'
+        : state === 'success'
+          ? 'Nous vous répondrons rapidement.'
+          : `${detail} Vos réponses et vos photos sont conservées. Revenez à votre demande pour les vérifier ou réessayer.`;
+    panelTitle.focus();
+  }
+  returnButton.addEventListener('click', () => {
+    panel.hidden = true;
+    form!.hidden = false;
+    render();
+  });
   sendButton.addEventListener('click', async () => {
+    if (sending || sent) return;
+    refreshSchedule();
+    const active = steps();
+    // Revalidate every relevant step before sending, including dates after midnight.
+    fieldsets.forEach((fieldset) => {
+      fieldset.disabled = !active.includes(fieldset);
+    });
+    conditionals();
+    volume.setCustomValidity(
+      !volume.value && !inventory.value.trim()
+        ? 'Indiquez un volume estimé ou décrivez votre inventaire.'
+        : '',
+    );
+    const invalid = active.find((fieldset) =>
+      [
+        ...fieldset.querySelectorAll<
+          HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+        >('input, select, textarea'),
+      ].some((input) => !input.checkValidity()),
+    );
+    if (invalid) {
+      step = active.indexOf(invalid);
+      render();
+      validation.validate(invalid);
+      return;
+    }
+    buildSummary();
+    render(false);
+    sending = true;
     sendButton.disabled = true;
-    previous.disabled = true;
-    downloadButton.disabled = true;
-    sendButton.textContent = 'Envoi en cours…';
-    sendError.hidden = true;
-    sendStatus.hidden = false;
-    sendStatus.textContent = 'Envoi de votre demande en cours…';
-    form.setAttribute('aria-busy', 'true');
-
+    showSubmission('sending');
     try {
       const email = formFields['Email']?.trim();
       if (!email) throw new Error('Votre adresse email est manquante.');
-      await sendFormWithForge(form.dataset.forgeFormToken ?? '', {
+      const attachments = await resizeContactPhotos(photoPicker.getFiles());
+      await sendFormWithForge(form!.dataset.forgeFormToken ?? '', {
         from_email: email,
         fields: {
           ...formFields,
@@ -204,35 +332,22 @@ if (form) {
           phone: formFields['Téléphone'] ?? '',
           message: recap,
         },
+        attachments,
       });
-      reviewTitle.textContent = 'Demande envoyée';
-      sendStatus.textContent =
-        'Forge a accepté votre demande pour envoi à MAZAT. Cela ne garantit pas sa réception finale par email.';
-      sendButton.hidden = true;
-      formButtons.hidden = true;
-      reviewTitle.focus();
+      sent = true;
+      showSubmission('success');
+      photoPicker.reset();
     } catch (error) {
-      console.error('[Demande de devis] Échec de l’envoi Forge.', error);
-      sendStatus.hidden = true;
-      sendError.textContent = `L’envoi a échoué. ${error instanceof Error ? error.message : 'Une erreur inattendue est survenue.'} Vos réponses sont conservées sur cette page : vous pouvez réessayer ou contacter MAZAT par email.`;
-      sendError.hidden = false;
-      sendButton.disabled = false;
-      sendButton.textContent = 'Réessayer l’envoi';
+      showSubmission(
+        'error',
+        error instanceof Error
+          ? error.message
+          : 'Une erreur inattendue est survenue.',
+      );
     } finally {
-      previous.disabled = false;
-      downloadButton.disabled = false;
-      form.removeAttribute('aria-busy');
+      sending = false;
+      sendButton.disabled = sent;
     }
-  });
-  form.querySelector('#download-summary')!.addEventListener('click', () => {
-    const url = URL.createObjectURL(
-      new Blob([recap], { type: 'text/plain;charset=utf-8' }),
-    );
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'demande-devis-mazat.txt';
-    link.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
   });
   render(false);
 }

@@ -1,6 +1,6 @@
 # Reusable delivery checklist
 
-Copied from Laure Corrao. These are workflow recipes, not completed actions. MAZAT uses `main`; hosting has not been selected. GitHub Pages/DNS instructions below are conditional on that choice and must be verified before use. See [todo.md](todo.md) for current delivery status.
+Copied from Laure Corrao. These are workflow recipes, not completed actions. MAZAT Transport uses `main`; hosting has not been selected. GitHub Pages/DNS instructions below are conditional on that choice and must be verified before use. See [todo.md](todo.md) for current delivery status.
 
 ## 1. Nom et arborescence
 

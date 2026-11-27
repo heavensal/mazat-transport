@@ -93,7 +93,7 @@ export const pages = [
     title: 'Confidentialité des données | MAZAT TRANSPORT',
     heading: 'Vos données personnelles.',
     description:
-      'Fonctionnement du formulaire de préparation de demande MAZAT et informations sur les données saisies.',
+      'Fonctionnement du formulaire de préparation de demande MAZAT Transport et informations sur les données saisies.',
     intro:
       'Comprendre ce que fait cette version du site avec les informations que vous saisissez.',
     eyebrow: 'Confidentialité',
@@ -104,7 +104,7 @@ export const pages = [
     title: 'Cookies et traceurs | MAZAT TRANSPORT',
     heading: 'Cookies et services externes.',
     description:
-      'Informations sur la navigation MAZAT et la suggestions d’adresse Google.',
+      'Informations sur la navigation MAZAT Transport et la suggestions d’adresse Google.',
     intro:
       'Le site n’ajoute pas de mesure d’audience ou de publicité. Les suggestions Google se chargent pendant la saisie d’une adresse ; les avis Google sont chargés sur l’accueil.',
     eyebrow: 'Cookies',
@@ -115,7 +115,7 @@ export const pages = [
     title: 'Conditions & médiation — préparation | MAZAT TRANSPORT',
     heading: 'Un périmètre clair,\nconsigné au devis.',
     description:
-      'Informations sur la demande et le devis MAZAT. CGV, assurance et médiation à confirmer avant publication.',
+      'Informations sur la demande et le devis MAZAT Transport. CGV, assurance et médiation à confirmer avant publication.',
     intro:
       'Une demande d’étude ne constitue ni une réservation ni un devis contractuel.',
     eyebrow: 'Conditions & médiation',

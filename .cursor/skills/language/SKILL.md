@@ -15,4 +15,4 @@ Read [MULTILANG.md](../../../MULTILANG.md) before language-related work. It is t
 3. Apply the corresponding monolingual or multilingual architecture from the rule.
 4. Validate routes, content, switching, Forge locale behavior and SEO as relevant to the change.
 
-MAZAT is a new French-only site using src/site/publication.ts, src/site/pages.ts and ordinary local content. No i18next runtime or unpublished English dictionaries are present.
+MAZAT Transport is a new French-only site using src/site/publication.ts, src/site/pages.ts and ordinary local content. No i18next runtime or unpublished English dictionaries are present.

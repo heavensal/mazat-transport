@@ -25,3 +25,14 @@
 #quote-form .check-label input {
   @apply mt-1 h-5 w-5 shrink-0;
 }
+
+#quote-form [aria-invalid='true'] {
+  border-color: #b91c1c;
+  outline-color: #b91c1c;
+}
+
+#quote-form input,
+#quote-form select,
+#quote-form textarea {
+  scroll-margin-block: 6rem;
+}

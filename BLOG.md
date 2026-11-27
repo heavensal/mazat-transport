@@ -183,6 +183,6 @@ Check the applicable cases:
 
 Report checks performed and remaining limitations.
 
-## MAZAT implementation
+## MAZAT Transport implementation
 
 The blog and English export are P2 follow-ups. No article routes or fetches are active. Apply this rule when that phase is requested.

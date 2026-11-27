@@ -17,7 +17,7 @@ Read [FAQ.md](../../../FAQ.md), the canonical FAQ rule, and [MULTILANG.md](../..
 5. Render both sources through the same native accordion component and use the selected visible list for any structured data.
 6. Verify the cases in FAQ.md and report remaining limitations.
 
-## MAZAT implementation references
+## MAZAT Transport implementation references
 
 - `src/components/Faq.astro`: shared local/remote renderer.
 - `src/lib/forge.ts`: build-only transport.

@@ -23,8 +23,13 @@ const { eyebrow, heading, intro } = Astro.props;
   />
   <div class="absolute inset-0 bg-slate-950/75" aria-hidden="true"></div>
   <div class="relative mx-auto w-11/12 max-w-7xl md:w-5/6">
-    <nav class="mb-8 text-sm text-slate-100" aria-label="Fil d’Ariane">
-      <a class="underline underline-offset-4" href="/">Accueil</a>
+    <nav
+      class="mb-8 w-fit rounded-sm border-l-4 border-red-700 bg-slate-950/90 px-4 py-3 text-sm text-sky-200"
+      aria-label="Fil d’Ariane"
+    >
+      <a class="underline underline-offset-4" href="/">
+        Accueil
+      </a>
       <span aria-hidden="true"> / </span>
       <span aria-current="page">{eyebrow}</span>
     </nav>

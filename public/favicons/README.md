@@ -1,4 +1,4 @@
-# MAZAT brand exports
+# MAZAT Transport brand exports
 
 Updated 2026-11-25 with the owner-supplied transparent `mazat_transport_logo.png` and favicon package. The supplied logo is copied unchanged to `public/images/mazat-logo.png`; responsive PNG/WebP variants preserve alpha. Supplied ICO, SVG, 96px PNG, Apple and web-app icons are preserved at the public root. The generator derives legacy favicon/Apple sizes from the supplied icons and maps web-app icons to existing manifest URLs. The existing French manifest settings are preserved. Maskable safe-zone variants and the sharing canvas are derived from the new logo.
 Run `pnpm assets:brand` to regenerate with Sharp supplied by Astro. Exports are committed; production builds do not need to generate them.

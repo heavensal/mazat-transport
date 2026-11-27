@@ -33,11 +33,12 @@ const { page } = Astro.props;
   </p>
   <p>
     Lorsque vous validez l’envoi, le navigateur transmet les champs du
-    formulaire à Forge pour acheminer la demande à MAZAT. Le site affiche le
+    formulaire à Forge pour acheminer la demande à MAZAT Transport. Le site affiche le
     résultat renvoyé par Forge, mais ne peut pas confirmer la réception finale
-    du message dans la messagerie de MAZAT. Les fichiers ne sont pas transmis ;
-    vous pouvez télécharger le récapitulatif ou les envoyer séparément par
-    email.
+    du message dans la messagerie de MAZAT Transport. Vous pouvez joindre jusqu’à trois
+    photos : elles sont réduites et converties en JPEG dans votre navigateur,
+    puis transmises à Forge avec la demande. Le récapitulatif détaillé est
+    destiné à MAZAT Transport ; aucun téléchargement n’est proposé au visiteur.
   </p>
   <h2 class="mt-10 mb-4 text-2xl font-bold">Avis Google</h2>
   <p>
@@ -53,11 +54,21 @@ const { page } = Astro.props;
     recherches d’adresse et les données techniques de connexion nécessaires à ce
     service. Vous pouvez corriger ou compléter les champs manuellement.
     Consultez la{' '}
-    <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" aria-description="S’ouvre dans un nouvel onglet">
+    <a
+      href="https://policies.google.com/privacy"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-description="S’ouvre dans un nouvel onglet"
+    >
       politique de confidentialité Google
     </a>{' '}
     et les{' '}
-    <a href="https://maps.google.com/help/terms_maps/" target="_blank" rel="noopener noreferrer" aria-description="S’ouvre dans un nouvel onglet">
+    <a
+      href="https://maps.google.com/help/terms_maps/"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-description="S’ouvre dans un nouvel onglet"
+    >
       conditions Google Maps
     </a>
     .
@@ -66,7 +77,7 @@ const { page } = Astro.props;
     Une question sur votre demande ?
   </h2>
   <p>
-    Vous pouvez joindre MAZAT à{' '}
+    Vous pouvez joindre MAZAT Transport à{' '}
     <a href={`mailto:${business.email}`}>{business.email}</a>.
   </p>
   <p class="mt-8 border-l-3 border-sky-700 bg-sky-50 px-6 py-5 text-slate-700">

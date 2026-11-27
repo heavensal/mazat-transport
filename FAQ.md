@@ -93,7 +93,7 @@ src/i18n/locales/en/faq.json
 
 Those dictionaries hold locally authored fallback questions/answers and interface text, not copies of remote Forge content. Do not require an unpublished language.
 
-MAZAT uses src/content/faq.ts and src/components/Faq.astro without translation dictionaries.
+MAZAT Transport uses src/content/faq.ts and src/components/Faq.astro without translation dictionaries.
 
 ## 8. Use identical rendering for both sources
 

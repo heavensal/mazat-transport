@@ -136,6 +136,6 @@ Check the applicable cases:
 
 Report checks performed and remaining limitations.
 
-## MAZAT implementation
+## MAZAT Transport implementation
 
 No approved local testimonials have been supplied. Link to the external review profile without copying ratings or named reviews. Forge imports use src/lib/forge.ts; unavailable credentials are reported distinctly and omit reviews.
